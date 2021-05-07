@@ -323,9 +323,7 @@ def load_data(config: ValidatorConfig):
         return None
 
 
-def calculate_influx_fields(config: ValidatorConfig):
-    data = load_data(config)
-
+def calculate_influx_fields(data):
     if data is None:
         result = {"validator_status": 0}
     else:
@@ -351,7 +349,6 @@ def calculate_influx_fields(config: ValidatorConfig):
         result.update(performance_metrics)
         result.update(get_balance_metric(data['identity_account_balance'], 'identity_account_balance'))
         result.update(get_balance_metric(data['vote_account_balance'], 'vote_account_balance'))
-        result.update(get_solana_version_metric(data['solana_version_data']))
 
     result.update({"monitoring_version": 1})
 
@@ -359,11 +356,16 @@ def calculate_influx_fields(config: ValidatorConfig):
 
 
 def calculate_influx_data(config: ValidatorConfig):
+
+    data = load_data(config)
+
     influx_measurement = {
         "measurement": "validators_info",
         "time": round(time.time() * 1000),
         "validator_name": config.validator_name,
-        "fields": calculate_influx_fields(config)
+        "fields": calculate_influx_fields(data)
     }
+
+    influx_measurement.update(get_solana_version_metric(data['solana_version_data']))
 
     return influx_measurement
