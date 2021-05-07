@@ -1,0 +1,23 @@
+---
+- name: set force install fact
+  set_fact:
+    force: "{{ force | default('false')  }}"
+
+- name: check solana cli installed
+  stat:
+    path: /home/solana/.local/share/solana/install/active_release/bin/solana-install
+  register: solana_exists
+  tags:
+    - cli
+
+- name: install solana cli
+  import_tasks: install.yaml
+  tags:
+    - cli.install
+  when: force == 'true' or not solana_exists.stat.exists
+
+- name: update solana cli
+  import_tasks: update.yaml
+  tags:
+    - cli.update
+  when: force != 'true' and solana_exists.stat.exists

@@ -1,0 +1,33 @@
+---
+- name: Set solana directory ownership
+  file:
+    path: /home/solana
+    owner: solana
+    group: solana
+    mode: 0755
+  when: node.lvm_enabled
+  ignore_errors: True
+  tags:
+    - config.solana_user
+
+- name: Create user solana
+  user:
+    name: solana
+    state: present
+    create_home: yes
+    shell: /bin/bash
+    skeleton: /etc/skel
+    groups: syslog
+  tags:
+    - config.solana_user
+
+- name: Create secrets dir
+  become: yes
+  become_user: solana
+  file:
+    path: "/home/solana/.secrets"
+    state: directory
+    mode: '0700'
+  tags:
+    - config.solana_user
+

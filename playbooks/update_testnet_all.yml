@@ -1,0 +1,3 @@
+---
+- name: update solana testnet validator
+  hosts: all

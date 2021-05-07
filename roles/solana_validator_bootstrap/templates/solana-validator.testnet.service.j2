@@ -1,0 +1,37 @@
+[Unit]
+Description=Solana {{ cluster.environment }} node
+After=network.target syslog.target
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=1
+User={{ validator.service_user }}
+LimitNOFILE=1024000
+Environment="PATH=/bin:/usr/bin:/home/solana.local/share/solana/install/active_release/bin"
+Environment="SOLANA_METRICS_CONFIG=host=https://metrics.solana.com:8086,db=tds,u=testnet_write,p=c4fa841aa918bf8274e3e2a44d77568d9861b3ea"
+#Environment="RUST_LOG=debug"
+ExecStart=/home/solana/.local/share/solana/install/active_release/bin/solana-validator \
+--identity {{ validator.secrets_path }}/validator-keypair.json \
+--vote-account {{ validator.secrets_path }}/vote-account-keypair.json \
+--rpc-port {{ validator.solana_rpc_port }} \
+--trusted-validator 5D1fNXzvv5NjV1ysLjirC4WY92RNsVH18vjmcszZd8on \
+--trusted-validator 7XSY3MrYnK8vq693Rju17bbPkCN3Z7KvvfvJx4kdrsSY \
+--trusted-validator Ft5fbkqNa76vnsjYNwjDZUXoTWpP7VYm3mtsaQckQADN \
+--trusted-validator 9QxCLckBiJc783jnMvXZubK4wH86Eqqvashtrwvcsgkv \
+--no-untrusted-rpc \
+--expected-genesis-hash 4uhcVJyU9pJkvQyS88uRDiswHXSCkY3zQawwpjk2NsNY \
+--snapshot-interval-slots 500 \
+--maximum-local-snapshot-age 1000 \
+--entrypoint '{{ cluster.entrypoint }}:8001' \
+--limit-ledger-size \
+--log {{ validator.log_file }} \
+--ledger {{ validator.ledger_path }} \
+--accounts {{ validator.accounts_path }} \
+--accounts-db-caching-enabled \
+--dynamic-port-range {{ validator.open_solana_ports_start }}-{{ validator.open_solana_ports_end }}
+
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,44 @@
+[Unit]
+Description=Solana {{ cluster.environment }} node
+After=network.target syslog.target
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=1
+User=solana
+LimitNOFILE=1024000
+Environment="PATH=/bin:/usr/bin:/home/solana.local/share/solana/install/active_release/bin"
+Environment="SOLANA_METRICS_CONFIG=host=https://metrics.solana.com:8086,db=mainnet-beta,u=mainnet-beta_write,p=password"
+#Environment="RUST_LOG=debug"
+ExecStart=/home/solana/.local/share/solana/install/active_release/bin/solana-validator \
+--entrypoint entrypoint.mainnet-beta.solana.com:8001 \
+--entrypoint entrypoint2.mainnet-beta.solana.com:8001 \
+--entrypoint entrypoint3.mainnet-beta.solana.com:8001 \
+--entrypoint entrypoint4.mainnet-beta.solana.com:8001 \
+--entrypoint entrypoint5.mainnet-beta.solana.com:8001 \
+--trusted-validator 7Np41oeYqPefeNQEHSv1UDhYrehxin3NStELsSKCT4K2 \
+--trusted-validator GdnSyH3YtwcxFvQrVVJMm1JhTS4QVX7MFsX56uJLUfiZ \
+--trusted-validator DE1bawNcRJB9rVm3buyMVfr8mBEoyyu73NBovf2oXJsJ \
+--trusted-validator CakcnaRDHka2gXyfbEd2d3xsvkJkqsLw2akB3zsN1D2S \
+--expected-genesis-hash 5eykt4UsFv8P8NJdTREpY1vzqKqZKvdpKuc147dw2N9d \
+--no-untrusted-rpc \
+--snapshot-interval-slots 2000 \
+--maximum-local-snapshot-age 3000 \
+--limit-ledger-size 100000000 \
+--wal-recovery-mode skip_any_corrupted_record \
+--snapshot-compression none \
+--no-port-check \
+--rpc-bind-address 127.0.0.1 \
+--accounts-db-caching-enabled \
+--rpc-port {{ validator.solana_rpc_port }}  \
+--identity {{ validator.secrets_path }}/validator-keypair.json \
+--vote-account {{ validator.secrets_path }}/vote-account-keypair.json \
+--log {{ validator.log_file }} \
+--ledger {{ validator.ledger_path }} \
+--accounts {{ validator.accounts_path }} \
+--dynamic-port-range {{ validator.open_solana_ports_start }}-{{ validator.open_solana_ports_end }}
+
+[Install]
+WantedBy=multi-user.target

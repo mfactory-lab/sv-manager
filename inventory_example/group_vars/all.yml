@@ -1,0 +1,62 @@
+---
+
+host:
+  validator_name: "{{ validator_name }}"
+  keybase_username: "{{ keybase_username | default('') }}"
+  validator_homepage: "{{ validator_homepage | default('') }}"
+  upload_validator_keys: "{{ upload_validator_keys | default(False) }}"
+  secrets_path: "{{ secrets_path | default('/home/solana/.secrets') }}"
+  set_validator_info: "{{ set_validator_info | default(True) }}"
+  service_user: "{{ service_user | default('solana') }}"
+  ledger_path: "{{ ledger_path | default('/home/solana/ledger') }}"
+  lvm_enabled: "{{ lvm_enabled | default(False) }}"
+  lvm_vg: "{{ lvm_vg | default('vg00') }}"
+  solana_validator_service: "{{ solana_validator_service | default('restarted')}}"
+  swap_file_size_gb: "{{ swap_file_size_gb | default(64) | int }}"
+  ramdisk_size_gb: "{{ ramdisk_size_gb | default(64) }}"
+  cluster_environment: "{{ cluster_environment | default ('testnet') }}"
+  cluster_rpc_address: "{{ cluster_rpc_address | default('https://testnet.solana.com') }}"
+
+local:
+  secrets_path: .secrets
+  flat_path: False
+
+cluster:
+  environment: "{{ host.cluster_environment }}"
+  entrypoint: "entrypoint.{{ host.cluster_environment }}.solana.com"
+  rpc_address: "{{ host.cluster_rpc_address }}"
+
+node:
+  swap_file_size_gb: "{{ host.swap_file_size_gb }}"
+  ramdisk_path: /mnt/ramdisk
+  ramdisk_size_gb: "{{ host.ramdisk_size_gb }}"
+  name: "{{ host.validator_name }}"
+  lvm_enabled: "{{ host.lvm_enabled }}"
+  lvm_vg: "{{ host.lvm_vg }}"
+
+validator:
+  version: v1.6.7
+  ledger_path: "{{ host.ledger_path }}"
+  accounts_path: "{{ node.ramdisk_path }}/solana"
+  secrets_path: "{{ host.secrets_path }}"
+  log_file: /var/log/solana-validator.log
+  open_solana_ports_start: 8000
+  open_solana_ports_end: 10000
+  solana_rpc_port: 8899
+  upload_validator_keys: "{{ host.upload_validator_keys }}"
+  name: "{{ host.validator_name }}"
+  homepage: "{{ host.validator_homepage }}"
+  keybase_username: "{{ host.keybase_username }}"
+  set_validator_info: "{{ host.set_validator_info }}"
+  service_user: "{{ host.service_user }}"
+  solana_validator_service: "{{ host.solana_validator_service }}"
+
+monitoring:
+  telegraf_database: v_metrics
+  telegraf_urls: http://influx.thevalidators.io:8086
+  telegraf_username: v_user
+  telegraf_password: thepassword
+
+
+
+

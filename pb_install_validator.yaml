@@ -1,0 +1,9 @@
+---
+- name: install solana validator
+  hosts: remote
+  become: yes
+  roles:
+    - configure_ubuntu
+    - solana_cli
+    - solana_validator_bootstrap
+    - monitoring

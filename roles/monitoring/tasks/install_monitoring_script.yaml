@@ -1,0 +1,38 @@
+---
+- name: Install python packages
+  pip:
+    name: requests
+    state: present
+  tags:
+    monitoring.script
+
+- name: Create script folder
+  file:
+    path: /home/solana/monitoring
+    owner: solana
+    group: solana
+    mode: 0755
+    state: directory
+  tags: 
+    monitoring.script
+
+- name: Upload monitoring library
+  copy:
+    src: files/validator_monitoring_library.py
+    dest: /home/solana/monitoring/validator_monitoring_library.py
+    owner: solana
+    group: solana
+    mode: 0644
+  tags:
+    monitoring.script
+
+- name: Upload monitoring script
+  template:
+    src: validator_monitoring.py.j2
+    dest: /home/solana/monitoring/validator_monitoring.py
+    owner: solana
+    group: solana
+    mode: 0755
+  tags: 
+    monitoring.script
+  

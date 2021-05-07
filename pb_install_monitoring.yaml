@@ -1,0 +1,6 @@
+---
+- name: install monitoring
+  hosts: remote
+  become: yes
+  roles:
+    - monitoring

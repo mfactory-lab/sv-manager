@@ -1,0 +1,45 @@
+---
+- name: Build flat keys path
+  set_fact:
+    secrets_local_path: "{{ local.secrets_path }}"
+  when: local.flat_path
+
+- name: Build non flat keys path
+  set_fact:
+    secrets_local_path: "{{ local.secrets_path }}/{{ validator.name }}/solana"
+  when: not local.flat_path
+
+- name: upload validator-keypair
+  copy:
+    src: "{{ secrets_local_path }}/validator-keypair.json"
+    dest: /home/solana/.secrets/
+    mode: 0400
+    owner: solana
+    group: solana
+    force: false
+  tags:
+    - validator.manage.keys.upload
+
+- name: Check vote account keypair exists locally
+  stat:
+    path: "{{ secrets_local_path }}/vote-account-keypair.json"
+  connection: local
+  become: no
+  delegate_to: localhost
+  register: vote_account_keypair_exists
+  tags:
+    - validator.manage.keys.create.vote
+
+- name: upload vote-account-keypair
+  copy:
+    src: "{{ secrets_local_path }}/vote-account-keypair.json"
+    dest: /home/solana/.secrets/
+    mode: 0400
+    owner: solana
+    group: solana
+    force: false
+  tags:
+    - validator.manage.keys.upload
+  when:
+    vote_account_keypair_exists.stat.exists
+

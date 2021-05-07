@@ -1,0 +1,6 @@
+---
+- name: Install solana-sys-tuner
+  hosts: primary
+  become: yes
+  roles:
+    - install_sol_sys_tuner

@@ -1,0 +1,75 @@
+---
+- name: check lvm configured
+  stat:
+    path: "/.lvm.done"
+  tags:
+    - config.lvm
+  register: lvm_configured
+
+- name: configured lvm
+  block:
+    - name: set lvm configured
+      file:
+        path: "/.lvm.done"
+        state: touch
+
+    - name: Add solana lvm
+      lvol:
+        vg: "{{ node.lvm_vg }}"
+        lv: swap
+        size: "{{ (node.swap_file_size_gb + 5) | int }}G"
+        state: present
+
+    - name: Create a ext4 filesystem on swap dir
+      filesystem:
+        fstype: ext4
+        dev: "/dev/{{ node.lvm_vg }}/swap"
+
+    - name: Create swap dir mount point
+      file:
+        path: "/mnt/swap"
+        state: directory
+        mode: '0755'
+
+    - name: Write swap dir entry in fstab
+      ansible.posix.mount:
+        path: "/mnt/swap"
+        src: "/dev/{{ node.lvm_vg }}/swap"
+        fstype: ext4
+        state: mounted
+
+    - name: Add solana lvm
+      lvol:
+        vg: "{{ node.lvm_vg }}"
+        lv: solana
+        size: 100%FREE
+        state: present
+
+    - name: Create a ext4 filesystem on home
+      filesystem:
+        fstype: ext4
+        dev: "/dev/{{ node.lvm_vg }}/solana"
+
+    - name: Create solana home mount point
+      file:
+        path: "/home/solana"
+        state: directory
+        mode: '0755'
+
+    - name: Write solana home entry in fstab
+      ansible.posix.mount:
+        path: "/home/solana"
+        src: "/dev/{{ node.lvm_vg }}/solana"
+        fstype: ext4
+        state: mounted
+
+  when: not lvm_configured.stat.exists
+  tags:
+    - config.lvm
+
+
+
+
+
+
+

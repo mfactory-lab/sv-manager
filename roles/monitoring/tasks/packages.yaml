@@ -1,0 +1,13 @@
+- name: Update apt cache
+  apt:
+    update_cache: yes
+
+- name: Install additinal packages
+  apt:
+    pkg:
+      - gpg
+      - gpg-agent
+      - python3
+      - python3-pip
+  tags:
+    - config.packages
