@@ -176,7 +176,6 @@ validator:
 * [Ansible documentation](https://docs.ansible.com/)
 * [Monitoring Dashboard](https://solana.thevalidators.io/)
 * [Joogh Validator](https://joogh.io)
-* [Powered by mFactory GmbH](https://mfactory.ch)
 
 ## How can you support this project
 
@@ -186,7 +185,7 @@ validator:
 - Donate BTC: bc1q9vkmfpmk77j2kcsdy2slnv6ld4ahg2g5guysvy
 - Stake on [Joogh Validator](https://solanabeach.io/validator/DPmsofVJ1UMRZADgwYAHotJnazMwohHzRHSoomL6Qcao)
 
-### [Powered by mFactory Team](https://mfactory.ch)
+### [Powered by mFactory Team](https://mfactory.tech)
 
 [1]: (https://solana.com/)
 [2]: (https://docs.solana.com/running-validator)
