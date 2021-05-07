@@ -1,5 +1,3 @@
-[Change History](history.md)
-
 # Solana Validators Manager
 
 - [Overview](#overview)
