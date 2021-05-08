@@ -143,14 +143,14 @@ all:
             validator_name: <- HERE
 #            keybase_username: ""
 #            validator_homepage: ""
-#            upload_validator_keys: False
+            upload_validator_keys: False <- Set it to True if you want to upload your keys
 #            secrets_path: /home/solana/.secrets
 #            set_validator_info: True
 #            service_user: solana
 #            ledger_path: /home/solana/ledger
 #            lvm_enabled: False
 #            lvm_vg: vg00
-#            solana_validator_service: restarted
+#            solana_validator_service: restarted <- Set it to stopped if you want to check your setup
 #            swap_file_size_gb: 64
 #            ramdisk_size_gb: 64
 #            cluster_environment: testnet
@@ -158,6 +158,12 @@ all:
           hosts:
             0.0.0.0 <- HERE
 ````
+
+in case you have already identity keys (the most of you will have at least a validator identity key)
+
+4. copy your validator identity key, if any, into .secrets/{{YOUR VALIDATOR NAME}}/solana
+5. copy your vote account identity key, if any, into .secrets/{{YOUR VALIDATOR NAME}}/solana
+6. set upload_validator_keys to True
 
 ## How to use
 
