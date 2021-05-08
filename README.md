@@ -81,7 +81,7 @@ which will directly provide a support for Solana Validator Manager, until that y
 
 1. clone git repository
    git clone ...
-1. copy or rename [inventories_example directory](inventory_example) to directory named *inventories*
+1. copy or rename [inventories_example directory](inventory_example) to directory named *inventory*
 2. add to your inventories/hosts.yaml
 
 * validator name
