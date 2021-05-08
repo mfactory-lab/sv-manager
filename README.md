@@ -1,5 +1,7 @@
 # Solana Validators Manager
 
+automatically bootstrap solana validator node inclusive performance optimizations and monitoring
+
 - [Overview](#overview)
 - [Node requirements](#node-requirements)
 - [What does it do with your Validator Node exactly](#what-does-it-do-with-your-validator-node-exactly)
