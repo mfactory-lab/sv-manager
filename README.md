@@ -2,7 +2,7 @@
 
 automatically bootstrap solana validator node inclusive performance optimizations and monitoring
 
-- [Overview](#overview)
+- [Preface](#Preface)
 - [Node requirements](#node-requirements)
 - [What does it do with your Validator Node exactly](#what-does-it-do-with-your-validator-node-exactly)
   - [Configure Ubuntu](#configure-ubuntu)
@@ -16,22 +16,57 @@ automatically bootstrap solana validator node inclusive performance optimization
 - [How to use](#how-to-use)
   - [from local machine](#from-local-machine)
   - [directly from Validator Node](#from-validator-node)
+  - [via docker](#via-docker)
 - [Which functions are supported](#which-functions-are-supported)
   - [install](#install-validator-node)
   - [update Solana Version](#update-solana-version)
   - [install or update monitoring](#install-or-update-monitoring)
-- [Useful links](#useful-links)
+    - [how to install monitoring with ansible](#how-to-install-monitoring-with-ansible)
+    - [how to install monitoring manually](#how-to-install-monitoring-manually)
+  - [migrate your current setup to supported by sv-manager](#migrate-your-current-setup-to-supported-by-sv-manager)
+    - [how to migrate your setup semi automatically](#how-to-migrate-your-setup-semi-automatically)
+    - [how to migrate your setup manually](#how-to-migrate-your-setup-manually)
+  [Useful links](#useful-links)
 - [How can you support this project](#how-can-you-support-this-project)
 
 
-## Overview
+## Preface
 
 * [History](./history.md)
 * [Roadmap](./roadmap.md)
 
+[Solana](https://solana.com/) is a fast, secure, and censorship resistant blockchain providing 
+the open infrastructure required for global adoption.
+
+For running of solana blockchain it needs to decentralize the network by providing computing resources 
+to validate transactions or storage for ledger redundancy.
+
+The computer resources are provided by validators who needs to maintain high performance linux nodes.
+
+There are now two Solana clusters, [Mainnet-Beta](https://explorer.solana.com/) 
+and [Testnet](https://explorer.solana.com/?cluster=testnet)
+
+Mainnet-Beta-Cluster is maintained by about 700 validators and Testnet-Cluster by about 1700 validators.
+
+We guess that most of them bootstraps their nodes manually goes throw 
+the [Solana Docs](https://docs.solana.com/running-validator) or similar community guidelines.
+
+That's why we are wondering if there are two equal setups of solana validator.
+
+This causes that is almost impossible to support validators with node issues and help them to improve node 
+and as a result of it cluster performance.
+
+We want to provide a toolkit that helps validator to bootstrap and maintain their nodes in the similar way.
+
+This ansible scripts is a compilation of best practices and community guidelines. 
+
+Enjoy and improve it.
+
+
 ## Node requirements
 
-* Only Ubuntu 20.04 is supported
+* We have tested it only with Ubuntu 20.04, but every linux distro with apt and systemd should be supported.
+* Support for other Linux-Distributives will be implemented soon.  
 * Check Solana [Validator requirements](https://docs.solana.com/running-validator/validator-reqs)
 
 ## What does it do with your Validator Node exactly
@@ -167,7 +202,23 @@ validator:
 * if you just want to use monitoring
 * or want update monitoring library
 
+#### How to install monitoring with ansible
+
   ansible-playbook pb_install_monitoring.yaml  -v
+
+#### How to install monitoring manually
+
+coming soon
+
+### Migrate your current setup to supported by sv-manager
+
+#### How to migrate your setup semi-automatically
+
+coming soon
+
+#### How to migrate your setup manually
+
+coming soon
 
 ## Useful links
 
