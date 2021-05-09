@@ -35,32 +35,25 @@ automatically bootstrap solana validator node inclusive performance optimization
 * [History](./history.md)
 * [Roadmap](./roadmap.md)
 
-[Solana](https://solana.com/) is a fast, secure, and censorship resistant blockchain providing 
-the open infrastructure required for global adoption.
+[Solana](https://solana.com/) is a fast, secure, and censorship-resistant blockchain providing open infrastructure necessary for global adoption.
 
-For running of solana blockchain it needs to decentralize the network by providing computing resources 
-to validate transactions or storage for ledger redundancy.
+In order to run, the Solana blockchain requires a decentralized network comprising computing resources to validate transactions as well as storage for ledger redundancy.
 
-The computer resources are provided by validators who needs to maintain high performance linux nodes.
+The computer resources are provided by validators who need to maintain high-performance Linux nodes.
 
-There are now two Solana clusters, [Mainnet-Beta](https://explorer.solana.com/) 
-and [Testnet](https://explorer.solana.com/?cluster=testnet)
+There are now two Solana clusters, [Mainnet-Beta](https://explorer.solana.com/)  and [Testnet](https://explorer.solana.com/?cluster=testnet).
 
-Mainnet-Beta-Cluster is maintained by about 700 validators and Testnet-Cluster by about 1700 validators.
+The Mainnet-Beta cluster is maintained by ~700 validators, and the Testnet cluster by ~1700 more validators.
 
-We guess that most of them bootstraps their nodes manually goes throw 
-the [Solana Docs](https://docs.solana.com/running-validator) or similar community guidelines.
+Most of the people running these just bootstrap their nodes manually, referring to the Solana docs or similar community guides. Apparently, there are no 2 identical setups across these 2400 validators.
 
-That's why we are wondering if there are two equal setups of solana validator.
+As a result, it is virtually impossible to support validators having issues with their nodes and/or help them improve their node, thus contributing to the overall cluster performance.
 
-This causes that is almost impossible to support validators with node issues and help them to improve node 
-and as a result of it cluster performance.
+What we would like to do is provide a toolkit to help validators bootstrap and maintain their nodes in a uniform, consistent way.
 
-We want to provide a toolkit that helps validator to bootstrap and maintain their nodes in the similar way.
+The Ansible scripts we have created for this purpose are a compilation of best practices and community guidelines.
 
-This ansible scripts is a compilation of best practices and community guidelines. 
-
-Enjoy and improve it.
+Please use them, enjoy them, and improve them.
 
 
 ## Node requirements
