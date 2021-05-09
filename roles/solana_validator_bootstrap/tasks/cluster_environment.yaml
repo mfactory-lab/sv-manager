@@ -2,9 +2,9 @@
 - name: set testnet cluster environment
   shell: solana config set --url https://testnet.solana.com
   become: yes
-  become_user: solana
+  become_user: "{{ node.solana_user }}"
   environment:
-    PATH: "/home/solana/.local/share/solana/install/active_release/bin"
+    PATH: "{{ node.solana_home }}/.local/share/solana/install/active_release/bin"
   tags:
     validator.manage.cluster
   when: cluster.environment != 'mainnet-beta'
@@ -12,9 +12,9 @@
 - name: set mainnet cluster environment
   shell: solana config set --url https://api.mainnet-beta.solana.com
   become: yes
-  become_user: solana
+  become_user: "{{ node.solana_user }}"
   environment:
-    PATH: "/home/solana/.local/share/solana/install/active_release/bin"
+    PATH: "{{ node.solana_home }}/.local/share/solana/install/active_release/bin"
   tags:
     validator.manage.cluster
   when: cluster.environment == 'mainnet-beta'

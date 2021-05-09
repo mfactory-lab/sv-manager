@@ -7,7 +7,7 @@ StartLimitIntervalSec=0
 Type=simple
 Restart=always
 RestartSec=1
-ExecStart=/home/solana/.local/share/solana/install/active_release/bin/solana-sys-tuner --user solana
+ExecStart={{ node.solana_home }}/.local/share/solana/install/active_release/bin/solana-sys-tuner --user {{ node.solana_user }}
 
 [Install]
 WantedBy=multi-user.target

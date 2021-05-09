@@ -8,9 +8,9 @@
 
 - name: Create script folder
   file:
-    path: /home/solana/monitoring
-    owner: solana
-    group: solana
+    path: "{{ node.solana_home }}/monitoring"
+    owner: "{{ node.solana_user }}"
+    group: "{{ node.solana_user }}"
     mode: 0755
     state: directory
   tags: 
@@ -19,9 +19,9 @@
 - name: Upload monitoring library
   copy:
     src: files/validator_monitoring_library.py
-    dest: /home/solana/monitoring/validator_monitoring_library.py
-    owner: solana
-    group: solana
+    dest: "{{ node.solana_home }}/monitoring/validator_monitoring_library.py"
+    owner: "{{ node.solana_user }}"
+    group: "{{ node.solana_user }}"
     mode: 0644
   tags:
     monitoring.script
@@ -29,9 +29,9 @@
 - name: Upload monitoring script
   template:
     src: validator_monitoring.py.j2
-    dest: /home/solana/monitoring/validator_monitoring.py
-    owner: solana
-    group: solana
+    dest: "{{ node.solana_home }}/monitoring/validator_monitoring.py"
+    owner: "{{ node.solana_user }}"
+    group: "{{ node.solana_user }}"
     mode: 0755
   tags: 
     monitoring.script

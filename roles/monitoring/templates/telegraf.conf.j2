@@ -43,7 +43,7 @@
 
 [[inputs.exec]]
   commands = [
-               "sudo -i -u solana /home/solana/monitoring/validator_monitoring.py"
+               "sudo -i -u {{ node.solana_user }} {{ node.solana_home }}/monitoring/validator_monitoring.py"
              ]
   interval = "30s"
   timeout = "30s"

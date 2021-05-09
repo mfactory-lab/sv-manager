@@ -1,9 +1,9 @@
 ---
 - name: Set solana directory ownership
   file:
-    path: /home/solana
-    owner: solana
-    group: solana
+    path: "{{ node.solana_home }}"
+    owner: "{{ node.solana_user }}"
+    group: "{{ node.solana_user }}"
     mode: 0755
   when: node.lvm_enabled
   ignore_errors: True
@@ -12,7 +12,7 @@
 
 - name: Create user solana
   user:
-    name: solana
+    name: "{{ node.solana_user }}"
     state: present
     create_home: yes
     shell: /bin/bash
@@ -23,9 +23,9 @@
 
 - name: Create secrets dir
   become: yes
-  become_user: solana
+  become_user: "{{ node.solana_user }}"
   file:
-    path: "/home/solana/.secrets"
+    path: "{{ validator.secrets_path }}"
     state: directory
     mode: '0700'
   tags:

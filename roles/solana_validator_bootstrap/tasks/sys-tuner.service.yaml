@@ -1,8 +1,8 @@
 ---
 - name: Create solana-sys-tuner service
-  copy:
-    src: files/solana-sys-tuner.service
-    dest: /etc/systemd/system/
+  template:
+    src: solana-sys-tuner.service.j2
+    dest: /etc/systemd/system/solana-sys-tuner.service
     mode: 0644
     owner: root
     group: root

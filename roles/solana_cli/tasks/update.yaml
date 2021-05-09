@@ -1,7 +1,7 @@
 - name: update solana
   shell: solana-install init {{ validator.version | default('stable') }}
   become: yes
-  become_user: solana
+  become_user: "{{ node.solana_user }}"
   environment:
     PATH: "/home/solana/.local/share/solana/install/active_release/bin"
   tags:

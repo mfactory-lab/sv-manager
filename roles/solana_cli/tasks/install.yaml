@@ -3,8 +3,8 @@
   file:
     path: /tmp/solana
     state: directory
-    owner: solana
-    group: solana
+    owner: "{{ node.solana_user }}"
+    group: "{{ node.solana_user }}"
   tags:
     - cli.install
 
@@ -19,7 +19,7 @@
     - name: run solana installer
       shell: /tmp/solana/install
   become: yes
-  become_user: solana
+  become_user: "{{ node.solana_user }}"
   tags:
     - cli.install
 

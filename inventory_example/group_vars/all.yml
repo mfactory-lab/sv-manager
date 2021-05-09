@@ -2,17 +2,18 @@
 
 host:
   validator_name: "{{ validator_name }}"
+  solana_user: "{{ solana_user | default('solana') }}"
   keybase_username: "{{ keybase_username | default('') }}"
   validator_homepage: "{{ validator_homepage | default('') }}"
-  upload_validator_keys: "{{ upload_validator_keys | default(False) }}"
-  secrets_path: "{{ secrets_path | default('/home/solana/.secrets') }}"
+  upload_validator_keys: "{{ upload_validator_keys | default(True) }}"
+  secrets_path: "{{ secrets_path | default('/home/' ~ solana_user ~ '/.secrets', true) }}"
   set_validator_info: "{{ set_validator_info | default(True) }}"
-  service_user: "{{ service_user | default('solana') }}"
-  ledger_path: "{{ ledger_path | default('/home/solana/ledger') }}"
+  service_user: "{{ service_user | default(solana_user) }}"
+  ledger_path: "{{ ledger_path | default('/home/' ~ solana_user ~ '/ledger', true) }}"
   lvm_enabled: "{{ lvm_enabled | default(False) }}"
   lvm_vg: "{{ lvm_vg | default('vg00') }}"
   solana_validator_service: "{{ solana_validator_service | default('restarted')}}"
-  swap_file_size_gb: "{{ swap_file_size_gb | default(64) | int }}"
+  swap_file_size_gb: "{{ swap_file_size_gb | default(64) }}"
   ramdisk_size_gb: "{{ ramdisk_size_gb | default(64) }}"
   cluster_environment: "{{ cluster_environment | default ('testnet') }}"
   cluster_rpc_address: "{{ cluster_rpc_address | default('https://testnet.solana.com') }}"
@@ -27,10 +28,12 @@ cluster:
   rpc_address: "{{ host.cluster_rpc_address }}"
 
 node:
+  solana_user: "{{ host.solana_user }}"
+  solana_home: "/home/{{ host.solana_user }}"
   swap_file_size_gb: "{{ host.swap_file_size_gb }}"
   ramdisk_path: /mnt/ramdisk
   ramdisk_size_gb: "{{ host.ramdisk_size_gb }}"
-  name: "{{ host.validator_name }}"
+  name: "{{host.validator_name}}"
   lvm_enabled: "{{ host.lvm_enabled }}"
   lvm_vg: "{{ host.lvm_vg }}"
 

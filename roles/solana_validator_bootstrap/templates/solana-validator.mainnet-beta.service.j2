@@ -9,10 +9,10 @@ Restart=always
 RestartSec=1
 User=solana
 LimitNOFILE=1024000
-Environment="PATH=/bin:/usr/bin:/home/solana.local/share/solana/install/active_release/bin"
+Environment="PATH=/bin:/usr/bin:{{ node.solana_home }}/.local/share/solana/install/active_release/bin"
 Environment="SOLANA_METRICS_CONFIG=host=https://metrics.solana.com:8086,db=mainnet-beta,u=mainnet-beta_write,p=password"
 #Environment="RUST_LOG=debug"
-ExecStart=/home/solana/.local/share/solana/install/active_release/bin/solana-validator \
+ExecStart={{ node.solana_home }}/.local/share/solana/install/active_release/bin/solana-validator \
 --entrypoint entrypoint.mainnet-beta.solana.com:8001 \
 --entrypoint entrypoint2.mainnet-beta.solana.com:8001 \
 --entrypoint entrypoint3.mainnet-beta.solana.com:8001 \

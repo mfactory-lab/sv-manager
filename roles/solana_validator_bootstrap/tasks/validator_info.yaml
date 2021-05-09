@@ -3,7 +3,7 @@
   shell: solana-keygen pubkey {{ validator.secrets_path }}/validator-keypair.json
   register: validator_pubkey
   environment:
-    PATH: "/home/solana/.local/share/solana/install/active_release/bin"
+    PATH: "{{ node.solana_home }}/.local/share/solana/install/active_release/bin"
   tags:
     validator.manage.info
 
@@ -50,8 +50,8 @@
 - name: Set validator info
   shell: "{{ shell_cmd }}"
   become: yes
-  become_user: solana
+  become_user: "{{ node.solana_user }}"
   environment:
-    PATH: "/home/solana/.local/share/solana/install/active_release/bin"
+    PATH: "{{ node.solana_home }}/.local/share/solana/install/active_release/bin"
   tags:
     validator.manage.info

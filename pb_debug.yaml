@@ -1,0 +1,8 @@
+---
+- name: install solana validator
+  hosts: remote
+  become: yes
+  tasks:
+  - name: debug variable
+    debug:
+      msg: "{{ validator.ledger_path }}"

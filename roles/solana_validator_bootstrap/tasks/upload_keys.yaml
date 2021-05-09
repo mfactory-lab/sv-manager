@@ -12,10 +12,10 @@
 - name: upload validator-keypair
   copy:
     src: "{{ secrets_local_path }}/validator-keypair.json"
-    dest: /home/solana/.secrets/
+    dest: "{{ node.solana_home }}/.secrets/"
     mode: 0400
-    owner: solana
-    group: solana
+    owner: "{{ node.solana_user }}"
+    group: "{{ node.solana_user }}"
     force: false
   tags:
     - validator.manage.keys.upload
@@ -33,10 +33,10 @@
 - name: upload vote-account-keypair
   copy:
     src: "{{ secrets_local_path }}/vote-account-keypair.json"
-    dest: /home/solana/.secrets/
+    dest: "{{ node.solana_home }}/.secrets/"
     mode: 0400
-    owner: solana
-    group: solana
+    owner: "{{ node.solana_user }}"
+    group: "{{ node.solana_user }}"
     force: false
   tags:
     - validator.manage.keys.upload

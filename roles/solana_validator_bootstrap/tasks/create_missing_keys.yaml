@@ -50,7 +50,7 @@
 - name: Create identity keypair
   shell: solana-keygen new --silent --no-bip39-passphrase --outfile ~/.secrets/validator-keypair.json
   environment:
-    PATH: "/home/solana/.local/share/solana/install/active_release/bin"
+    PATH: "{{ node.solana_home }}/.local/share/solana/install/active_release/bin"
   tags:
     validator.manage.keys.create.identity
   when: not validator_keypair_exists_locally.stat.exists
@@ -60,7 +60,7 @@
 - name: Create vote account keypair
   shell: solana-keygen new --silent --no-bip39-passphrase --outfile ~/.secrets/vote-account-keypair.json
   environment:
-    PATH: "/home/solana/.local/share/solana/install/active_release/bin"
+    PATH: "{{ node.solana_home }}/.local/share/solana/install/active_release/bin"
   tags:
     validator.manage.keys.create.vote-account
   when: not vote_account_keypair_exists_locally.stat.exists
@@ -70,7 +70,7 @@
 - name: Airdrop 1 sol to validator-keypair
   shell: solana airdrop --keypair ~/.secrets/validator-keypair.json 1
   environment:
-    PATH: "/home/solana/.local/share/solana/install/active_release/bin"
+    PATH: "{{ node.solana_home }}/.local/share/solana/install/active_release/bin"
   tags:
     validator.manage.keys.create.airdrop
   when: not validator_keypair_exists.stat.exists
@@ -80,7 +80,7 @@
 - name: Create vote account
   shell: solana create-vote-account ~/.secrets/vote-account-keypair.json ~/.secrets/validator-keypair.json --keypair ~/.secrets/validator-keypair.json
   environment:
-    PATH: "/home/solana/.local/share/solana/install/active_release/bin"
+    PATH: "{{ node.solana_home }}/.local/share/solana/install/active_release/bin"
   tags:
     validator.manage.keys.create.airdrop
   when: not vote_account_keypair_exists.stat.exists
@@ -89,7 +89,7 @@
 
 - name: fetch validator-keypair
   fetch:
-    src: /home/solana/.secrets/validator-keypair.json
+    src: "{{ node.solana_home }}/.secrets/validator-keypair.json"
     dest: "{{ secrets_local_path }}"
     flat: true
   tags:
@@ -99,7 +99,7 @@
 
 - name: fetch vote-account-keypair
   fetch:
-    src: /home/solana/.secrets/vote-account-keypair.json
+    src: "{{ node.solana_home }}/.secrets/vote-account-keypair.json"
     dest: "{{ secrets_local_path }}"
     flat: true
   tags:

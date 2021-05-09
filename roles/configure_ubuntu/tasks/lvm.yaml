@@ -52,13 +52,13 @@
 
     - name: Create solana home mount point
       file:
-        path: "/home/solana"
+        path: "{{ node.solana_home }}"
         state: directory
         mode: '0755'
 
     - name: Write solana home entry in fstab
       ansible.posix.mount:
-        path: "/home/solana"
+        path: "{{ node.solana_home }}"
         src: "/dev/{{ node.lvm_vg }}/solana"
         fstype: ext4
         state: mounted
