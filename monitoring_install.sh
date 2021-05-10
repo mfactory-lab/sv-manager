@@ -31,8 +31,8 @@ cd ./sv-manager-feature-shell_scripts
 echo Which cluster you wnat to monitor?
 select cluster in "mainnet-beta" "testnet"; do
     case $cluster in
-        mainnet-beta ) $entry_point="http://localhost:8089"; break;;
-        testnet ) $entry_point="https://testnet.colana.com"; break;;
+        mainnet-beta ) entry_point="http://localhost:8089"; break;;
+        testnet ) entry_point="https://testnet.solana.com"; break;;
     esac
 done
 
