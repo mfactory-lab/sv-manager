@@ -1,4 +1,5 @@
 #!/bin/bash
+set -x -e
 
 echo ###################### WARNING!!! ######################
 echo ###   This script will install and/or reconfigure    ###
