@@ -27,12 +27,13 @@ echo "Unpack"
 unzip sv_manager.zip -d .
 
 cd ./sv-manager-feature-shell_scripts
+cp -r ./inventory_example ./inventory
 
 echo Which cluster you wnat to monitor?
 select cluster in "mainnet-beta" "testnet"; do
     case $cluster in
         mainnet-beta ) entry_point="http://localhost:8089"; break;;
-        testnet ) entry_point="https://testnet.solana.com"; break;;
+        testnet ) entry_point="https://testnet.colana.com"; break;;
     esac
 done
 
@@ -42,7 +43,7 @@ read VALIDATOR_NAME
 echo "Please type the full path to your validator keys: "
 read PATH_TO_VALIDATOR_KEYS
 
-ansible-playbook --connection=local --inventory ./inventory --limit local  pb_install_monitoring_local.yaml -e validator.name=$VALIDATOR_NAME -e validator.secrets_path=$PATH_TO_VALIDATOR_KEYS -e cluster.rpc_address=$entry_point
+ansible-playbook --connection=local --inventory ./inventory --limit local  pb_install_solana_monitoring_local.yaml -e "{'solana_user':'root','validator_name':'$VALIDATOR_NAME','secrets_path':'$PATH_TO_VALIDATOR_KEYS', 'rpc_address':'$entry_point'}"
 
 }
 
@@ -53,5 +54,3 @@ select yn in "Yes" "No"; do
         No ) exit;;
     esac
 done
-
-
