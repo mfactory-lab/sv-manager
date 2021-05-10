@@ -13,7 +13,7 @@
 - name: Create missing keys
   import_tasks: create_missing_keys.yaml
   become: yes
-  become_user: solana
+  become_user: "{{ node.solana_user }}"
   tags:
     - validator.manage.keys
 

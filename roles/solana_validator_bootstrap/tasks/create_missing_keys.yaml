@@ -10,6 +10,7 @@
   stat:
     path: ~/.secrets/vote-account-keypair.json
   register: vote_account_keypair_exists
+  become: yes
   tags:
     - validator.manage.keys.create.vote
 

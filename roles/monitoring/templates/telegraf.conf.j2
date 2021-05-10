@@ -29,13 +29,13 @@
 [[inputs.nstat]]
 
 [[inputs.procstat]]
- pattern="solana"
+ pattern="{{ node.solana_user }}"
 
 [[inputs.system]]
 
 [[inputs.systemd_units]]
     [inputs.systemd_units.tagpass]
-    name = ["solana*"]
+    name = ["{{ node.solana_user }}*"]
 
 [[inputs.mem]]
 
