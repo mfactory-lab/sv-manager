@@ -21,12 +21,14 @@ $pkg_manager update
 echo "Install ansible.."
 $pkg_manager install ansible curl unzip
 
-echo "DOWNLOAD Solana validator manager"
+echo "Download Solana validator manager"
 curl -fsSL https://github.com/mfactory-lab/sv-manager/archive/refs/heads/feature/shell_scripts.zip --output sv_manager.zip
-echo "Unpack"
+echo "Unpack Solana validator manager"
 unzip sv_manager.zip -d .
 
-cd ./sv-manager-feature-shell_scripts
+mv sv-manager* sv_manager
+
+cd ./sv_manager
 cp -r ./inventory_example ./inventory
 
 echo Which cluster you wnat to monitor?
@@ -43,7 +45,12 @@ read VALIDATOR_NAME
 echo "Please type the full path to your validator keys: "
 read PATH_TO_VALIDATOR_KEYS
 
-ansible-playbook --connection=local --inventory ./inventory --limit local  install_solana_monitoring_local.yaml -e "{'solana_user':'root','validator_name':'$VALIDATOR_NAME','secrets_path':'$PATH_TO_VALIDATOR_KEYS', 'rpc_address':'$entry_point'}"
+ansible-playbook --connection=local --inventory ./inventory --limit local  install_solana_monitoring_local.yaml -e "{'validator_name':'$VALIDATOR_NAME','secrets_path':'$PATH_TO_VALIDATOR_KEYS', 'rpc_address':'$entry_point'}"
+
+cd /
+echo "### Cleanup install folder ###"
+rm -r /tmp/install
+echo "### Cleanup install folder done ###"
 
 }
 
