@@ -14,34 +14,58 @@ def execute_cmd_str(cmd: str):
         return None
 
 
-def load_stake_account_rewards(stake_account):
-    cmd = f'solana stake-account ' + stake_account + ' --num-rewards-epochs=1 --with-rewards --output json-compact'
+def load_stake_account_rewards(stake_account, epochs):
+    # solana stake-account 6P2SLykNoJH7G2TbL4MZNWEN9i4JgJXCLrUgK2V99bnT --num-rewards-epochs=1 --with-rewards --output json-compact
+    cmd = f'solana stake-account ' + stake_account + ' --num-rewards-epochs=' + str(epochs) + ' --with-rewards --output json-compact'
     return execute_cmd_str(cmd)
 
 
-def calc_apy(rewards_data, epoch_count):
-    if 'epochRewards' in rewards_data:
-        epoch_rewards = rewards_data['epochRewards']
-        if len(epoch_rewards) > 0:
-            epoch_reward = rewards_data['epochRewards'][0]
-            if 'percentChange' in epoch_reward:
-                percent_change = epoch_reward['percentChange']
-                apy = (1 + percent_change / 100) ** epoch_count - 1
-                return apy
+def get_rewards(rewards_data):
+    result = []
 
-    return None
+    if rewards_data is not None:
+        if 'epochRewards' in rewards_data:
+            epoch_rewards = rewards_data['epochRewards']
+            for reward in epoch_rewards:
+                result.append({
+                    'percent_change': reward['percentChange'],
+                    'apr': reward['apr']
+                })
+
+    return result
+
+
+def calc_apy(apr, percent_change):
+    epoch_count = apr / percent_change
+    result = ((1 + percent_change / 100) ** epoch_count - 1) * 100
+    return result
 
 
 def process(stake_account):
-    rewards_data = load_stake_account_rewards(stake_account)
-    if stake_account is not None:
-        apy = calc_apy(rewards_data, 130)
+    rewards_data = load_stake_account_rewards(stake_account, 10)
+    rewards = get_rewards(rewards_data)
 
-        if apy is not None:
-            return apy
+    l_apy = []
 
-    return 0
+    for reward in rewards:
+        apy = calc_apy(reward['apr'], reward['percent_change'])
+        l_apy.append(apy)
+
+    return l_apy
 
 
-apy = process('6P2SLykNoJH7G2TbL4MZNWEN9i4JgJXCLrUgK2V99bnT')
-print(apy * 100)
+def avg(l_apy):
+    s = 0
+
+    for item in l_apy:
+        s = s + item
+
+    if len(l_apy) > 0:
+        return s/len(l_apy)
+    else:
+        return 0
+
+
+calc = process('6P2SLykNoJH7G2TbL4MZNWEN9i4JgJXCLrUgK2V99bnT')
+print(calc)
+print(avg(calc))
