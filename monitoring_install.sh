@@ -43,7 +43,7 @@ read VALIDATOR_NAME
 echo "Please type the full path to your validator keys: "
 read PATH_TO_VALIDATOR_KEYS
 
-ansible-playbook --connection=local --inventory ./inventory --limit local  pb_install_solana_monitoring_local.yaml -e "{'solana_user':'root','validator_name':'$VALIDATOR_NAME','secrets_path':'$PATH_TO_VALIDATOR_KEYS', 'rpc_address':'$entry_point'}"
+ansible-playbook --connection=local --inventory ./inventory --limit local  install_solana_monitoring_local.yaml -e "{'solana_user':'root','validator_name':'$VALIDATOR_NAME','secrets_path':'$PATH_TO_VALIDATOR_KEYS', 'rpc_address':'$entry_point'}"
 
 }
 
