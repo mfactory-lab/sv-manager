@@ -9,6 +9,16 @@
     secrets_local_path: "{{ local.secrets_path }}/{{ validator.name }}/solana"
   when: not local.flat_path
 
+- name: Check validator-keypair exists locally
+  stat:
+    path: "{{ secrets_local_path }}/validator-keypair.json"
+  connection: local
+  become: no
+  delegate_to: localhost
+  register: validator_keypair_exists
+  tags:
+    - validator.manage.keys.create.vote
+
 - name: upload validator-keypair
   copy:
     src: "{{ secrets_local_path }}/validator-keypair.json"
@@ -19,6 +29,8 @@
     force: false
   tags:
     - validator.manage.keys.upload
+  when:
+    validator_keypair_exists.stat.exists
 
 - name: Check vote account keypair exists locally
   stat:
