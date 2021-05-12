@@ -56,7 +56,7 @@ install_monitoring () {
   echo "### Cleaning up installation folder ###"
   cd ..
   rm -r ./sv_manager
-  echo "### Cleaning up installation folder ###"
+  echo "### 'Uninstall ansible ###"
 
   $pkg_manager remove ansible --yes
 
