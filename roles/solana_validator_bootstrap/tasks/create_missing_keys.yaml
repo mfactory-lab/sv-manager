@@ -97,6 +97,7 @@
     validator.manage.keys.create.fetch
   when: not validator_keypair_exists.stat.exists
         and not validator_keypair_exists_locally.stat.exists
+        and host_hosts != 'local'
 
 - name: fetch vote-account-keypair
   fetch:
@@ -107,3 +108,4 @@
     validator.manage.keys.create.fetch
   when: not vote_account_keypair_exists.stat.exists
         and not vote_account_keypair_exists_locally.stat.exists
+        and host_hosts != 'local'

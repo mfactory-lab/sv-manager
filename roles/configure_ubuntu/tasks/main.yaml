@@ -14,6 +14,8 @@
   import_tasks: ansible_user.yaml
   tags:
     - config.ansible_user
+  when:
+    - host_hosts != 'local'
 
 - name: Create solana user
   import_tasks: solana_user.yaml
