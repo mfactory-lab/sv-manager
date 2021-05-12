@@ -2,8 +2,10 @@
 #set -x -e
 
 echo "###################### WARNING!!! ######################"
-echo "###   This script will install and/or reconfigure    ###"
-echo "### telegraf and point it to solana.thevalidators.io ###"
+echo "###   This script will boostrap a validator          ###"
+echo "### for solana testnet cluster and installs          ###"
+echo "### monitoring via telegraf                          ###"
+echo "### and point it to solana.thevalidators.io          ###"
 echo "########################################################"
 
 install_monitoring () {
@@ -34,21 +36,13 @@ rm ./sv_manager.zip
 cd ./sv_manager
 cp -r ./inventory_example ./inventory
 
-echo "Which cluster you want to install monitoring node (select number)?"
-select cluster in "mainnet-beta" "testnet"; do
-    case $cluster in
-        mainnet-beta ) entry_point="https://api.mainnet-beta.solana.com"; break;;
-        testnet ) entry_point="https://testnet.solana.com"; break;;
-    esac
-done
-
+entry_point="https://testnet.solana.com"
 
 echo "Please type your validator name: "
 read VALIDATOR_NAME
 read -e -p "Please type the full path to your validator keys: " -i "/root/" PATH_TO_VALIDATOR_KEYS
 read -e -p "Enter size of new ram-drive in GB (should be server ram-amount minus 16GB): " -i "48" RAM_DISK_SIZE
 read -e -p "Enter size of server new swap in GB (should be eq to ram-amount): " -i "64" SWAP_SIZE
-
 
 ansible-playbook --connection=local --inventory ./inventory --limit local  playbooks/pb_install_validator.yaml -v -e "{'host_hosts': 'local', \
 'validator_name':'$VALIDATOR_NAME', \
@@ -74,10 +68,10 @@ done
 
 }
 
-echo Do you want to install monitoring?
+echo" Do you want to bootstrap validator?"
 select yn in "Yes" "No"; do
     case $yn in
         Yes ) install_monitoring; break;;
-        No ) echo "Aborting install. No changes are made on the system."; exit;;
+        No ) echo "Aborting install. No changes will be made."; exit;;
     esac
 done

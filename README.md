@@ -22,6 +22,15 @@ The Ansible scripts we have created for this purpose are a compilation of best p
 
 Please use them, enjoy them, and improve them.
 
+### Quick Install
+
+* copy your validator identity key to the server and name it 'validator-keypair.json'
+* login into your server,  execute following command and go through the wizard  
+
+````shell
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/mfactory-lab/sv-manager/0.0.1-SNAPSHOT/install/install_validator.sh)"
+````
+
 - [Node requirements](#node-requirements)
 - [What does it do with your Validator Node exactly](#what-does-it-do-with-your-validator-node-exactly)
   - [Configure Ubuntu](#configure-ubuntu)
