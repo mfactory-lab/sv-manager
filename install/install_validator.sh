@@ -21,8 +21,11 @@ $pkg_manager update
 echo "Install ansible, curl, unzip..."
 $pkg_manager install ansible curl unzip --yes
 
+ansible-galaxy collection install ansible.posix
+ansible-galaxy collection install community.general
+
 echo "Download Solana validator manager"
-curl -fsSL https://github.com/mfactory-lab/sv-manager/archive/refs/heads/feature/shell_scripts.zip --output sv_manager.zip
+curl -fsSL https://github.com/mfactory-lab/sv-manager/archive/refs/tags/0.0.1-SNAPSHOT.zip --output sv_manager.zip
 echo "Unpack Solana validator manager"
 unzip ./sv_manager.zip -d .
 
@@ -31,7 +34,7 @@ rm ./sv_manager.zip
 cd ./sv_manager
 cp -r ./inventory_example ./inventory
 
-echo Which cluster you wnat to monitor?
+echo "Which cluster you want to install monitoring node (select number)?"
 select cluster in "mainnet-beta" "testnet"; do
     case $cluster in
         mainnet-beta ) entry_point="https://api.mainnet-beta.solana.com"; break;;
@@ -45,7 +48,9 @@ read VALIDATOR_NAME
 echo "Please type the full path to your validator keys: "
 read PATH_TO_VALIDATOR_KEYS
 
-ansible-playbook --connection=local --inventory ./inventory --limit local  pb_install_monitoring_local.yaml -e "{'validator_name':'$VALIDATOR_NAME','secrets_path':'$PATH_TO_VALIDATOR_KEYS', 'rpc_address':'$entry_point'}"
+
+pb_params="{'host_hosts': 'local', 'validator_name':'$VALIDATOR_NAME','secrets_path':'$PATH_TO_VALIDATOR_KEYS', 'rpc_address':'$entry_point'}"
+ansible-playbook --connection=local --inventory ./inventory --limit local  playbooks/pb_install_monitoring_local.yaml -e $pb_params
 
 echo "### Cleanup install folder ###"
 cd ..

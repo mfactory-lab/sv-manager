@@ -1,5 +1,0 @@
----
-- name: Install and configure telegraf as a service
-  hosts: local
-  roles:
-    - monitoring

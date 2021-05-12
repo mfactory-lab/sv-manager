@@ -22,7 +22,7 @@ echo "Install ansible, curl, unzip..."
 $pkg_manager install ansible curl unzip --yes
 
 echo "Download Solana validator manager"
-curl -fsSL https://github.com/mfactory-lab/sv-manager/archive/refs/heads/feature/shell_scripts.zip --output sv_manager.zip
+curl -fsSL https://github.com/mfactory-lab/sv-manager/archive/refs/tags/0.0.1-SNAPSHOT.zip --output sv_manager.zip
 echo "Unpack Solana validator manager"
 unzip ./sv_manager.zip -d .
 

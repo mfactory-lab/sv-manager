@@ -1,6 +1,6 @@
 ---
 - name: install monitoring
-  hosts: remote
+  hosts: "{{ host.hosts }}"
   become: yes
   roles:
     - monitoring

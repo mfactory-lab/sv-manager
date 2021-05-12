@@ -204,7 +204,7 @@ validator:
 
 From server command line, user root, paste the whole command and run it: 
 
-... 
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/mfactory-lab/sv-manager/0.0.1-SNAPSHOT/install/install_validator.sh)"
 
 ### Migrate your current setup to supported by sv-manager
 

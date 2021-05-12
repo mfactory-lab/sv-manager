@@ -5,6 +5,7 @@ fix:
 
 host:
   validator_name: "{{ validator_name }}"
+  hosts: "{{ host_hosts | default('remote') }}"
   solana_user: "{{ fix.solana_user }}"
   keybase_username: "{{ keybase_username | default('') }}"
   validator_homepage: "{{ validator_homepage | default('') }}"
