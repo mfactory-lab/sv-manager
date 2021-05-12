@@ -3,9 +3,9 @@
 
 echo "###################### WARNING!!! ######################"
 echo "###   This script will boostrap a validator          ###"
-echo "### for solana testnet cluster and installs          ###"
-echo "### monitoring via telegraf                          ###"
-echo "### and point it to solana.thevalidators.io          ###"
+echo "###   for solana testnet cluster and installs        ###"
+echo "###   monitoring via telegraf                        ###"
+echo "###   and point it to solana.thevalidators.io        ###"
 echo "########################################################"
 
 install_monitoring () {
@@ -68,7 +68,7 @@ done
 
 }
 
-echo" Do you want to bootstrap validator?"
+echo "Do you want to bootstrap validator?"
 select yn in "Yes" "No"; do
     case $yn in
         Yes ) install_monitoring; break;;
