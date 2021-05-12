@@ -74,8 +74,7 @@
     PATH: "{{ node.solana_home }}/.local/share/solana/install/active_release/bin"
   tags:
     validator.manage.keys.create.airdrop
-  when: not validator_keypair_exists.stat.exists
-        and not vote_account_keypair_exists_locally.stat.exists
+  when: not vote_account_keypair_exists.stat.exists
         and cluster.environment == 'testnet'
 
 - name: Create vote account
