@@ -26,6 +26,36 @@
   tags:
     monitoring.script
 
+- name: Upload common
+  copy:
+    src: files/common.py
+    dest: "{{ node.solana_home }}/monitoring/common.py"
+    owner: "{{ node.solana_user }}"
+    group: "{{ node.solana_user }}"
+    mode: 0644
+  tags:
+    monitoring.script
+
+- name: Upload request_utils
+  copy:
+    src: files/request_utils.py
+    dest: "{{ node.solana_home }}/monitoring/request_utils.py"
+    owner: "{{ node.solana_user }}"
+    group: "{{ node.solana_user }}"
+    mode: 0644
+  tags:
+    monitoring.script
+
+- name: Upload solana_rpc
+  copy:
+    src: files/solana_rpc.py
+    dest: "{{ node.solana_home }}/monitoring/solana_rpc.py"
+    owner: "{{ node.solana_user }}"
+    group: "{{ node.solana_user }}"
+    mode: 0644
+  tags:
+    monitoring.script
+
 - name: Upload monitoring script
   template:
     src: validator_monitoring.py.j2

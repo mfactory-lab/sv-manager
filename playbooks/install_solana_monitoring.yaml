@@ -1,8 +1,0 @@
----
-- name: Install and configure telegraf as a service
-  hosts: 65.21.63.206
-  roles:
-    - install_telegraf
-  tags:
-   - telegraf
-  become: yes

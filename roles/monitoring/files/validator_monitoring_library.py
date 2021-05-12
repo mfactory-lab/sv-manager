@@ -1,180 +1,7 @@
-import subprocess
 import time
-from pprint import pprint
-import requests
-from typing import Optional
-
-
-class ValidatorConfig:
-    def __init__(self,
-                 validator_name: str,
-                 secrets_path: str,
-                 local_rpc_address: str,
-                 remote_rpc_address: str,
-                 debug_mode: bool):
-        self.validator_name = validator_name
-        self.secrets_path = secrets_path
-        self.local_rpc_address = local_rpc_address
-        self.remote_rpc_address = remote_rpc_address
-        self.debug_mode = debug_mode
-
-
-def debug(config: ValidatorConfig, data):
-    if config.debug_mode:
-        pprint(data)
-
-
-def execute_cmd_str(cmd: str) -> Optional[str]:
-    """
-    executes shell command and return string result
-    :param cmd: shell command
-    :return: returns string result or None
-    """
-    try:
-        result: str = subprocess.check_output(cmd, shell=True).decode().strip()
-        return result
-    except:
-        return None
-
-
-def rpc_call(address: str, method: str, params, error_result, except_result):
-    """
-    calls solana rpc (https://docs.solana.com/developing/clients/jsonrpc-api)
-    and returns result or default
-    :param address: local or remote rpc server address
-    :param method: rpc method
-    :param params: rpc call parameters
-    :return: result or default
-    """
-    try:
-        json_request = {
-            "jsonrpc": "2.0",
-            "id": 1,
-            "method": method,
-            "params": params
-        }
-        json_response = requests.post(address, json=json_request).json()
-        if 'result' not in json_response:
-            return error_result
-        else:
-            return json_response['result']
-    except:
-        return except_result
-
-
-def smart_rpc_call(config: ValidatorConfig, method: str, params, default_result):
-    """
-    tries to call local rpc, if it fails tries to call remote rpc
-    """
-    result = rpc_call(config.local_rpc_address, method, params, None, None)
-
-    if result is None:
-        result = rpc_call(config.remote_rpc_address, method, params, default_result, default_result)
-
-    return result
-
-
-def load_identity_account_pubkey(config: ValidatorConfig) -> Optional[str]:
-    """
-    loads validator identity account pubkey
-    :param config: Validator Configuration
-    :return: returns validator identity pubkey or None
-    """
-    identity_cmd = f'solana address -u localhost --keypair ' + config.secrets_path + '/validator-keypair.json'
-    debug(config, identity_cmd)
-    return execute_cmd_str(identity_cmd)
-
-
-def load_vote_account_pubkey(config: ValidatorConfig) -> Optional[str]:
-    """
-    loads vote account pubkey
-    :param config: Validator Configuration
-    :return: returns vote account pubkey  or None
-    """
-    vote_pubkey_cmd = f'solana address -u localhost --keypair ' + config.secrets_path + '/vote-account-keypair.json'
-    debug(config, vote_pubkey_cmd)
-    return execute_cmd_str(vote_pubkey_cmd)
-
-
-def load_vote_account_balance(config: ValidatorConfig, vote_account_pubkey: str):
-    """
-    loads vote account balance
-    https://docs.solana.com/developing/clients/jsonrpc-api#getbalance
-    """
-    return smart_rpc_call(config, "getBalance", [vote_account_pubkey], {})
-
-
-def load_identity_account_balance(config: ValidatorConfig, identity_account_pubkey: str):
-    """
-    loads identity account balance
-    https://docs.solana.com/developing/clients/jsonrpc-api#getbalance
-    """
-    return smart_rpc_call(config, "getBalance", [identity_account_pubkey], {})
-
-
-def load_epoch_info(config: ValidatorConfig):
-    """
-    loads epoch info
-    https://docs.solana.com/developing/clients/jsonrpc-api#getbalance
-    """
-    return smart_rpc_call(config, "getEpochInfo", [], {})
-
-
-def load_leader_schedule(config: ValidatorConfig, identity_account_pubkey: str):
-    """
-    loads leader schedule
-    https://docs.solana.com/developing/clients/jsonrpc-api#getleaderschedule
-    """
-    params = [
-        None,
-        {
-            'identity': identity_account_pubkey
-        }
-    ]
-    return smart_rpc_call(config, "getLeaderSchedule", params, {})
-
-
-def load_block_production(config: ValidatorConfig, identity_account_pubkey: str):
-    """
-    loads block production
-    https://docs.solana.com/developing/clients/jsonrpc-api#getblockproduction
-    """
-    params = [
-        {
-            'identity': identity_account_pubkey
-        }
-    ]
-    return smart_rpc_call(config, "getBlockProduction", params, {})
-
-
-def load_vote_accounts(config: ValidatorConfig, vote_account_pubkey: str):
-    """
-    loads block production
-    https://docs.solana.com/developing/clients/jsonrpc-api#getvoteaccounts
-    """
-    params = [
-        {
-            'votePubkey': vote_account_pubkey
-        }
-    ]
-    return rpc_call(config.remote_rpc_address, "getVoteAccounts", params, {}, {})
-
-
-def load_recent_performance_sample(config: ValidatorConfig):
-    """
-    loads recent performance sample
-    https://docs.solana.com/developing/clients/jsonrpc-api#getrecentperformancesamples
-    """
-    params = [1]
-    return rpc_call(config.remote_rpc_address, "getRecentPerformanceSamples", params, [], [])
-
-
-def load_solana_version(config: ValidatorConfig):
-    """
-    loads solana version
-    https://docs.solana.com/developing/clients/jsonrpc-api#getversion
-    """
-    return rpc_call(config.remote_rpc_address, "getVersion", [], [], [])
+import solana_rpc as rpc
+from common import debug
+from common import ValidatorConfig
 
 
 def get_metrics_from_vote_account_item(item):
@@ -289,19 +116,32 @@ def get_solana_version_metric(solana_version_data):
         return {}
 
 
+def get_current_stake_metric(stake_data):
+    active = 0
+    activating = 0
+    deactivating = 0
+    for item in stake_data:
+        active = active + item.get('activeStake', 0)
+        activating = activating + item.get('activatingStake', 0)
+        deactivating = deactivating + item.get('deactivatingStake', 0)
+
+    return {'active_stake': active, 'activating_stake': activating, 'deactivating_stake': deactivating}
+
+
 def load_data(config: ValidatorConfig):
-    identity_account_pubkey = load_identity_account_pubkey(config)
-    vote_account_pubkey = load_vote_account_pubkey(config)
+    identity_account_pubkey = rpc.load_identity_account_pubkey(config)
+    vote_account_pubkey = rpc.load_vote_account_pubkey(config)
 
     if (identity_account_pubkey is not None) and (vote_account_pubkey is not None):
-        identity_account_balance_data = load_identity_account_balance(config, identity_account_pubkey)
-        vote_account_balance_data = load_vote_account_balance(config, vote_account_pubkey)
-        epoch_info_data = load_epoch_info(config)
-        leader_schedule_data = load_leader_schedule(config, identity_account_pubkey)
-        block_production_data = load_block_production(config, identity_account_pubkey)
-        vote_accounts_data = load_vote_accounts(config, vote_account_pubkey)
-        performance_sample_data = load_recent_performance_sample(config)
-        solana_version_data = load_solana_version(config)
+        identity_account_balance_data = rpc.load_identity_account_balance(config, identity_account_pubkey)
+        vote_account_balance_data = rpc.load_vote_account_balance(config, vote_account_pubkey)
+        epoch_info_data = rpc.load_epoch_info(config)
+        leader_schedule_data = rpc.load_leader_schedule(config, identity_account_pubkey)
+        block_production_data = rpc.load_block_production(config, identity_account_pubkey)
+        vote_accounts_data = rpc.load_vote_accounts(config, vote_account_pubkey)
+        performance_sample_data = rpc.load_recent_performance_sample(config)
+        solana_version_data = rpc.load_solana_version(config)
+        stakes_data = rpc.load_stakes(vote_account_pubkey)
 
         result = {
             'identity_account_pubkey': identity_account_pubkey,
@@ -313,7 +153,8 @@ def load_data(config: ValidatorConfig):
             'block_production': block_production_data,
             'vote_accounts': vote_accounts_data,
             'performance_sample': performance_sample_data,
-            'solana_version_data': solana_version_data
+            'solana_version_data': solana_version_data,
+            'stakes_data': stakes_data
         }
 
         debug(config, str(result))
@@ -349,6 +190,7 @@ def calculate_influx_fields(data):
         result.update(performance_metrics)
         result.update(get_balance_metric(data['identity_account_balance'], 'identity_account_balance'))
         result.update(get_balance_metric(data['vote_account_balance'], 'vote_account_balance'))
+        result.update(get_current_stake_metric(data['stakes_data']))
 
     result.update({"monitoring_version": 1})
 
