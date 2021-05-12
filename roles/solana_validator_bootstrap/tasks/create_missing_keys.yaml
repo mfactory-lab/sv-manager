@@ -75,7 +75,7 @@
   tags:
     validator.manage.keys.create.airdrop
   when: not validator_keypair_exists.stat.exists
-        and not validator_keypair_exists_locally.stat.exists
+        and not vote_account_keypair_exists_locally.stat.exists
         and cluster.environment == 'testnet'
 
 - name: Create vote account
