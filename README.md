@@ -1,6 +1,6 @@
-# Solana Validators Manager
+# Solana Validator Manager
 
-### automatically bootstrap solana validator node inclusive performance optimizations and monitoring
+### Automatically bootstrap a Solana validator node, optimize its performance, and connect the node to a monitoring dashboard
 
 [Solana](https://solana.com/) is a fast, secure, and censorship-resistant blockchain providing open infrastructure necessary for global adoption.
 
@@ -24,12 +24,27 @@ Please use them, enjoy them, and improve them.
 
 ### Quick Install
 
-* copy your validator identity key to the server and name it 'validator-keypair.json'
-* login into your server,  execute following command and go through the wizard  
-
+* Log in to your server  (if you don’t, skip this step; a key pair will be generated automatically):
+  If you already have a key pair:
+* Create the key pair file in your home directory (you can also upload it via scp if you prefer):
+  ````shell
+  nano ~/validator-keypair.json[/code]
+  ````   
+  Paste your key pair, save the file (ctrl-O) and exit (ctrl-X). 
+* If you already have a *vote account* key pair (if you don’t, skip this step; a key pair will be generated automatically):
+* Create the key pair file in your home directory (or upload it via scp):
+  ````shell
+   nano ~/vote-account-keypair.json
+  ````  
+  Paste your key pair, save the file (ctrl-O) and exit (ctrl-X).
+* Run this command and follow the wizard’s instructions:
+  
 ````shell
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/mfactory-lab/sv-manager/0.0.1-SNAPSHOT/install/install_validator.sh)"
 ````
+
+### If you want more control over the configuration of your node, refer to the information below
+
 
 - [Node requirements](#node-requirements)
 - [What does it do with your Validator Node exactly](#what-does-it-do-with-your-validator-node-exactly)
