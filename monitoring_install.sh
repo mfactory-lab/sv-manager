@@ -36,7 +36,7 @@ select cluster in "mainnet-beta" "testnet"; do
     case $cluster in
         mainnet-beta ) entry_point="https://api.mainnet-beta.solana.com"; break;;
         testnet ) entry_point="https://testnet.solana.com"; break;;
-    esachttps://testnet.colana.com
+    esac
 done
 
 
