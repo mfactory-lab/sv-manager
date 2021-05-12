@@ -2,7 +2,4 @@
 - name: Install and configure telegraf as a service
   hosts: local
   roles:
-    - install_telegraf
-  tags:
-   - telegraf
-  become: yes
+    - monitoring
