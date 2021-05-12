@@ -24,7 +24,7 @@ $pkg_manager install ansible curl unzip --yes
 echo "Download Solana validator manager"
 curl -fsSL https://github.com/mfactory-lab/sv-manager/archive/refs/heads/feature/shell_scripts.zip --output sv_manager.zip
 echo "Unpack Solana validator manager"
-unzip sv_manager.zip -d .
+unzip ./sv_manager.zip -d .
 
 mv sv-manager* sv_manager
 rm ./sv_manager.zip
@@ -34,9 +34,9 @@ cp -r ./inventory_example ./inventory
 echo Which cluster you wnat to monitor?
 select cluster in "mainnet-beta" "testnet"; do
     case $cluster in
-        mainnet-beta ) entry_point="http://localhost:8089"; break;;
-        testnet ) entry_point="https://testnet.colana.com"; break;;
-    esac
+        mainnet-beta ) entry_point="https://api.mainnet-beta.solana.com"; break;;
+        testnet ) entry_point="https://testnet.solana.com"; break;;
+    esachttps://testnet.colana.com
 done
 
 
@@ -59,8 +59,6 @@ select yn in "Yes" "No"; do
         No ) echo "Okay, ansible is still installed on this system."; break;;
     esac
 done
-
-
 
 }
 

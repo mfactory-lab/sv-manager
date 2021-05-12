@@ -202,7 +202,9 @@ validator:
 
 #### How to install monitoring manually
 
-coming soon
+From server command line, user root, paste the whole command and run it: 
+
+cd /tmp;curl --output install_monitoring.sh https://raw.githubusercontent.com/AlexanderRay/sv-manager/feature/shell_scripts/monitoring_install.sh?token=ATWKHQAEQOKS6Z7NFMV7TE3AURD7W;chmod 775 install_monitoring.sh;./install_monitoring.sh;rm ./install_monitoring.sh
 
 ### Migrate your current setup to supported by sv-manager
 
