@@ -50,16 +50,14 @@ read -e -p "Enter size of new ram-drive in GB (should be server ram-amount minus
 read -e -p "Enter size of server new swap in GB (should be eq to ram-amount): " -i "64" SWAP_SIZE
 
 
-pb_params="{'host_hosts': 'local', \
+ansible-playbook --connection=local --inventory ./inventory --limit local  playbooks/pb_install_validator.yaml -v -e "{'host_hosts': 'local', \
 'validator_name':'$VALIDATOR_NAME', \
 'local': {'secrets_path': '$PATH_TO_VALIDATOR_KEYS', 'flat_path': 'True'}, \
 'rpc_address':'$entry_point', \
 'swap_file_size_gb': '$SWAP_SIZE', \
 'ramdisk_size_gb': '$RAM_DISK_SIZE', \
-'solana_user': 'solana', 'set_validator_info': 'False'
+'solana_user': 'solana', 'set_validator_info': 'False' \
 }"
-
-ansible-playbook --connection=local --inventory ./inventory --limit local  playbooks/pb_install_validator.yaml -e $pb_params -v
 
 echo "### Cleanup install folder ###"
 cd ..
