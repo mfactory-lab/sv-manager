@@ -17,7 +17,7 @@
       lvol:
         vg: "{{ node.lvm_vg }}"
         lv: swap
-        size: "{{ (node.swap_file_size_gb + 5) | int }}G"
+        size: "{{ (node.swap_file_size_gb | int + 5) | int }}G"
         state: present
 
     - name: Create a ext4 filesystem on swap dir
