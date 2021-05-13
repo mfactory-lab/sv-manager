@@ -27,7 +27,7 @@ install_monitoring () {
   ansible-galaxy collection install community.general
 
   echo "Downloading Solana validator manager"
-  curl -fsSL https://github.com/mfactory-lab/sv-manager/archive/refs/tags/0.0.1.zip --output sv_manager.zip
+  curl -fsSL https://github.com/mfactory-lab/sv-manager/archive/refs/tags/latest.zip --output sv_manager.zip
   echo "Unpacking"
   unzip ./sv_manager.zip -d .
 

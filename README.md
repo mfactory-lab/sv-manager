@@ -40,7 +40,7 @@ Please use them, enjoy them, and improve them.
 * Run this command and follow the wizard’s instructions:
   
 ````shell
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/mfactory-lab/sv-manager/0.0.1/install/install_validator.sh)"
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/mfactory-lab/sv-manager/latest/install/install_validator.sh)"
 ````
 
 ### If you want more control over the configuration of your node, refer to the information below
@@ -228,7 +228,7 @@ validator:
 
 From server command line, user root, paste the whole command and run it: 
 
-  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/mfactory-lab/sv-manager/0.0.1-SNAPSHOT/install/install_validator.sh)"
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/mfactory-lab/sv-manager/latest/install/install_monitoring.sh)"
 
 ### Migrate your current setup to supported by sv-manager
 
