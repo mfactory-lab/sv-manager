@@ -28,7 +28,7 @@ Please use them, enjoy them, and improve them.
   If you already have a key pair:
 * Create the key pair file in your home directory (you can also upload it via scp if you prefer):
   ````shell
-  nano ~/validator-keypair.json[/code]
+  nano ~/validator-keypair.json
   ````   
   Paste your key pair, save the file (ctrl-O) and exit (ctrl-X). 
 * If you already have a *vote account* key pair (if you don’t, skip this step; a key pair will be generated automatically):
