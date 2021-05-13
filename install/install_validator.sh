@@ -59,6 +59,8 @@ install_monitoring () {
   echo "### 'Uninstall ansible ###"
 
   $pkg_manager remove ansible --yes
+  
+  echo "Finished. Check your validator stats on https://solana.thevalidators.io"
 
 }
 
