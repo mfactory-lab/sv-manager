@@ -45,7 +45,9 @@ read VALIDATOR_NAME
 echo "Please type the full path to your validator keys: "
 read PATH_TO_VALIDATOR_KEYS
 
-ansible-playbook --connection=local --inventory ./inventory --limit local  playbooks/pb_install_monitoring.yaml -e "{'host_hosts': 'local', 'validator_name':'$VALIDATOR_NAME','secrets_path':'$PATH_TO_VALIDATOR_KEYS', 'rpc_address':'$entry_point'}"
+read -e -p "Please tell which user is running validator: " -i "solana" SOLANA_USER
+
+ansible-playbook --connection=local --inventory ./inventory --limit local  playbooks/pb_install_monitoring.yaml -e "{'host_hosts': 'local', 'solana_user': '$SOLANA_USER', 'validator_name':'$VALIDATOR_NAME','secrets_path':'$PATH_TO_VALIDATOR_KEYS', 'rpc_address':'$entry_point'}"
 
 echo "### Cleanup install folder ###"
 cd ..
