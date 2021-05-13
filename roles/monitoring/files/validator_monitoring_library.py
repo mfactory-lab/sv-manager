@@ -209,6 +209,7 @@ def calculate_influx_data(config: ValidatorConfig):
         "fields": calculate_influx_fields(data)
     }
 
-    influx_measurement.update(get_solana_version_metric(data['solana_version_data']))
+    if data is not None and 'solana_version_data' in data:
+        influx_measurement.update(get_solana_version_metric(data['solana_version_data']))
 
     return influx_measurement
