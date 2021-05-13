@@ -110,10 +110,11 @@ def get_balance_metric(balance_data, key: str):
 
 
 def get_solana_version_metric(solana_version_data):
-    if 'solana-core' in solana_version_data:
-        return {'solana_version': solana_version_data['solana-core']}
-    else:
-        return {}
+    if solana_version_data is not None:
+        if 'solana-core' in solana_version_data:
+            return {'solana_version': solana_version_data['solana-core']}
+
+    return {}
 
 
 def get_current_stake_metric(stake_data):
