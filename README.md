@@ -108,6 +108,13 @@ that role installs or updates solana cli
 
 that role configures sending of validator and node metrics to our [grafana dashboard](https://solana.thevalidators.io)
 
+### Quick fix Solana-Cluster-Rpc timeout issue
+
+````shell
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/mfactory-lab/sv-manager/latest/install/quick_fix_monitoring.sh)"
+````
+
+
 ## How to install Ansible
 
 ### On macOS
