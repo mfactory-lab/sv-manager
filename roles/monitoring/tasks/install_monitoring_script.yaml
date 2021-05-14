@@ -3,6 +3,7 @@
   pip:
     name: requests
     state: present
+    executable: pip3.3
   tags:
     monitoring.script
 
