@@ -29,7 +29,7 @@ local:
 
 cluster:
   environment: "{{ host.cluster_environment }}"
-  entrypoint: "entrypoint.{{ host.cluster_environment }}.solana.com"
+  entrypoint: "{{ host.cluster_environment }}.solana.com"
   rpc_address: "{{ host.cluster_rpc_address }}"
 
 node:
