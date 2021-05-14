@@ -3,14 +3,15 @@
 import validator_monitoring_library as vm
 import json
 
+config = vm.ValidatorConfig(
+    validator_name="{{ validator.name }}",
+    secrets_path="{{ validator.secrets_path }}",
+    local_rpc_address="http://localhost:8899",
+    remote_rpc_address="{{ cluster.rpc_address }}",
+    debug_mode=False
+)
+
 def process():
-    config = vm.ValidatorConfig(
-        validator_name="{{ validator.name }}",
-        secrets_path="{{ validator.secrets_path }}",
-        local_rpc_address="http://localhost:8899",
-        remote_rpc_address="{{ cluster.rpc_address }}",
-        debug_mode=False
-    )
     influx_measurement = vm.calculate_influx_data(config)
     print(json.dumps(influx_measurement))
 

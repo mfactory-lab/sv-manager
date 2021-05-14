@@ -24,7 +24,8 @@
     group: "{{ node.solana_user }}"
     mode: 0644
   tags:
-    monitoring.script
+    - monitoring.script
+    - monitoring.script.library
 
 - name: Upload common
   copy:
@@ -34,7 +35,8 @@
     group: "{{ node.solana_user }}"
     mode: 0644
   tags:
-    monitoring.script
+    - monitoring.script
+    - monitoring.script.library
 
 - name: Upload request_utils
   copy:
@@ -44,7 +46,8 @@
     group: "{{ node.solana_user }}"
     mode: 0644
   tags:
-    monitoring.script
+    - monitoring.script
+    - monitoring.script.library
 
 - name: Upload solana_rpc
   copy:
@@ -54,7 +57,8 @@
     group: "{{ node.solana_user }}"
     mode: 0644
   tags:
-    monitoring.script
+    - monitoring.script
+    - monitoring.script.library
 
 - name: Upload monitoring script
   template:

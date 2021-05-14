@@ -1,14 +1,8 @@
 ---
-- name: Set solana directory ownership
-  file:
-    path: "{{ node.solana_home }}"
-    owner: "{{ node.solana_user }}"
-    group: "{{ node.solana_user }}"
-    mode: 0755
-  when: node.lvm_enabled
-  ignore_errors: True
-  tags:
-    - config.solana_user
+- name: Ensure group solana exists
+  ansible.builtin.group:
+    name: "{{ node.solana_user }}"
+    state: present
 
 - name: Create user solana
   user:
@@ -17,7 +11,10 @@
     create_home: yes
     shell: /bin/bash
     skeleton: /etc/skel
-    groups: syslog
+    force: yes
+    groups:
+      - "{{ node.solana_user }}"
+      - syslog
   tags:
     - config.solana_user
 
@@ -30,4 +27,5 @@
     mode: '0700'
   tags:
     - config.solana_user
+
 

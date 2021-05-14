@@ -1,6 +1,6 @@
 ---
 - name: install solana validator
-  hosts: "{{ host_hosts }}"
+  hosts: "{{ host_hosts | default('remote') }}"
   become: yes
   roles:
     - configure_ubuntu
