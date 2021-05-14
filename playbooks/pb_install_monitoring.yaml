@@ -1,6 +1,6 @@
 ---
 - name: install monitoring
-  hosts: "{{ host_hosts }}"
+  hosts: "{{ host_hosts | default('remote') }}"
   become: yes
   roles:
     - monitoring

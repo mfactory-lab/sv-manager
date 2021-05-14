@@ -28,4 +28,14 @@
   tags:
     - config.solana_user
 
+- name: Set ledger directory ownership
+  file:
+    path: "{{ validator.ledger_path }}"
+    owner: "{{ node.solana_user }}"
+    group: "{{ node.solana_user }}"
+    mode: 0755
+  ignore_errors: True
+  tags:
+    - config.solana_user
+
 

@@ -35,7 +35,7 @@
 
 [[inputs.systemd_units]]
     [inputs.systemd_units.tagpass]
-    name = ["{{ node.solana_user }}*"]
+    name = ["solana*"]
 
 [[inputs.mem]]
 
@@ -43,7 +43,7 @@
 
 [[inputs.exec]]
   commands = [
-               "sudo -i -u {{ node.solana_user }} {{ node.solana_home }}/monitoring/validator_monitoring.py"
+               "sudo -i -u {{ node.solana_user }} {{ node.solana_home }}/monitoring/validator_monitoring_starter.sh"
              ]
   interval = "60s"
   timeout = "60s"

@@ -1,7 +1,7 @@
 ---
 
 - name: wait for restart windows
-  hosts: "{{ host_hosts }}"
+  hosts: "{{ host_hosts | default('remote') }}"
   become: yes
   tags:
     - validator.manage.restart.wait
@@ -9,7 +9,7 @@
     - solana_validator_restart
 
 - name: update solana validator
-  hosts: "{{ host.hosts }}"
+  hosts: "{{ host.hosts | default('remote') }}"
   become: yes
   roles:
     - solana_cli

@@ -142,7 +142,7 @@ def load_data(config: ValidatorConfig):
         vote_accounts_data = rpc.load_vote_accounts(config, vote_account_pubkey)
         performance_sample_data = rpc.load_recent_performance_sample(config)
         solana_version_data = rpc.load_solana_version(config)
-        stakes_data = rpc.load_stakes(vote_account_pubkey)
+        stakes_data = rpc.load_stakes(config, vote_account_pubkey)
 
         result = {
             'identity_account_pubkey': identity_account_pubkey,

@@ -1,7 +1,4 @@
-#!/usr/bin/env python3
-
 import validator_monitoring_library as vm
-import json
 
 config = vm.ValidatorConfig(
     validator_name="{{ validator.name }}",
@@ -10,9 +7,3 @@ config = vm.ValidatorConfig(
     remote_rpc_address="{{ cluster.rpc_address }}",
     debug_mode=False
 )
-
-def process():
-    influx_measurement = vm.calculate_influx_data(config)
-    print(json.dumps(influx_measurement))
-
-process()
