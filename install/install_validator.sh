@@ -44,7 +44,7 @@ install_monitoring () {
   read -e -p "Enter new RAM drive size, GB (recommended size: server RAM minus 16GB):" -i "48" RAM_DISK_SIZE
   read -e -p "Enter new server swap size, GB (recommended size: equal to server RAM): " -i "64" SWAP_SIZE
 
-  ansible-playbook --connection=local --inventory ./inventory --limit local  playbooks/pb_install_validator.yaml -e "{'host_hosts': 'local', \
+  ansible-playbook --connection=local --inventory ./inventory --limit local  playbooks/pb_config.yaml --extra-vars "{'host_hosts': 'local', \
   'validator_name':'$VALIDATOR_NAME', \
   'local': {'secrets_path': '$PATH_TO_VALIDATOR_KEYS', 'flat_path': 'True'}, \
   'rpc_address':'$entry_point', \
@@ -53,9 +53,8 @@ install_monitoring () {
   'solana_user': 'solana', 'set_validator_info': 'False' \
   }"
 
-  echo "### Cleaning up installation folder ###"
-  cd ..
-  rm -r ./sv_manager
+  ansible-playbook --connection=local --inventory ./inventory --limit local  playbooks/pb_install_validator.yaml --extra-vars "@/etc/sv_manager/sv_manager.conf"
+
   echo "### 'Uninstall ansible ###"
 
   $pkg_manager remove ansible --yes
