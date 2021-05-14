@@ -121,12 +121,29 @@ def get_current_stake_metric(stake_data):
     active = 0
     activating = 0
     deactivating = 0
+    active_cnt = 0
+    activating_cnt = 0
+    deactivating_cnt = 0
     for item in stake_data:
-        active = active + item.get('activeStake', 0)
-        activating = activating + item.get('activatingStake', 0)
-        deactivating = deactivating + item.get('deactivatingStake', 0)
+        if 'activeStake' in item:
+            active = active + item.get('activeStake', 0)
+            active_cnt = active_cnt + 1
+        if 'activatingStake' in item:
+            activating = activating + item.get('activatingStake', 0)
+            activating_cnt = activating_cnt + 1
+        if 'deactivatingStake' in item:
+            deactivating = deactivating + item.get('deactivatingStake', 0)
+            deactivating_cnt = deactivating_cnt + 1
 
-    return {'active_stake': active, 'activating_stake': activating, 'deactivating_stake': deactivating}
+    return {
+        'active_stake': active,
+        'activating_stake': activating,
+        'deactivating_stake': deactivating,
+        'stake_holders': len(stake_data),
+        'active_cnt': active_cnt,
+        'activating_cnt': activating_cnt,
+        'deactivating_cnt': deactivating_cnt
+    }
 
 
 def load_data(config: ValidatorConfig):
