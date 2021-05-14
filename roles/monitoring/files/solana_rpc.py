@@ -123,8 +123,8 @@ def load_solana_validators(config: ValidatorConfig):
 
 
 def load_stakes(config: ValidatorConfig, vote_account):
-    cmd = f'solana stakes ' + vote_account + ' -u l --output json-compact'
-    return execute_cmd_str(config, cmd, convert_to_json=True)
+    cmd = f'solana stakes ' + vote_account + ' --output json-compact'
+    return execute_cmd_str(config, cmd, convert_to_json=True, default=[])
 
 
 def load_block_time(config: ValidatorConfig, block):

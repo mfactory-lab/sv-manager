@@ -5,9 +5,10 @@ import json
 from common import debug
 
 
-def execute_cmd_str(config: ValidatorConfig, cmd: str, convert_to_json: bool):
+def execute_cmd_str(config: ValidatorConfig, cmd: str, convert_to_json: bool, default=None):
     """
     executes shell command and return string result
+    :param default:
     :param config:
     :param convert_to_json:
     :param cmd: shell command
@@ -24,7 +25,7 @@ def execute_cmd_str(config: ValidatorConfig, cmd: str, convert_to_json: bool):
 
         return result
     except:
-        return None
+        return default
 
 
 def rpc_call(config: ValidatorConfig, address: str, method: str, params, error_result, except_result):
