@@ -24,24 +24,26 @@ Please use them, enjoy them, and improve them.
 
 ### Quick Install
 
-* Log in to your server  (if you don’t, skip this step; a key pair will be generated automatically):
-  If you already have a key pair:
-* Create the key pair file in your home directory (you can also upload it via scp if you prefer):
+* Log in to your server
+* __If you don’t have a key pair yet, skip this step: it will be generated automatically__.
+
+  If you have a key pair, create the key pair file in your home directory (you can also upload it via scp if you prefer):
   ````shell
   nano ~/validator-keypair.json
   ````   
-  Paste your key pair, save the file (ctrl-O) and exit (ctrl-X). 
-* If you already have a *vote account* key pair (if you don’t, skip this step; a key pair will be generated automatically):
-* Create the key pair file in your home directory (or upload it via scp):
+  Paste your key pair, save the file (ctrl-O) and exit (ctrl-X).
+* __If you don’t have a *vote account* key pair yet, skip this step: it will be generated automatically__.
+
+  If you have a *vote account* key pair, create the key pair file in your home directory (or upload it via scp):
   ````shell
    nano ~/vote-account-keypair.json
   ````  
   Paste your key pair, save the file (ctrl-O) and exit (ctrl-X).
 * Run this command and follow the wizard’s instructions:
   
-````shell
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/mfactory-lab/sv-manager/latest/install/install_validator.sh)"
-````
+  ````shell
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/mfactory-lab/sv-manager/latest/install/install_validator.sh)"
+  ````
 
 ### If you want more control over the configuration of your node, refer to the information below
 
