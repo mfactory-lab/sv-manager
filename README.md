@@ -39,11 +39,16 @@ Please use them, enjoy them, and improve them.
    nano ~/vote-account-keypair.json
   ````  
   Paste your key pair, save the file (ctrl-O) and exit (ctrl-X).
-* Run this command and follow the wizard’s instructions:
+* Run this command…
   
-  ````shell
-  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/mfactory-lab/sv-manager/latest/install/install_validator.sh)"
-  ````
+````shell
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/mfactory-lab/sv-manager/latest/install/install_validator.sh)"
+````
+  <img src="gif/launch.gif" width=500>
+…and follow the wizard’s instructions:
+  <img src="gif/wizard.gif" width=500>
+
+That's it, you are all set!
 
 ### If you want more control over the configuration of your node, please refer to the [advanced technical specifications](advanced.md)
 
