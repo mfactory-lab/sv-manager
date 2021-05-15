@@ -46,6 +46,10 @@ install_monitoring () {
   read -e -p "Enter new RAM drive size, GB (recommended size: server RAM minus 16GB):" -i "48" RAM_DISK_SIZE
   read -e -p "Enter new server swap size, GB (recommended size: equal to server RAM): " -i "64" SWAP_SIZE
 
+  # shellcheck disable=SC2154
+  echo "pwd: $(pwd)"
+  ls -lah ./
+
   ansible-playbook --connection=local --inventory ./inventory --limit local  playbooks/pb_config.yaml --extra-vars "{'host_hosts': 'local', \
   'validator_name':'$VALIDATOR_NAME', \
   'local': {'secrets_path': '$PATH_TO_VALIDATOR_KEYS', 'flat_path': 'True'}, \
