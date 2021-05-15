@@ -104,7 +104,7 @@ def load_solana_version(config: ValidatorConfig):
     loads solana version
     https://docs.solana.com/developing/clients/jsonrpc-api#getversion
     """
-    return smart_rpc_call(config, "getVersion", [], [])
+    return rpc_call(config, config.local_rpc_address, "getVersion", [], [], [])
 
 
 def load_stake_account_rewards(config: ValidatorConfig, stake_account):

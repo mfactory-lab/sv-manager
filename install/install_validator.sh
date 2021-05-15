@@ -67,7 +67,7 @@ install_monitoring () {
 
   $pkg_manager remove ansible --yes
   
-  echo "Finished. Check your validator stats on https://solana.thevalidators.io"
+  echo "### Check your dashboard: https://solana.thevalidators.io/d/e-8yEOXMwerfwe/solana-monitoring-v1-0-preview?&var-server=$VALIDATOR_NAME"
 
 }
 
