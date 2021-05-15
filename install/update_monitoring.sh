@@ -3,31 +3,31 @@
 
 update_monitoring() {
 
-if [[ $(which apt | wc -l) -gt 0 ]]
-then
-pkg_manager=apt
-elif [[ $(which yum | wc -l) -gt 0 ]]
-then
-pkg_manager=yum
-fi
+  if [[ $(which apt | wc -l) -gt 0 ]]
+  then
+  pkg_manager=apt
+  elif [[ $(which yum | wc -l) -gt 0 ]]
+  then
+  pkg_manager=yum
+  fi
 
-echo "### Update packages... ###"
-$pkg_manager update
-echo "### Install ansible, curl, unzip... ###"
-$pkg_manager install ansible curl unzip --yes
+  echo "### Update packages... ###"
+  $pkg_manager update
+  echo "### Install ansible, curl, unzip... ###"
+  $pkg_manager install ansible curl unzip --yes
 
-echo "### Download Solana validator manager"
-#curl -fsSL https://github.com/mfactory-lab/sv-manager/archive/refs/tags/latest.zip --output sv_manager.zip
-curl -fsSL https://github.com/Rossignolskier/sv-manager/archive/refs/heads/develop.zip --output sv_manager.zip
-echo "### Unpack Solana validator manager ###"
-unzip ./sv_manager.zip -d .
+  echo "### Download Solana validator manager"
+  curl -fsSL https://github.com/mfactory-lab/sv-manager/archive/refs/tags/"$1".zip --output sv_manager.zip
 
-mv sv-manager* sv_manager
-rm ./sv_manager.zip
-cd ./sv_manager
-cp -r ./inventory_example ./inventory
+  echo "### Unpack Solana validator manager ###"
+  unzip ./sv_manager.zip -d .
 
-ansible-playbook --connection=local --inventory ./inventory --limit local  playbooks/pb_install_monitoring.yaml --tags telegraf.configure,monitoring.script --extra-vars "@/etc/sv_manager/sv_manager.conf" --extra-vars 'host_hosts=local'
+  mv sv-manager* sv_manager
+  rm ./sv_manager.zip
+  cd ./sv_manager || exit
+  cp -r ./inventory_example ./inventory
+
+  ansible-playbook --connection=local --inventory ./inventory --limit local  playbooks/pb_install_monitoring.yaml --tags telegraf.configure,monitoring.script --extra-vars "@/etc/sv_manager/sv_manager.conf" --extra-vars 'host_hosts=local'
 }
 
 if [ -f /etc/sv_manager/sv_manager.conf ]
@@ -35,7 +35,7 @@ then
 echo "### Monitoring has been already installed. Start update?"
 select yn in "Yes" "No"; do
     case $yn in
-        Yes ) update_monitoring; break;;
+        Yes ) update_monitoring "${1:-latest}"; break;;
         No ) echo "### Aborting update. No changes are made on the system."; exit;;
     esac
 done
