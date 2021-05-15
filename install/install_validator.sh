@@ -65,7 +65,7 @@ install_monitoring () {
 
 }
 
-version=${1:-latest}
+version=${0:-latest}
 echo "installing version: $version"
 echo "This script will bootstrap a Solana validator node. Proceed?"
 select yn in "Yes" "No"; do
