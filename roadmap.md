@@ -1,3 +1,0 @@
-* improve monitoring
-* alerting
-...
