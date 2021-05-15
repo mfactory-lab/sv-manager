@@ -46,6 +46,7 @@ Please use them, enjoy them, and improve them.
 ````
   <img src="docs/launch.gif" width=500>
 …and follow the wizard’s instructions:
+
   <img src="docs/wizard.gif" width=500>
 
 That's it, you are all set!
