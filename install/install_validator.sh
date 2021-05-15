@@ -65,10 +65,12 @@ install_monitoring () {
 
 }
 
+version=${1:-latest}
+echo "installing version: $version"
 echo "This script will bootstrap a Solana validator node. Proceed?"
 select yn in "Yes" "No"; do
     case $yn in
-        Yes ) install_monitoring "${1:-latest}"; break;;
+        Yes ) install_monitoring "$version"; break;;
         No ) echo "Aborting install. No changes will be made."; exit;;
     esac
 done
