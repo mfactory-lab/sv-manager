@@ -48,7 +48,7 @@ read PATH_TO_VALIDATOR_KEYS
 
 read -e -p "### Please tell which user is running validator: " -i "solana" SOLANA_USER
 echo $(pwd)
-ansible-playbook --connection=local --inventory ./inventory --limit local  playbooks/pb_config.yaml --extra-vars "{'host_hosts': 'local', 'solana_user': '$SOLANA_USER', 'validator_name':'$VALIDATOR_NAME','secrets_path':'$PATH_TO_VALIDATOR_KEYS', 'rpc_address':'$entry_point'}"
+ansible-playbook --connection=local --inventory ./inventory --limit local  playbooks/pb_config.yaml --extra-vars "{'host_hosts': 'local', 'solana_user': '$SOLANA_USER', 'validator_name':'$VALIDATOR_NAME','secrets_path':'$PATH_TO_VALIDATOR_KEYS', 'cluster_rpc_address':'$entry_point'}"
 
 ansible-playbook --connection=local --inventory ./inventory --limit local  playbooks/pb_install_monitoring.yaml --extra-vars "@/etc/sv_manager/sv_manager.conf" --extra-vars 'host_hosts=local'
 
