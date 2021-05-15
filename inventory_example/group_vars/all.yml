@@ -20,7 +20,7 @@ host:
   swap_file_size_gb: "{{ swap_file_size_gb | default(64) }}"
   ramdisk_size_gb: "{{ ramdisk_size_gb | default(64) }}"
   cluster_environment: "{{ cluster_environment | default ('testnet') }}"
-  cluster_rpc_address: "{{ cluster_rpc_address | default('https://testnet.solana.com') }}"
+  cluster_rpc_address: "{{ cluster_rpc_address | default('https://api.testnet.solana.com') }}"
 
 
 local:
