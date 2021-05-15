@@ -8,6 +8,8 @@ echo "########################################################"
 
 install_monitoring () {
 
+    rm -rf sv_manager/
+
   if [[ $(which apt | wc -l) -gt 0 ]]
   then
   pkg_manager=apt
