@@ -45,7 +45,8 @@ Please use them, enjoy them, and improve them.
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/mfactory-lab/sv-manager/latest/install/install_validator.sh)"
 ````
   <img src="docs/launch.gif" width=500>
-…and follow the wizard’s instructions:
+…and follow the wizard’s instructions (__enter your own Node name!__):
+
   <img src="docs/wizard.gif" width=500>
 
 That's it, you are all set!
