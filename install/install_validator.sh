@@ -61,7 +61,7 @@ install_monitoring () {
   'solana_user': 'solana', 'set_validator_info': 'False' \
   }"
 
-  ansible-playbook --connection=local --inventory ./inventory --limit local  playbooks/pb_install_validator.yaml --extra-vars host_hosts=local --extra-vars "@/etc/sv_manager/sv_manager.conf"
+  ansible-playbook --connection=local --inventory ./inventory --limit local  playbooks/pb_install_validator.yaml --extra-vars 'host_hosts=local' --extra-vars "@/etc/sv_manager/sv_manager.conf"
 
   echo "### 'Uninstall ansible ###"
 
