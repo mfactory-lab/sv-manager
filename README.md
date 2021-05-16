@@ -63,6 +63,12 @@ Please use them, enjoy them, and improve them.
 
 That's it, you are all set!
 
+### how to update 
+
+````shell
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/mfactory-lab/sv-manager/latest/install/update_validator_version.sh)" --version 1.6.9
+````
+
 ### If you want more control over the configuration of your node, please refer to the [advanced technical specifications](docs/advanced.md)
 
 ## Useful links
