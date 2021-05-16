@@ -49,6 +49,12 @@ install_monitoring () {
   echo "### Please type the full path to your validator keys: "
   read PATH_TO_VALIDATOR_KEYS
 
+  if [ ! -f "$PATH_TO_VALIDATOR_KEYS/validator-keypair.json" ]
+  then
+    echo "key $PATH_TO_VALIDATOR_KEYS/validator-keypair.json not found. Pleas verify and run the script again"
+    exit
+  fi
+
   read -e -p "### Please tell which user is running validator: " SOLANA_USER
   #echo $(pwd)
   ansible-playbook --connection=local --inventory ./inventory --limit local  playbooks/pb_config.yaml --extra-vars "{'host_hosts': 'local', \
