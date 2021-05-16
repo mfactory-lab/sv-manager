@@ -9,7 +9,7 @@
     - solana_validator_restart
 
 - name: update solana validator
-  hosts: "{{ host.hosts | default('remote') }}"
+  hosts: "{{ host_hosts | default('remote') }}"
   become: yes
   roles:
     - solana_cli
