@@ -15,10 +15,18 @@ echo "#####################################################################"
 
 update_validator() {
   #sudo -i -u solana solana-validator --ledger path exit --min-idle-time 12
-  sudo -i -u solana solana-validator wait-for-restart-window
+  if [ -d /mnt/ledger ]
+  then
+    sudo -i -u solana bash -c "$(echo 'set -x &&  cd /mnt && solana-validator wait-for-restart-window')"
+  else
+    sudo -i -u solana solana-validator wait-for-restart-window
+  fi
   sudo -i -u solana solana-install init "$version"
   systemctl restart solana-sys-tuner
-  systemctl restart solana-validator
+  systemctl stop solana-validator
+  #sed -i 's/entrypoint.testnet.solana.com/entrypoint.testnet.solana.com/' /etc/systemd/system/solana-validator.service
+  systemctl stop solana-validator
+  sudo -i -u solana solana config set -ut
 }
 
 catchup_info() {
