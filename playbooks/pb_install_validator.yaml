@@ -3,6 +3,7 @@
   hosts: "{{ host_hosts | default('remote') }}"
   become: yes
   roles:
+    - check_node
     - configure_ubuntu
     - solana_cli
     - solana_validator_bootstrap
