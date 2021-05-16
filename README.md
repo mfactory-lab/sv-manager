@@ -1,5 +1,20 @@
 # Solana Validator Manager
 
+# We fixed a bug that sometimes caused the script to fail to copy the keypair file.
+If you launched the script on May 16, between 0:00 and 12:00 UTC, you got this error message: 
+
+`````shell
+  Error: abcd is not a validator info account
+`````
+
+Please run our quick fix available at 
+
+`````shell
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/mfactory-lab/sv-manager/latest/install/quick_fix_wrong_keys.sh)"
+`````
+
+It will backup your keypair, copy your correct keypair to /home/solana/secrets, set up your vote account, create a vote account keypair, and link your Identity keypair to your Vote account keypair. It will then restart the validator node.
+
 ### Automatically bootstrap a Solana validator node, optimize its performance, and connect the node to a monitoring dashboard
 
 [Solana](https://solana.com/) is a fast, secure, and censorship-resistant blockchain providing open infrastructure necessary for global adoption.
