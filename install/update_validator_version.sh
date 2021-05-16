@@ -1,6 +1,5 @@
 #!/bin/bash
 #set -x -e
-#set -e
 
 echo "###################### WARNING!!! ###################################"
 echo "###   This script will perform the following operations:          ###"
@@ -11,10 +10,7 @@ echo "###   * restart validator service                                 ###"
 echo "###   * wait for catchup                                          ###"
 echo "#####################################################################"
 
-
-
 update_validator() {
-  #sudo -i -u solana solana-validator --ledger path exit --min-idle-time 12
   if [ -d /mnt/ledger ]
   then
     sudo -i -u solana bash -c "$(echo 'set -x &&  cd /mnt && solana-validator wait-for-restart-window')"
@@ -23,9 +19,7 @@ update_validator() {
   fi
   sudo -i -u solana solana-install init "$version"
   systemctl restart solana-sys-tuner
-  systemctl stop solana-validator
-  #sed -i 's/entrypoint.testnet.solana.com/entrypoint.testnet.solana.com/' /etc/systemd/system/solana-validator.service
-  systemctl stop solana-validator
+  systemctl restart solana-validator
   sudo -i -u solana solana config set -ut
 }
 
@@ -41,8 +35,8 @@ catchup_info() {
       exit 0
     fi
 
-    echo "waiting 10 seconds"
-    sleep 10
+    echo "waiting next 30 seconds for rpc"
+    sleep 30
 
   done
 
