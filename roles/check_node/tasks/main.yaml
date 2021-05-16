@@ -27,4 +27,4 @@
 - name: Fail if no validator-keypair exists locally
   fail:
     msg: No validator-keypair exists locally
-  when: not validator_keypair_exists.stats.exists
+  when: not validator_keypair_exists.stat.exists
