@@ -38,7 +38,7 @@ then
 echo "### Monitoring has been already installed. Start update?"
 select yn in "Yes" "No"; do
     case $yn in
-        Yes ) update_monitoring "${0:-latest}"; break;;
+        Yes ) update_monitoring "${1:-latest}"; break;;
         No ) echo "### Aborting update. No changes are made on the system."; exit;;
     esac
 done
