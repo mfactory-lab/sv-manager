@@ -1,6 +1,6 @@
 #!/bin/bash
 #set -x -e
-set -e
+#set -e
 
 echo "###################### WARNING!!! ###################################"
 echo "###   This script will perform the following operations:          ###"
@@ -40,6 +40,9 @@ catchup_info() {
     then
       exit 0
     fi
+
+    echo "waiting 10 seconds"
+    sleep 10
 
   done
 
