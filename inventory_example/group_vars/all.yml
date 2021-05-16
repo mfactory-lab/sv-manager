@@ -58,6 +58,7 @@ validator:
   set_validator_info: "{{ host.set_validator_info }}"
   service_user: "{{ host.service_user }}"
   solana_validator_service: "{{ host.solana_validator_service }}"
+  fail_if_no_validator_keypair: True
 
 monitoring:
   telegraf_database: v_metrics
