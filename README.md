@@ -1,10 +1,10 @@
 # Solana Validator Manager
 
-# We fixed a bug that sometimes caused the sv-manager to fail to copy the keypair file.
+## We fixed a bug that sometimes caused the sv-manager to fail to copy the keypair file.
 If you launched sv-manager on May 16, between 0:00 and 12:00 UTC and
 you have only about *1 SOL* on your identity account, 
 
-then please run our quick fix available at 
+then please run our quick fix:
 
 `````shell
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/mfactory-lab/sv-manager/latest/install/quick_fix_wrong_keys.sh)"
