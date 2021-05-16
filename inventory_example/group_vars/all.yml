@@ -21,11 +21,13 @@ host:
   ramdisk_size_gb: "{{ ramdisk_size_gb | default(64) }}"
   cluster_environment: "{{ cluster_environment | default ('testnet') }}"
   cluster_rpc_address: "{{ cluster_rpc_address | default('https://api.testnet.solana.com') }}"
+  secrets_path: "{{ secrets_path | default('../.secrets') }}"
+  flat_path: "{{ flat_path | default(True) }}"
 
 
 local:
-  secrets_path: ../.secrets
-  flat_path: True
+  secrets_path: "{{ host.secrets_path }}"
+  flat_path: "{{ host.flat_path }}"
 
 cluster:
   environment: "{{ host.cluster_environment }}"
