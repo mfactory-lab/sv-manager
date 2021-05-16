@@ -1,11 +1,8 @@
 # Solana Validator Manager
 
-# We fixed a bug that sometimes caused the script to fail to copy the keypair file.
-If you launched the script on May 16, between 0:00 and 12:00 UTC, you got this error message: 
-
-`````shell
-  Error: abcd is not a validator info account
-`````
+# We fixed a bug that sometimes caused the sv-manager to fail to copy the keypair file.
+If you launched sv-manager on May 16, between 0:00 and 12:00 UTC, 
+you have only about *1 SOL* on your identity account  
 
 Please run our quick fix available at 
 
