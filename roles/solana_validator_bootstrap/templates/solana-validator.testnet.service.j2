@@ -24,7 +24,7 @@ ExecStart={{ node.solana_home }}/.local/share/solana/install/active_release/bin/
 --expected-genesis-hash 4uhcVJyU9pJkvQyS88uRDiswHXSCkY3zQawwpjk2NsNY \
 --snapshot-interval-slots 500 \
 --maximum-local-snapshot-age 1000 \
---entrypoint '{{ cluster.entrypoint }}:8001' \
+--entrypoint 'entrypoint.{{ cluster.entrypoint }}:8001' \
 --limit-ledger-size \
 --log {{ validator.log_file }} \
 --ledger {{ validator.ledger_path }} \
