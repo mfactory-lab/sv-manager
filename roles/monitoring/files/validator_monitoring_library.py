@@ -2,7 +2,7 @@ import time
 import solana_rpc as rpc
 from common import debug
 from common import ValidatorConfig
-
+import statistics
 
 def get_metrics_from_vote_account_item(item):
     return {
@@ -117,6 +117,27 @@ def get_solana_version_metric(solana_version_data):
     return {}
 
 
+def get_cluster_credits_metric(validators):
+
+    if validators is not None:
+        c = []
+
+        for v in validators:
+            c.append(v['epochCredits'])
+
+        result = {
+            'cluster_mean_epoch_credits': statistics.mean(c),
+            'cluster_min_epoch_credits': min(c),
+            'cluster_max_epoch_credits': max(c),
+            'cluster_median_epoch_credits': statistics.median(c)
+        }
+
+    else:
+        result = {}
+
+    return result
+
+
 def get_current_stake_metric(stake_data):
     active = 0
     activating = 0
@@ -160,6 +181,7 @@ def load_data(config: ValidatorConfig):
         performance_sample_data = rpc.load_recent_performance_sample(config)
         solana_version_data = rpc.load_solana_version(config)
         stakes_data = rpc.load_stakes(config, vote_account_pubkey)
+        validators_data = rpc.load_solana_validators(config)
 
         result = {
             'identity_account_pubkey': identity_account_pubkey,
@@ -172,7 +194,8 @@ def load_data(config: ValidatorConfig):
             'vote_accounts': vote_accounts_data,
             'performance_sample': performance_sample_data,
             'solana_version_data': solana_version_data,
-            'stakes_data': stakes_data
+            'stakes_data': stakes_data,
+            'validators_data': validators_data
         }
 
         debug(config, str(result))
@@ -209,8 +232,9 @@ def calculate_influx_fields(data):
         result.update(get_balance_metric(data['identity_account_balance'], 'identity_account_balance'))
         result.update(get_balance_metric(data['vote_account_balance'], 'vote_account_balance'))
         result.update(get_current_stake_metric(data['stakes_data']))
+        result.update(get_cluster_credits_metric(data['validators_data']))
 
-    result.update({"monitoring_version": 1})
+    result.update({"monitoring_version": 2})
 
     return result
 
