@@ -67,7 +67,33 @@ def get_block_production_metrics(block_production_data, identity_account_pubkey)
         }
     except:
         return {"slots_done": 0, "slots_skipped": 0, "blocks_produced": 0}
-       
+
+
+def get_block_production_cli_metrics(block_production_data_cli, identity_account_pubkey: str):
+    if 'leaders' in block_production_data_cli:
+        leaders = block_production_data_cli['leaders']
+        skip_rate = []
+        my_skip_rate = 0
+        for leader in leaders:
+            leader_slots = leader.get('leaderSlots', 0)
+            if leader_slots > 0:
+                current_skip_rate = leader.get('skippedSlots', 0) / leader_slots
+                skip_rate.append(current_skip_rate)
+                if leader['identityPubkey'] == identity_account_pubkey:
+                    my_skip_rate = current_skip_rate
+
+        result = {
+            'leader_skip_rate': my_skip_rate,
+            'cluster_min_leader_skip_rate': min(skip_rate),
+            'cluster_max_leader_skip_rate': max(skip_rate),
+            'cluster_mean_leader_skip_rate': statistics.mean(skip_rate),
+            'cluster_median_leader_skip_rate': statistics.median(skip_rate),
+        }
+    else:
+        result = {}
+
+    return result
+
 
 def get_performance_metrics(performance_sample_data, epoch_info_data, leader_schedule_by_identity):
 
@@ -177,6 +203,7 @@ def load_data(config: ValidatorConfig):
         epoch_info_data = rpc.load_epoch_info(config)
         leader_schedule_data = rpc.load_leader_schedule(config, identity_account_pubkey)
         block_production_data = rpc.load_block_production(config, identity_account_pubkey)
+        block_production_cli = rpc.load_block_production_cli(config)
         vote_accounts_data = rpc.load_vote_accounts(config, vote_account_pubkey)
         performance_sample_data = rpc.load_recent_performance_sample(config)
         solana_version_data = rpc.load_solana_version(config)
@@ -191,6 +218,7 @@ def load_data(config: ValidatorConfig):
             'epoch_info': epoch_info_data,
             'leader_schedule': leader_schedule_data,
             'block_production': block_production_data,
+            'load_block_production_cli': block_production_cli,
             'vote_accounts': vote_accounts_data,
             'performance_sample': performance_sample_data,
             'solana_version_data': solana_version_data,
@@ -233,6 +261,7 @@ def calculate_influx_fields(data):
         result.update(get_balance_metric(data['vote_account_balance'], 'vote_account_balance'))
         result.update(get_current_stake_metric(data['stakes_data']))
         result.update(get_cluster_credits_metric(data['validators_data']))
+        result.update(get_block_production_cli_metrics(data['load_block_production_cli'], identity_account_pubkey))
 
     result.update({"monitoring_version": 2})
 

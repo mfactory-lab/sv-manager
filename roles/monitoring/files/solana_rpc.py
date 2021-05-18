@@ -77,6 +77,11 @@ def load_block_production(config: ValidatorConfig, identity_account_pubkey: str)
     return smart_rpc_call(config, "getBlockProduction", params, {})
 
 
+def load_block_production_cli(config: ValidatorConfig):
+    cmd = f'solana block-production -u l --output json-compact'
+    return execute_cmd_str(config, cmd, convert_to_json=True, default={})
+
+
 def load_vote_accounts(config: ValidatorConfig, vote_account_pubkey: str):
     """
     loads block production
