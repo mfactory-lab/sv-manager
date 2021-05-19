@@ -10,18 +10,6 @@
   tags:
     - config.packages
 
-- name: Create ansible user
-  import_tasks: ansible_user.yaml
-  tags:
-    - config.ansible_user
-  when:
-    - host_hosts != 'local'
-
-- name: Create solana user
-  import_tasks: solana_user.yaml
-  tags:
-    - config.solana_user
-
 - name: Create swap
   import_tasks: swap.yaml
   tags:
@@ -43,3 +31,15 @@
   import_tasks: firewall.yaml
   tags:
     - config.firewall
+
+- name: Create ansible user
+  import_tasks: ansible_user.yaml
+  tags:
+    - config.ansible_user
+  when:
+    - host_hosts != 'local'
+
+- name: Create solana user
+  import_tasks: solana_user.yaml
+  tags:
+    - config.solana_user
