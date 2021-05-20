@@ -1,0 +1,3 @@
+---
+lvm_enabled: True
+lvm_vg: "{{ lvm_vg | default('vg00') }}"

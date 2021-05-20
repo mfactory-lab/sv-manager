@@ -1,8 +1,21 @@
 ---
 - name: install solana validator
-  hosts: "{{ host_hosts | default('remote') }}"
+  hosts: local
   become: yes
+  
+  vars_prompt:
+    - name: validator_key_path
+      prompt: Where are your keys?
+      private: no
+    - name: validator_name
+      prompt: What is your validator name?
+      private: no
+    - name: lvm_enabled
+      prompt: LVM enabled (Yes/No)?
+      default: No
+      private: no
+
   tasks:
     - name: debug variable
       debug:
-        msg: "{{ validator.ledger_path }}"
+        msg: 'cluster: {{ hostvars }}'
