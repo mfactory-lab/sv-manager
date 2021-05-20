@@ -5,7 +5,7 @@ fix:
 
 host:
   validator_name: "{{ validator_name }}"
-  hosts: "{{ host_hosts | default('remote') }}"
+  vhosts: "{{ host_hosts | default('remote') }}"
   solana_user: "{{ fix.solana_user }}"
   keybase_username: "{{ keybase_username | default('') }}"
   validator_homepage: "{{ validator_homepage | default('') }}"
@@ -13,19 +13,21 @@ host:
   secrets_path: "{{ secrets_path | default('/home/' ~ fix.solana_user ~ '/.secrets', true) }}"
   set_validator_info: "{{ set_validator_info | default(True) }}"
   service_user: "{{ service_user | default(fix.solana_user) }}"
-  ledger_path: "{{ ledger_path | default('/home/' ~ fix.solana_user ~ '/ledger', true) }}"
+  ledger_path: "{{ ledger_path | default('/mnt/ledger') }}"
   lvm_enabled: "{{ lvm_enabled | default(False) }}"
   lvm_vg: "{{ lvm_vg | default('vg00') }}"
   solana_validator_service: "{{ solana_validator_service | default('restarted')}}"
   swap_file_size_gb: "{{ swap_file_size_gb | default(64) }}"
   ramdisk_size_gb: "{{ ramdisk_size_gb | default(64) }}"
   cluster_environment: "{{ cluster_environment | default ('testnet') }}"
-  cluster_rpc_address: "{{ cluster_rpc_address | default('https://testnet.solana.com') }}"
+  cluster_rpc_address: "{{ cluster_rpc_address | default('https://api.testnet.solana.com') }}"
+  local_secrets_path: "{{ local_secrets_path | default('../.secrets') }}"
+  flat_path: "{{ flat_path | default(True) }}"
 
 
 local:
-  secrets_path: ../.secrets
-  flat_path: False
+  secrets_path: "{{ host.local_secrets_path }}"
+  flat_path: "{{ host.flat_path }}"
 
 cluster:
   environment: "{{ host.cluster_environment }}"
@@ -43,7 +45,7 @@ node:
   lvm_vg: "{{ host.lvm_vg }}"
 
 validator:
-  version: v1.6.8
+  version: v1.6.9
   ledger_path: "{{ host.ledger_path }}"
   accounts_path: "{{ node.ramdisk_path }}/solana"
   secrets_path: "{{ host.secrets_path }}"
@@ -58,6 +60,7 @@ validator:
   set_validator_info: "{{ host.set_validator_info }}"
   service_user: "{{ host.service_user }}"
   solana_validator_service: "{{ host.solana_validator_service }}"
+  fail_if_no_validator_keypair: True
 
 monitoring:
   telegraf_database: v_metrics

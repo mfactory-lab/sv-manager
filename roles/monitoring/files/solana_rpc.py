@@ -12,7 +12,7 @@ def load_identity_account_pubkey(config: ValidatorConfig) -> Optional[str]:
     """
     identity_cmd = f'solana address -u localhost --keypair ' + config.secrets_path + '/validator-keypair.json'
     debug(config, identity_cmd)
-    return execute_cmd_str(identity_cmd, convert_to_json=False)
+    return execute_cmd_str(config, identity_cmd, convert_to_json=False)
 
 
 def load_vote_account_pubkey(config: ValidatorConfig) -> Optional[str]:
@@ -23,7 +23,7 @@ def load_vote_account_pubkey(config: ValidatorConfig) -> Optional[str]:
     """
     vote_pubkey_cmd = f'solana address -u localhost --keypair ' + config.secrets_path + '/vote-account-keypair.json'
     debug(config, vote_pubkey_cmd)
-    return execute_cmd_str(vote_pubkey_cmd, convert_to_json=False)
+    return execute_cmd_str(config, vote_pubkey_cmd, convert_to_json=False)
 
 
 def load_vote_account_balance(config: ValidatorConfig, vote_account_pubkey: str):
@@ -77,6 +77,11 @@ def load_block_production(config: ValidatorConfig, identity_account_pubkey: str)
     return smart_rpc_call(config, "getBlockProduction", params, {})
 
 
+def load_block_production_cli(config: ValidatorConfig):
+    cmd = f'solana block-production -u l --output json-compact'
+    return execute_cmd_str(config, cmd, convert_to_json=True, default={})
+
+
 def load_vote_accounts(config: ValidatorConfig, vote_account_pubkey: str):
     """
     loads block production
@@ -87,7 +92,7 @@ def load_vote_accounts(config: ValidatorConfig, vote_account_pubkey: str):
             'votePubkey': vote_account_pubkey
         }
     ]
-    return rpc_call(config.remote_rpc_address, "getVoteAccounts", params, {}, {})
+    return smart_rpc_call(config, "getVoteAccounts", params, {})
 
 
 def load_recent_performance_sample(config: ValidatorConfig):
@@ -96,7 +101,7 @@ def load_recent_performance_sample(config: ValidatorConfig):
     https://docs.solana.com/developing/clients/jsonrpc-api#getrecentperformancesamples
     """
     params = [1]
-    return rpc_call(config.remote_rpc_address, "getRecentPerformanceSamples", params, [], [])
+    return rpc_call(config, config.remote_rpc_address, "getRecentPerformanceSamples", params, [], [])
 
 
 def load_solana_version(config: ValidatorConfig):
@@ -104,17 +109,17 @@ def load_solana_version(config: ValidatorConfig):
     loads solana version
     https://docs.solana.com/developing/clients/jsonrpc-api#getversion
     """
-    return rpc_call(config.local_rpc_address, "getVersion", [], [], [])
+    return rpc_call(config, config.local_rpc_address, "getVersion", [], [], [])
 
 
-def load_stake_account_rewards(stake_account):
+def load_stake_account_rewards(config: ValidatorConfig, stake_account):
     cmd = f'solana stake-account ' + stake_account + ' --num-rewards-epochs=1 --with-rewards --output json-compact'
-    return execute_cmd_str(cmd, convert_to_json=True)
+    return execute_cmd_str(config, cmd, convert_to_json=True)
 
 
-def load_solana_validators():
+def load_solana_validators(config: ValidatorConfig):
     cmd = f'solana validators --output json-compact'
-    data = execute_cmd_str(cmd, convert_to_json=True)
+    data = execute_cmd_str(config, cmd, convert_to_json=True)
 
     if 'validators' in data:
         return data['validators']
@@ -122,8 +127,48 @@ def load_solana_validators():
         return None
 
 
-def load_stakes(vote_account):
+def load_stakes(config: ValidatorConfig, vote_account):
     cmd = f'solana stakes ' + vote_account + ' --output json-compact'
-    return execute_cmd_str(cmd, convert_to_json=True)
+    return execute_cmd_str(config, cmd, convert_to_json=True, default=[])
 
 
+def load_block_time(config: ValidatorConfig, block):
+    """
+    loads solana version
+    https://docs.solana.com/developing/clients/jsonrpc-api#getblocktime
+    """
+    params = [block]
+    return rpc_call(config, config.local_rpc_address, "getBlockTime", params, None, None)
+
+#    cmd = f'solana block-time -u l ' + str(block) + ' --output json-compact'
+#    return execute_cmd_str(cmd, convert_to_json=True)
+
+
+def try_to_load_current_block_info(config: ValidatorConfig):
+    epoch_info_data = load_epoch_info(config)
+
+    if epoch_info_data is not None:
+        slot_index = epoch_info_data['slotIndex']
+        absolute_slot = epoch_info_data['absoluteSlot']
+
+        block_time_data = load_block_time(config, absolute_slot)
+
+        if block_time_data is not None:
+            return {
+                'slot_index':  slot_index,
+                'absolute_block': absolute_slot,
+                'block_time': block_time_data['timestamp']
+            }
+
+    return None
+
+
+def load_current_block_info(config: ValidatorConfig):
+    result = None
+    max_tries = 10
+    current_try = 0
+    while result is None and current_try < max_tries:
+        result = try_to_load_current_block_info(config)
+        current_try = current_try + 1
+
+    return result

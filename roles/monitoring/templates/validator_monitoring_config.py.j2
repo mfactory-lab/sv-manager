@@ -1,0 +1,9 @@
+import validator_monitoring_library as vm
+
+config = vm.ValidatorConfig(
+    validator_name="{{ validator.name }}",
+    secrets_path="{{ validator.secrets_path }}",
+    local_rpc_address="http://localhost:8899",
+    remote_rpc_address="{{ cluster.rpc_address }}",
+    debug_mode=False
+)

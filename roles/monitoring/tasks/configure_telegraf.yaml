@@ -40,4 +40,5 @@
     state: restarted
   tags:
     - telegraf.start
+    - monitoring.script.library
   become: yes

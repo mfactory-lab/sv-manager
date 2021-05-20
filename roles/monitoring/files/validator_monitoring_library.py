@@ -2,7 +2,7 @@ import time
 import solana_rpc as rpc
 from common import debug
 from common import ValidatorConfig
-
+import statistics
 
 def get_metrics_from_vote_account_item(item):
     return {
@@ -67,7 +67,33 @@ def get_block_production_metrics(block_production_data, identity_account_pubkey)
         }
     except:
         return {"slots_done": 0, "slots_skipped": 0, "blocks_produced": 0}
-       
+
+
+def get_block_production_cli_metrics(block_production_data_cli, identity_account_pubkey: str):
+    if 'leaders' in block_production_data_cli:
+        leaders = block_production_data_cli['leaders']
+        skip_rate = []
+        my_skip_rate = 0
+        for leader in leaders:
+            leader_slots = leader.get('leaderSlots', 0)
+            if leader_slots > 0:
+                current_skip_rate = leader.get('skippedSlots', 0) / leader_slots
+                skip_rate.append(current_skip_rate)
+                if leader['identityPubkey'] == identity_account_pubkey:
+                    my_skip_rate = current_skip_rate
+
+        result = {
+            'leader_skip_rate': my_skip_rate,
+            'cluster_min_leader_skip_rate': min(skip_rate),
+            'cluster_max_leader_skip_rate': max(skip_rate),
+            'cluster_mean_leader_skip_rate': statistics.mean(skip_rate),
+            'cluster_median_leader_skip_rate': statistics.median(skip_rate),
+        }
+    else:
+        result = {}
+
+    return result
+
 
 def get_performance_metrics(performance_sample_data, epoch_info_data, leader_schedule_by_identity):
 
@@ -117,16 +143,54 @@ def get_solana_version_metric(solana_version_data):
     return {}
 
 
+def get_cluster_credits_metric(validators):
+
+    if validators is not None:
+        c = []
+
+        for v in validators:
+            c.append(v['epochCredits'])
+
+        result = {
+            'cluster_mean_epoch_credits': statistics.mean(c),
+            'cluster_min_epoch_credits': min(c),
+            'cluster_max_epoch_credits': max(c),
+            'cluster_median_epoch_credits': statistics.median(c)
+        }
+
+    else:
+        result = {}
+
+    return result
+
+
 def get_current_stake_metric(stake_data):
     active = 0
     activating = 0
     deactivating = 0
+    active_cnt = 0
+    activating_cnt = 0
+    deactivating_cnt = 0
     for item in stake_data:
-        active = active + item.get('activeStake', 0)
-        activating = activating + item.get('activatingStake', 0)
-        deactivating = deactivating + item.get('deactivatingStake', 0)
+        if 'activeStake' in item:
+            active = active + item.get('activeStake', 0)
+            active_cnt = active_cnt + 1
+        if 'activatingStake' in item:
+            activating = activating + item.get('activatingStake', 0)
+            activating_cnt = activating_cnt + 1
+        if 'deactivatingStake' in item:
+            deactivating = deactivating + item.get('deactivatingStake', 0)
+            deactivating_cnt = deactivating_cnt + 1
 
-    return {'active_stake': active, 'activating_stake': activating, 'deactivating_stake': deactivating}
+    return {
+        'active_stake': active,
+        'activating_stake': activating,
+        'deactivating_stake': deactivating,
+        'stake_holders': len(stake_data),
+        'active_cnt': active_cnt,
+        'activating_cnt': activating_cnt,
+        'deactivating_cnt': deactivating_cnt
+    }
 
 
 def load_data(config: ValidatorConfig):
@@ -139,10 +203,12 @@ def load_data(config: ValidatorConfig):
         epoch_info_data = rpc.load_epoch_info(config)
         leader_schedule_data = rpc.load_leader_schedule(config, identity_account_pubkey)
         block_production_data = rpc.load_block_production(config, identity_account_pubkey)
+        block_production_cli = rpc.load_block_production_cli(config)
         vote_accounts_data = rpc.load_vote_accounts(config, vote_account_pubkey)
         performance_sample_data = rpc.load_recent_performance_sample(config)
         solana_version_data = rpc.load_solana_version(config)
-        stakes_data = rpc.load_stakes(vote_account_pubkey)
+        stakes_data = rpc.load_stakes(config, vote_account_pubkey)
+        validators_data = rpc.load_solana_validators(config)
 
         result = {
             'identity_account_pubkey': identity_account_pubkey,
@@ -152,10 +218,12 @@ def load_data(config: ValidatorConfig):
             'epoch_info': epoch_info_data,
             'leader_schedule': leader_schedule_data,
             'block_production': block_production_data,
+            'load_block_production_cli': block_production_cli,
             'vote_accounts': vote_accounts_data,
             'performance_sample': performance_sample_data,
             'solana_version_data': solana_version_data,
-            'stakes_data': stakes_data
+            'stakes_data': stakes_data,
+            'validators_data': validators_data
         }
 
         debug(config, str(result))
@@ -192,8 +260,10 @@ def calculate_influx_fields(data):
         result.update(get_balance_metric(data['identity_account_balance'], 'identity_account_balance'))
         result.update(get_balance_metric(data['vote_account_balance'], 'vote_account_balance'))
         result.update(get_current_stake_metric(data['stakes_data']))
+        result.update(get_cluster_credits_metric(data['validators_data']))
+        result.update(get_block_production_cli_metrics(data['load_block_production_cli'], identity_account_pubkey))
 
-    result.update({"monitoring_version": 1})
+    result.update({"monitoring_version": 2})
 
     return result
 

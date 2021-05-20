@@ -9,5 +9,6 @@
       - gpg-agent
       - python3
       - python3-pip
+      - coreutils
   tags:
     - config.packages

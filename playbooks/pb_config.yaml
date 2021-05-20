@@ -1,0 +1,6 @@
+---
+- name: install or update config file
+  hosts: "{{ host_hosts | default('remote') }}"
+  become: yes
+  roles:
+    - solana_config

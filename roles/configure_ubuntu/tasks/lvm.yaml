@@ -6,6 +6,15 @@
     - config.lvm
   register: lvm_configured
 
+
+- name: create ledger mount point
+  file:
+    path: "{{ validator.ledger_path }}"
+    state: directory
+    mode: '0755'
+  tags:
+    - config.lvm
+
 - name: configured lvm
   block:
     - name: set lvm configured
@@ -17,7 +26,7 @@
       lvol:
         vg: "{{ node.lvm_vg }}"
         lv: swap
-        size: "{{ (node.swap_file_size_gb + 5) | int }}G"
+        size: "{{ (node.swap_file_size_gb | int + 5) | int }}G"
         state: present
 
     - name: Create a ext4 filesystem on swap dir
@@ -41,27 +50,22 @@
     - name: Add solana lvm
       lvol:
         vg: "{{ node.lvm_vg }}"
-        lv: solana
+        lv: ledger
         size: 100%FREE
         state: present
 
-    - name: Create a ext4 filesystem on home
+    - name: Create a ext4 filesystem on ledger
       filesystem:
         fstype: ext4
-        dev: "/dev/{{ node.lvm_vg }}/solana"
+        dev: "/dev/{{ node.lvm_vg }}/ledger"
 
-    - name: Create solana home mount point
-      file:
-        path: "{{ node.solana_home }}"
-        state: directory
-        mode: '0755'
-
-    - name: Write solana home entry in fstab
+    - name: Write ledger entry in fstab
       ansible.posix.mount:
-        path: "{{ node.solana_home }}"
-        src: "/dev/{{ node.lvm_vg }}/solana"
+        path: "{{ validator.ledger_path }}"
+        src: "/dev/{{ node.lvm_vg }}/ledger"
         fstype: ext4
         state: mounted
+
 
   when: not lvm_configured.stat.exists
   tags:
