@@ -48,7 +48,7 @@ validator:
   version: v1.6.9
   ledger_path: "{{ host.ledger_path }}"
   accounts_path: "{{ node.ramdisk_path }}/solana"
-  secrets_path: "{{ host.secrets_path }}"
+  secrets_path: "{{ host.local_secrets_path }}"
   log_file: /var/log/solana-validator.log
   open_solana_ports_start: 8000
   open_solana_ports_end: 10000
