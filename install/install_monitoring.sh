@@ -60,7 +60,7 @@ install_monitoring () {
   ansible-playbook --connection=local --inventory ./inventory --limit local  playbooks/pb_config.yaml --extra-vars "{'host_hosts': 'local', \
   'solana_user': '$SOLANA_USER', \
   'validator_name':'$VALIDATOR_NAME', \
-  'local_secrets_path': '$PATH_TO_VALIDATOR_KEYS', \
+  'secrets_path': '$PATH_TO_VALIDATOR_KEYS', \
   'flat_path': 'True', \
   'cluster_rpc_address':'$entry_point'\
   }"

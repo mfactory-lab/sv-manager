@@ -23,7 +23,7 @@ host:
   cluster_rpc_address: "{{ cluster_rpc_address | default('https://api.testnet.solana.com') }}"
   local_secrets_path: "{{ local_secrets_path | default('../.secrets') }}"
   flat_path: "{{ flat_path | default(True) }}"
-
+  snapshots_path: "{{ snapshots_path | default('/mnt/shapshots') }}"
 
 local:
   secrets_path: "{{ host.local_secrets_path }}"
@@ -61,6 +61,7 @@ validator:
   service_user: "{{ host.service_user }}"
   solana_validator_service: "{{ host.solana_validator_service }}"
   fail_if_no_validator_keypair: True
+  snapshots_path: "{{ host.snapshots_path }}"
 
 monitoring:
   telegraf_database: v_metrics
