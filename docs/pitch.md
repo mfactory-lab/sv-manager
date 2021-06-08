@@ -51,11 +51,11 @@ engineering, development, monitoring, operations and security in both applicatio
 
 ## Previous Work
 
-globar: https://www.youtube.com/watch?v=PFpokgVh0gg
-mwall: https://www.youtube.com/watch?v=oBLZtNEQ-zE
-profiter: https://profiter.mfactory.de/
-pltool: https://pl-tool.com/
-github: https://github.com/mfactory-lab
+- globar: https://www.youtube.com/watch?v=PFpokgVh0gg
+- mwall: https://www.youtube.com/watch?v=oBLZtNEQ-zE
+- profiter: https://profiter.mfactory.de/
+- pltool: https://pl-tool.com/
+- github: https://github.com/mfactory-lab
 
 ## Amount
 
