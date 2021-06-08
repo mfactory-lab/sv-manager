@@ -1,6 +1,6 @@
 ---
 - name: set testnet cluster environment
-  shell: solana config set --url https://testnet.solana.com
+  shell: solana config set --url https://api.testnet.solana.com
   become: yes
   become_user: "{{ node.solana_user }}"
   environment:
