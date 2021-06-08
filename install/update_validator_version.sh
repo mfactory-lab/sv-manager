@@ -4,7 +4,7 @@
 echo "###################### WARNING!!! ###################################"
 echo "###   This script will perform the following operations:          ###"
 echo "###   * wait for validator restart window                         ###"
-echo "###   * download version 1.7.10                                   ###"
+echo "###   * download version 1.7.1                                    ###"
 echo "###   * restart sys tuner service                                 ###"
 echo "###   * restart validator service                                 ###"
 echo "###   * wait for catchup                                          ###"
