@@ -48,7 +48,8 @@ Vladimir Polyatskin (https://www.linkedin.com/in/vladimir-polyatskin-839923154/)
 
 A multi-faceted team covering a wide range of important skills such as
 engineering, development, monitoring, operations and security in both application and infrastructure domains, as well 20+ years experience in these areas.
-Previous Work
+
+##Previous Work
 
 globar: https://www.youtube.com/watch?v=PFpokgVh0gg
 mwall: https://www.youtube.com/watch?v=oBLZtNEQ-zE
