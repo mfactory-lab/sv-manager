@@ -40,7 +40,7 @@ install_monitoring () {
   cd ./sv_manager || exit
   cp -r ./inventory_example ./inventory
 
-  entry_point="https://testnet.solana.com"
+  entry_point="https://api.testnet.solana.com"
 
   echo "Please enter a name for your validator node: "
   read VALIDATOR_NAME
