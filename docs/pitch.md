@@ -41,8 +41,8 @@ With our SV (Solana Validator) Manager (https://sv-manager.thevalidators.io/) we
 
 ## Team
 
-Alexander Ray (https://www.linkedin.com/in/alex-a-ray/)
-Vladimir Polyatskin (https://www.linkedin.com/in/vladimir-polyatskin-839923154/)
+1. Alexander Ray (https://www.linkedin.com/in/alex-a-ray/)
+2. Vladimir Polyatskin (https://www.linkedin.com/in/vladimir-polyatskin-839923154/)
 
 ## Why You?
 
