@@ -45,7 +45,7 @@ def load_identity_account_balance(config: ValidatorConfig, identity_account_pubk
 def load_epoch_info(config: ValidatorConfig):
     """
     loads epoch info
-    https://docs.solana.com/developing/clients/jsonrpc-api#getbalance
+    https://docs.solana.com/developing/clients/jsonrpc-api#getepochinfo
     """
     return smart_rpc_call(config, "getEpochInfo", [], {})
 

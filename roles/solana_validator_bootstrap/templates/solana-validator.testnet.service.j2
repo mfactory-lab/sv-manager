@@ -10,8 +10,8 @@ RestartSec=1
 User={{ validator.service_user }}
 LimitNOFILE=1024000
 Environment="PATH=/bin:/usr/bin:{{ node.solana_home }}/.local/share/solana/install/active_release/bin"
-Environment="SOLANA_METRICS_CONFIG=host=https://metrics.solana.com:8086,db=tds,u=testnet_write,p=c4fa841aa918bf8274e3e2a44d77568d9861b3ea"
-#Environment="RUST_LOG=debug"
+#Environment="SOLANA_METRICS_CONFIG=host=https://metrics.solana.com:8086,db=tds,u=testnet_write,p=c4fa841aa918bf8274e3e2a44d77568d9861b3ea"
+Environment="RUST_LOG={{ validator.log_level }}"
 ExecStart={{ node.solana_home }}/.local/share/solana/install/active_release/bin/solana-validator \
 --identity {{ validator.secrets_path }}/validator-keypair.json \
 --vote-account {{ validator.secrets_path }}/vote-account-keypair.json \
@@ -33,7 +33,8 @@ ExecStart={{ node.solana_home }}/.local/share/solana/install/active_release/bin/
 --accounts {{ validator.accounts_path }} \
 --accounts-db-caching-enabled \
 --snapshots {{ validator.snapshots_path }} \
---dynamic-port-range {{ validator.open_solana_ports_start }}-{{ validator.open_solana_ports_end }}
+--dynamic-port-range {{ validator.open_solana_ports_start }}-{{ validator.open_solana_ports_end }} \
+--no-poh-speed-test
 
 
 [Install]
