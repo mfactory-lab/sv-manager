@@ -118,10 +118,10 @@ def load_stake_account_rewards(config: ValidatorConfig, stake_account):
 
 
 def load_solana_validators(config: ValidatorConfig):
-    cmd = f'solana validators --output json-compact'
+    cmd = f'solana validators -ul --output json-compact'
     data = execute_cmd_str(config, cmd, convert_to_json=True)
 
-    if 'validators' in data:
+    if (data is not None) and ('validators' in data):
         return data['validators']
     else:
         return None

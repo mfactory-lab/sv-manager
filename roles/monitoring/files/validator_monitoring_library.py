@@ -274,6 +274,8 @@ def calculate_influx_data(config: ValidatorConfig):
 
     influx_measurement = {
         "measurement": "validators_info",
+        "validator_identity_pubkey": data['identity_account_pubkey'],
+        "validator_vote_pubkey": data['vote_account_pubkey'],
         "time": round(time.time() * 1000),
         "validator_name": config.validator_name,
         "fields": calculate_influx_fields(data)

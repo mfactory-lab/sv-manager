@@ -41,4 +41,5 @@
   tags:
     - telegraf.start
     - monitoring.script.library
+    - telegraf.configure
   become: yes
