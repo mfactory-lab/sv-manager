@@ -5,5 +5,6 @@ config = vm.ValidatorConfig(
     secrets_path="{{ validator.secrets_path }}",
     local_rpc_address="http://localhost:8899",
     remote_rpc_address="{{ cluster.rpc_address }}",
+    cluster_environment="{{ cluster.environment }}",
     debug_mode=False
 )

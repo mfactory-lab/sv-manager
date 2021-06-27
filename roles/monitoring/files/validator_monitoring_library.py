@@ -263,8 +263,6 @@ def calculate_influx_fields(data):
         result.update(get_cluster_credits_metric(data['validators_data']))
         result.update(get_block_production_cli_metrics(data['load_block_production_cli'], identity_account_pubkey))
 
-    result.update({"monitoring_version": 2})
-
     return result
 
 
@@ -278,6 +276,8 @@ def calculate_influx_data(config: ValidatorConfig):
         "validator_vote_pubkey": data['vote_account_pubkey'],
         "time": round(time.time() * 1000),
         "validator_name": config.validator_name,
+        "cluster_environment": config.cluster_environment,
+        "monitoring_version": "2.0.1",
         "fields": calculate_influx_fields(data)
     }
 
