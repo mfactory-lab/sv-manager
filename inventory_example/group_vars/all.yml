@@ -46,7 +46,7 @@ node:
   lvm_vg: "{{ host.lvm_vg }}"
 
 validator:
-  version: v1.7.1
+  version: v1.7.3
   ledger_path: "{{ host.ledger_path }}"
   accounts_path: "{{ node.ramdisk_path }}/solana"
   secrets_path: "{{ host.secrets_path }}"
