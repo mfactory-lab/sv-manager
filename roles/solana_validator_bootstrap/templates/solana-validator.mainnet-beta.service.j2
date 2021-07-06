@@ -40,7 +40,8 @@ ExecStart={{ node.solana_home }}/.local/share/solana/install/active_release/bin/
 --accounts {{ validator.accounts_path }} \
 --snapshots {{ validator.snapshots_path }} \
 --dynamic-port-range {{ validator.open_solana_ports_start }}-{{ validator.open_solana_ports_end }} \
---no-poh-speed-test
+--no-poh-speed-test \
+--private-rpc
 
 [Install]
 WantedBy=multi-user.target

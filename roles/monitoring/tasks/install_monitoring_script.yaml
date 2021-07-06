@@ -1,7 +1,9 @@
 ---
 - name: Install python packages
   pip:
-    name: requests
+    name:
+      - requests
+      - numpy
     state: present
     executable: pip3
   tags:
