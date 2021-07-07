@@ -8,7 +8,7 @@ echo "########################################################"
 
 install_monitoring () {
 
-    rm -rf sv_manager/
+  rm -rf sv_manager/
 
   if [[ $(which apt | wc -l) -gt 0 ]]
   then
@@ -35,11 +35,11 @@ install_monitoring () {
   cd ./sv_manager || exit
   cp -r ./inventory_example ./inventory
 
-  echo "### Which cluster you wnat to monitor? ###"
+  echo "### Which cluster do you want to monitor? ###"
   select cluster in "mainnet-beta" "testnet"; do
       case $cluster in
-          mainnet-beta ) entry_point="https://api.mainnet-beta.solana.com"; break;;
-          testnet ) entry_point="https://api.testnet.solana.com"; break;;
+          mainnet-beta ) cluster_environment="mainnet-beta"; break;;
+          testnet ) cluster_environment="testnet"; break;;
       esac
   done
 
@@ -62,7 +62,7 @@ install_monitoring () {
   'validator_name':'$VALIDATOR_NAME', \
   'secrets_path': '$PATH_TO_VALIDATOR_KEYS', \
   'flat_path': 'True', \
-  'cluster_rpc_address':'$entry_point'\
+  'cluster_environment':'$cluster_environment'\
   }"
 
   ansible-playbook --connection=local --inventory ./inventory --limit local  playbooks/pb_install_monitoring.yaml --extra-vars "@/etc/sv_manager/sv_manager.conf" --extra-vars 'host_hosts=local'
