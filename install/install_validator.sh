@@ -40,7 +40,13 @@ install_monitoring () {
   cd ./sv_manager || exit
   cp -r ./inventory_example ./inventory
 
-  entry_point="https://api.testnet.solana.com"
+  echo "### Which cluster do you want to monitor? ###"
+  select cluster in "mainnet-beta" "testnet"; do
+      case $cluster in
+          mainnet-beta ) cluster_environment="mainnet-beta"; break;;
+          testnet ) cluster_environment="testnet"; break;;
+      esac
+  done
 
   echo "Please enter a name for your validator node: "
   read VALIDATOR_NAME
@@ -63,10 +69,11 @@ install_monitoring () {
   'validator_name':'$VALIDATOR_NAME', \
   'local_secrets_path': '$PATH_TO_VALIDATOR_KEYS', \
   'flat_path': 'True', \
-  'cluster_rpc_address':'$entry_point', \
+  'cluster_environment':'$cluster_environment', \
   'swap_file_size_gb': $SWAP_SIZE, \
   'ramdisk_size_gb': $RAM_DISK_SIZE, \
-  'solana_user': 'solana', 'set_validator_info': 'False' \
+  'solana_user': 'solana', \
+  'set_validator_info': 'False' \
   }"
 
   ansible-playbook --connection=local --inventory ./inventory --limit local  playbooks/pb_install_validator.yaml --extra-vars 'host_hosts=local' --extra-vars "@/etc/sv_manager/sv_manager.conf"
