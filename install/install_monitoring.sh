@@ -23,6 +23,9 @@ install_monitoring () {
   echo "### Install ansible, curl, unzip... ###"
   $pkg_manager install ansible curl unzip --yes
 
+  ansible-galaxy collection install ansible.posix
+  ansible-galaxy collection install community.general
+
   echo "### Download Solana validator manager"
   cmd="https://github.com/mfactory-lab/sv-manager/archive/refs/tags/$1.zip"
   echo "starting $cmd"
@@ -73,7 +76,7 @@ install_monitoring () {
   echo "### Cleanup install folder done ###"
   echo "### Check your dashboard: https://solana.thevalidators.io/d/e-8yEOXMwerfwe/solana-monitoring-v1-0-preview?&var-server="$VALIDATOR_NAME
 
-  echo Do you want to UNinstall ansible?
+  echo Do you want to Uninstall ansible?
   select yn in "Yes" "No"; do
       case $yn in
           Yes ) $pkg_manager remove ansible --yes; break;;
