@@ -17,6 +17,7 @@
       - syslog
   tags:
     - config.solana_user
+    - cli
 
 - name: Create secrets dir
   become: yes
@@ -27,6 +28,7 @@
     mode: '0700'
   tags:
     - config.solana_user
+    - cli
 
 - name: Create ledger directory
   become: yes
@@ -38,6 +40,7 @@
     mode: '0755'
   tags:
     - config.solana_user
+    - cli
 
 - name: Create accounts directory
   become: yes
@@ -49,6 +52,7 @@
     mode: '0755'
   tags:
     - config.solana_user
+    - cli
 
 - name: Create snapshots directory
   become: yes
@@ -60,4 +64,5 @@
     mode: '0755'
   tags:
     - config.solana_user
+    - cli
 
