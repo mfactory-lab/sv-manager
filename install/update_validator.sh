@@ -18,6 +18,9 @@ update_validator() {
   echo "### Install ansible, curl, unzip... ###"
   $pkg_manager install ansible curl unzip --yes
 
+  ansible-galaxy collection install ansible.posix
+  ansible-galaxy collection install community.general
+
   echo "### Download Solana validator manager"
   cmd="https://github.com/mfactory-lab/sv-manager/archive/refs/tags/$1.zip"
   echo "starting $cmd"
