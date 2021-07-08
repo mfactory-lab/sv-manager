@@ -2,6 +2,10 @@
 - name: set force install fact
   set_fact:
     force: "{{ force | default('false')  }}"
+  tags:
+    - cli
+    - cli.install
+    - cli.update
 
 - name: check solana cli installed
   stat:
@@ -9,6 +13,8 @@
   register: solana_exists
   tags:
     - cli
+    - cli.install
+    - cli.update
 
 - name: install solana cli
   import_tasks: install.yaml
