@@ -1,6 +1,39 @@
 #!/bin/bash
 #set -x -e
 
+wait_for_restart_window() {
+  if [ -d /mnt/ledger ]
+  then
+    sudo -i -u solana bash -c "$(echo 'set -x &&  cd /mnt && solana-validator wait-for-restart-window')"
+  else
+    if [ -d /mnt/ramdisk/solana/ledger/ ]
+    then
+      sudo -i -u solana bash -c "$(echo 'set -x &&  cd /mnt/ramdisk/solana/ && solana-validator wait-for-restart-window')"
+    else
+      sudo -i -u solana solana-validator wait-for-restart-window
+    fi
+  fi
+}
+
+catchup_info() {
+
+  while true; do
+
+    sudo -i -u solana solana catchup .secrets/validator-keypair.json --our-localhost
+    status=$?
+
+    if [ $status -eq 0 ]
+    then
+      exit 0
+    fi
+
+    echo "waiting next 30 seconds for rpc"
+    sleep 30
+
+  done
+
+}
+
 update_validator() {
 
   rm -rf sv_manager/
@@ -35,7 +68,19 @@ update_validator() {
 
   sed -i 's/\/\/testnet.solana.com/\/\/api.testnet.solana.com/g' /etc/sv_manager/sv_manager.conf
 
-  ansible-playbook --connection=local --inventory ./inventory --limit local  playbooks/pb_install_validator.yaml --tags validator.logrotate --extra-vars "@/etc/sv_manager/sv_manager.conf" --extra-vars 'host_hosts=local'
+  wait_for_restart_window
+
+  ansible-playbook --connection=local --inventory ./inventory --limit local  playbooks/pb_install_validator.yaml --tags "$2" --extra-vars "@/etc/sv_manager/sv_manager.conf" --extra-vars 'host_hosts=local'
+
+  catchup_info
+
+  echo Do you want to Uninstall ansible?
+  select yn in "Yes" "No"; do
+      case $yn in
+          Yes ) $pkg_manager remove ansible --yes; break;;
+          No ) echo "### Okay, ansible is still installed on this system.  ###"; break;;
+      esac
+  done
 }
 
 if [ -f /etc/sv_manager/sv_manager.conf ]
@@ -43,7 +88,7 @@ then
 echo "### Validator has been already installed. Start update?"
 select yn in "Yes" "No"; do
     case $yn in
-        Yes ) update_validator "${1:-latest}"; break;;
+        Yes ) update_validator "${1:-latest}" "${2:-""}"; break;;
         No ) echo "### Aborting update. No changes are made on the system."; exit;;
     esac
 done
