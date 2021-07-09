@@ -25,6 +25,8 @@ host:
   flat_path: "{{ flat_path | default(True) }}"
   snapshots_path: "{{ snapshots_path | default('/mnt/snapshots') }}"
   log_level: "{{ log_level | default('info') }}"
+  version: "{{ version | default('v1.7.4') }}"
+
 
 local:
   secrets_path: "{{ host.local_secrets_path }}"
@@ -46,7 +48,7 @@ node:
   lvm_vg: "{{ host.lvm_vg }}"
 
 validator:
-  version: v1.7.3
+  version: "{{ host.version }}"
   ledger_path: "{{ host.ledger_path }}"
   accounts_path: "{{ node.ramdisk_path }}/solana"
   secrets_path: "{{ host.secrets_path }}"

@@ -7,25 +7,25 @@
     owner: root
     group: root
   tags:
-    validator.service.solana
+    - validator.service.solana
 
 - name: Reload systemd
   systemd:
     daemon_reload: yes
   tags:
-    validator.service.solana
+    - validator.service.solana
 
 - name: Enable solana service
   systemd:
     name: solana-validator
     enabled: yes
   tags:
-    validator.service.solana
+    - validator.service.solana
 
 - name: Start solana service
   systemd:
     name: solana-validator
     state: "{{ validator.solana_validator_service }}"
   tags:
-    validator.service.solana
+    - validator.service.solana
 
