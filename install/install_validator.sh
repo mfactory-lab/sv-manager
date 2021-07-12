@@ -8,7 +8,7 @@ echo "###   it to the monitoring dashboard                 ###"
 echo "###   at solana.thevalidators.io                     ###"
 echo "########################################################"
 
-install_monitoring () {
+install_validator () {
 
   rm -rf sv_manager/
 
@@ -43,8 +43,14 @@ install_monitoring () {
   echo "### Which cluster do you want to monitor? ###"
   select cluster in "mainnet-beta" "testnet"; do
       case $cluster in
-          mainnet-beta ) cluster_environment="mainnet-beta"; break;;
-          testnet ) cluster_environment="testnet"; break;;
+          mainnet-beta )
+            cluster_environment="mainnet-beta"
+            version="1.6.16"
+            break;;
+          testnet )
+            cluster_environment="testnet"
+            version="1.7.4"
+            break;;
       esac
   done
 
@@ -74,6 +80,7 @@ install_monitoring () {
   'ramdisk_size_gb': $RAM_DISK_SIZE, \
   'solana_user': 'solana', \
   'set_validator_info': 'False' \
+  'version': '$version'
   }"
 
   ansible-playbook --connection=local --inventory ./inventory --limit local  playbooks/pb_install_validator.yaml --extra-vars 'host_hosts=local' --extra-vars "@/etc/sv_manager/sv_manager.conf"
@@ -86,12 +93,10 @@ install_monitoring () {
 
 }
 
-version=${1:-latest}
-echo "installing version: $version"
 echo "This script will bootstrap a Solana validator node. Proceed?"
 select yn in "Yes" "No"; do
     case $yn in
-        Yes ) install_monitoring "$version"; break;;
+        Yes ) install_validator; break;;
         No ) echo "Aborting install. No changes will be made."; exit;;
     esac
 done
