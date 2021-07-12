@@ -28,7 +28,7 @@ install_validator () {
   ansible-galaxy collection install ansible.posix
   ansible-galaxy collection install community.general
 
-  echo "Downloading Solana validator manager"
+  echo "Downloading Solana validator manager version $1"
   cmd="https://github.com/mfactory-lab/sv-manager/archive/refs/tags/$1.zip"
   echo "starting $cmd"
   curl -fsSL "$cmd" --output sv_manager.zip
