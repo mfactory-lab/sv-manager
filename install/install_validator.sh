@@ -93,10 +93,14 @@ install_validator () {
 
 }
 
+sv_version=${1:-latest}
+
+echo "installing sv manager version $sv_version"
+
 echo "This script will bootstrap a Solana validator node. Proceed?"
 select yn in "Yes" "No"; do
     case $yn in
-        Yes ) install_validator; break;;
+        Yes ) install_validator "$sv_version"; break;;
         No ) echo "Aborting install. No changes will be made."; exit;;
     esac
 done
