@@ -45,10 +45,12 @@ install_validator () {
       case $cluster in
           mainnet-beta )
             cluster_environment="mainnet-beta"
+            cluster_rpc_address="https://api.mainnet-beta.solana.com"
             version="1.6.16"
             break;;
           testnet )
             cluster_environment="testnet"
+            cluster_rpc_address="https://api.testnet.solana.com"
             version="1.7.4"
             break;;
       esac
@@ -76,6 +78,7 @@ install_validator () {
   'local_secrets_path': '$PATH_TO_VALIDATOR_KEYS', \
   'flat_path': 'True', \
   'cluster_environment':'$cluster_environment', \
+  'cluster_rpc_address': '$cluster_rpc_address', \
   'swap_file_size_gb': $SWAP_SIZE, \
   'ramdisk_size_gb': $RAM_DISK_SIZE, \
   'solana_user': 'solana', \
