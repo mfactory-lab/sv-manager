@@ -79,7 +79,7 @@ install_validator () {
   'swap_file_size_gb': $SWAP_SIZE, \
   'ramdisk_size_gb': $RAM_DISK_SIZE, \
   'solana_user': 'solana', \
-  'set_validator_info': 'False' \
+  'set_validator_info': 'False', \
   'version': '$version'
   }"
 
