@@ -23,14 +23,12 @@ ExecStart={{ node.solana_home }}/.local/share/solana/install/active_release/bin/
 --trusted-validator DE1bawNcRJB9rVm3buyMVfr8mBEoyyu73NBovf2oXJsJ \
 --trusted-validator CakcnaRDHka2gXyfbEd2d3xsvkJkqsLw2akB3zsN1D2S \
 --expected-genesis-hash 5eykt4UsFv8P8NJdTREpY1vzqKqZKvdpKuc147dw2N9d \
+--private-rpc \
+--rpc-bind-address 127.0.0.1 \
 --no-untrusted-rpc \
---snapshot-interval-slots 500 \
---maximum-local-snapshot-age 1000 \
---limit-ledger-size 50000000 \
+--limit-ledger-size \
 --wal-recovery-mode skip_any_corrupted_record \
---snapshot-compression none \
 --no-port-check \
---accounts-db-caching-enabled \
 --rpc-port {{ validator.solana_rpc_port }}  \
 --identity {{ validator.secrets_path }}/validator-keypair.json \
 --vote-account {{ validator.secrets_path }}/vote-account-keypair.json \
