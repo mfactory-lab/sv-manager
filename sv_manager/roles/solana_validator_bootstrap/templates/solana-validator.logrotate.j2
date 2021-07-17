@@ -1,9 +1,0 @@
-{{ validator.log_file }} {
-  rotate 1
-  size 1G
-  compress
-  missingok
-  postrotate
-    systemctl kill -s USR1 solana-validator.service
-  endscript
-}
