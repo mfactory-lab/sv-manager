@@ -11,7 +11,7 @@ User=solana
 LimitNOFILE=1024000
 Environment="PATH=/bin:/usr/bin:{{ node.solana_home }}/.local/share/solana/install/active_release/bin"
 Environment="SOLANA_METRICS_CONFIG=host=https://metrics.solana.com:8086,db=mainnet-beta,u=mainnet-beta_write,p=password"
-#Environment="RUST_LOG=debug"
+Environment="RUST_LOG={{ validator.log_level }}"
 ExecStart={{ node.solana_home }}/.local/share/solana/install/active_release/bin/solana-validator \
 --entrypoint entrypoint.mainnet-beta.solana.com:8001 \
 --entrypoint entrypoint2.mainnet-beta.solana.com:8001 \
@@ -23,15 +23,12 @@ ExecStart={{ node.solana_home }}/.local/share/solana/install/active_release/bin/
 --trusted-validator DE1bawNcRJB9rVm3buyMVfr8mBEoyyu73NBovf2oXJsJ \
 --trusted-validator CakcnaRDHka2gXyfbEd2d3xsvkJkqsLw2akB3zsN1D2S \
 --expected-genesis-hash 5eykt4UsFv8P8NJdTREpY1vzqKqZKvdpKuc147dw2N9d \
---no-untrusted-rpc \
---snapshot-interval-slots 2000 \
---maximum-local-snapshot-age 3000 \
---limit-ledger-size 100000000 \
---wal-recovery-mode skip_any_corrupted_record \
---snapshot-compression none \
---no-port-check \
+--private-rpc \
 --rpc-bind-address 127.0.0.1 \
---accounts-db-caching-enabled \
+--no-untrusted-rpc \
+--limit-ledger-size \
+--wal-recovery-mode skip_any_corrupted_record \
+--no-port-check \
 --rpc-port {{ validator.solana_rpc_port }}  \
 --identity {{ validator.secrets_path }}/validator-keypair.json \
 --vote-account {{ validator.secrets_path }}/vote-account-keypair.json \

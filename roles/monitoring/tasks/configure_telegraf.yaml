@@ -16,7 +16,7 @@
     path: /etc/sudoers
     state: present
     regexp: '^telegraf'
-    line: "telegraf ALL=({{ node.solana_user }}:{{ node.solana_user }}) NOPASSWD:ALL"
+    line: "telegraf ALL=({{ solana_user }}:{{ solana_user }}) NOPASSWD:ALL"
     validate: 'visudo -cf %s'
   tags:
     - telegraf.configure

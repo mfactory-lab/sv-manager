@@ -1,0 +1,18 @@
+---
+all:
+  children:
+    mainnet_validators:
+      children:
+        remote:
+          hosts:
+            joogh_mainnet_hetzner:
+              ramdisk_size_gb: 196
+              ansible_host: 157.90.177.36
+              keybase_username: 'joogh'
+            joogh_mainnet_webtropia:
+              ramdisk_size_gb: 512
+              ansible_host: 89.163.220.199
+        local:
+          hosts:
+            localhost:
+              validator_name: "megapihar"

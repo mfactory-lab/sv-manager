@@ -1,9 +1,9 @@
 ---
 - name: Load validator pubkey
-  shell: solana-keygen pubkey {{ validator.secrets_path }}/validator-keypair.json
+  shell: solana-keygen pubkey {{ secrets_path }}/validator-keypair.json
   register: validator_pubkey
   environment:
-    PATH: "{{ node.solana_home }}/.local/share/solana/install/active_release/bin"
+    PATH: "{{ env_path }}"
   tags:
     validator.manage.info
 
@@ -13,7 +13,7 @@
 
 - name: Set homepage parameter
   set_fact:
-    cmd_homepage_param: -w "{{ validator.homepage }}"
+    cmd_homepage_param: -w "{{ validator_homepage }}" # hosts.yaml
   when: validator.homepage != ""
   tags:
     validator.manage.info
@@ -22,10 +22,10 @@
   block:
     - name: Check if keybase is present
       uri:
-        url: https://keybase.pub/{{ validator.keybase_username }}/solana/validator-{{ validator_pubkey.stdout_lines[0] }}
+        url: https://keybase.pub/{{ keybase_username }}/solana/validator-{{ validator_pubkey.stdout_lines[0] }}
     - name: set keybase-check passed shell-command
       set_fact:
-        cmd_keybase_param: -n "{{ validator.keybase_username }}"
+        cmd_keybase_param: -n "{{ keybase_username }}" # hosts.yaml
   rescue:
     - name: Notify if keybase is skipped
       debug:
@@ -38,7 +38,7 @@
     shell_cmd: |
       solana validator-info publish \
       --keypair {{ validator.secrets_path }}/validator-keypair.json \
-      "{{ validator.name }} {{ cmd_keybase_param | default('') }} {{ cmd_homepage_param | default('') }}"
+      "{{ validator_name }} {{ cmd_keybase_param | default('') }} {{ cmd_homepage_param | default('') }}"
   tags:
     validator.manage.info
 
@@ -50,8 +50,8 @@
 - name: Set validator info
   shell: "{{ shell_cmd }}"
   become: yes
-  become_user: "{{ node.solana_user }}"
+  become_user: "{{ solana_user }}"
   environment:
-    PATH: "{{ node.solana_home }}/.local/share/solana/install/active_release/bin"
+    PATH: "{{ env_path }}"
   tags:
     validator.manage.info

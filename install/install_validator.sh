@@ -8,7 +8,7 @@ echo "###   it to the monitoring dashboard                 ###"
 echo "###   at solana.thevalidators.io                     ###"
 echo "########################################################"
 
-install_monitoring () {
+install_validator () {
 
   rm -rf sv_manager/
 
@@ -40,7 +40,15 @@ install_monitoring () {
   cd ./sv_manager || exit
   cp -r ./inventory_example ./inventory
 
-  entry_point="https://testnet.solana.com"
+  #entry_point="https://testnet.solana.com"
+
+  echo "### Which type of validator you want to set up? ###"
+  select cluster in "mainnet-beta" "testnet"; do
+      case $cluster in
+          mainnet-beta ) entry_point="https://api.mainnet-beta.solana.com"; inventory="mainnet.yaml"; break;;
+          testnet ) entry_point="https://api.testnet.solana.com"; inventory="testnet.yaml"; break;;
+      esac
+  done
 
   echo "Please enter a name for your validator node: "
   read VALIDATOR_NAME
@@ -59,17 +67,14 @@ install_monitoring () {
   echo "pwd: $(pwd)"
   ls -lah ./
 
-  ansible-playbook --connection=local --inventory ./inventory --limit local  playbooks/pb_config.yaml --extra-vars "{'host_hosts': 'local', \
+  ansible-playbook --connection=local --inventory ./inventory/$inventory --limit localhost  playbooks/pb_config.yaml --extra-vars "{ \
   'validator_name':'$VALIDATOR_NAME', \
   'local_secrets_path': '$PATH_TO_VALIDATOR_KEYS', \
-  'flat_path': 'True', \
-  'cluster_rpc_address':'$entry_point', \
   'swap_file_size_gb': $SWAP_SIZE, \
   'ramdisk_size_gb': $RAM_DISK_SIZE, \
-  'solana_user': 'solana', 'set_validator_info': 'False' \
-  }"
+  }" --check
 
-  ansible-playbook --connection=local --inventory ./inventory --limit local  playbooks/pb_install_validator.yaml --extra-vars 'host_hosts=local' --extra-vars "@/etc/sv_manager/sv_manager.conf"
+  ansible-playbook --connection=local --inventory ./inventory/$inventory --limit localhost  playbooks/pb_install_validator.yaml --extra-vars "@/etc/sv_manager/sv_manager.conf" --extra-vars "{'validator_version': $version}" --check
 
   echo "### 'Uninstall ansible ###"
 
@@ -84,7 +89,7 @@ echo "installing version: $version"
 echo "This script will bootstrap a Solana validator node. Proceed?"
 select yn in "Yes" "No"; do
     case $yn in
-        Yes ) install_monitoring "$version"; break;;
+        Yes ) install_validator "$version"; break;;
         No ) echo "Aborting install. No changes will be made."; exit;;
     esac
 done

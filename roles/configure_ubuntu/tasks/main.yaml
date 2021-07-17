@@ -1,7 +1,7 @@
 ---
 - name: Configure lvm
   import_tasks: lvm.yaml
-  when: node.lvm_enabled
+  when: lvm_enabled
   tags:
     config.lvm
 
@@ -14,13 +14,13 @@
   import_tasks: swap.yaml
   tags:
     - config.swap
-  when: node.swap_file_size_gb | int  > 0
+  when: swap_file_size_gb | int  > 0
 
 - name: Create ramdisk
   import_tasks: ramdisk.yaml
   tags:
     - config.ramdisk
-  when: node.ramdisk_size_gb | int > 0
+  when: ramdisk_size_gb | int > 0
 
 - name: Config cpu governor
   import_tasks: cpu_governor.yaml
@@ -37,7 +37,7 @@
   tags:
     - config.ansible_user
   when:
-    - host_hosts != 'local'
+    - and "'local' not in group_names"
 
 - name: Create solana user
   import_tasks: solana_user.yaml

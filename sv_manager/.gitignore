@@ -1,0 +1,6 @@
+.secrets/
+.idea/
+__pycache__/
+inventory/
+inventory_/
+tmp/

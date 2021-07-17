@@ -1,0 +1,59 @@
+---
+all:
+  children:
+    local:      
+      hosts:
+        localhost:
+          become: false
+          ansible_connection: local
+          ansible_python_interpreter: "{{ ansible_playbook_python }}"
+          cluster_environment: "blabla"
+    remote:
+      vars:
+        ansible_user: root
+      children:
+        pb_tests:
+          hosts:
+            hetzner-test-validator:
+              ansible_ssh_host: 65.21.149.247
+        mainnet_validators:
+          hosts:
+            joogh_mainnet_hetzner:
+              ramdisk_size_gb: 196
+              ansible_ssh_host: 157.90.177.36
+            joogh_mainnet_webtropia:
+              solana_user: solana
+              ramdisk_size_gb: 512
+              ledger_path: /mnt/ramdisk/solana/ledger
+              snapshots_path: /mnt/snapshots
+              flat_path: False
+              ansible_ssh_host: 89.163.220.199
+        testnet_validators:
+          hosts:
+            jd-testnet:
+              secrets_path: /home/solana/testnet
+              ansible_ssh_host: 217.160.186.47
+            jal-testnet:
+              secrets_path: /home/solana/testnet
+              ansible_ssh_host: 78.46.82.11
+            jsn-testnet-webtropia:
+              ansible_ssh_host: 135.181.213.210
+            # son_testnet_webtropia:
+            #   vars:
+            #     validator_name: jsn-testnet-webtropia
+            #     set_validator_info: False
+            #     upload_validator_keys: True
+            #     solana_validator_service: stopped
+            #     flat_path: False
+            #   hosts:
+            #     85.114.134.69
+            lk_testnet:
+              lvm_enabled: True
+              flat_path: False
+              ansible_host: 82.223.17.38
+            as_testnet:
+              lvm_enabled: True
+              ansible_host: 217.79.189.50
+          vars:
+            upload_validator_keys: True
+            set_validator_info: False

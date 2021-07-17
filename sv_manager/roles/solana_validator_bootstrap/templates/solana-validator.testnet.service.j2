@@ -11,7 +11,7 @@ User={{ validator.service_user }}
 LimitNOFILE=1024000
 Environment="PATH=/bin:/usr/bin:{{ node.solana_home }}/.local/share/solana/install/active_release/bin"
 Environment="SOLANA_METRICS_CONFIG=host=https://metrics.solana.com:8086,db=tds,u=testnet_write,p=c4fa841aa918bf8274e3e2a44d77568d9861b3ea"
-#Environment="RUST_LOG=debug"
+Environment="RUST_LOG={{ validator.log_level }}"
 ExecStart={{ node.solana_home }}/.local/share/solana/install/active_release/bin/solana-validator \
 --identity {{ validator.secrets_path }}/validator-keypair.json \
 --vote-account {{ validator.secrets_path }}/vote-account-keypair.json \
@@ -20,12 +20,14 @@ ExecStart={{ node.solana_home }}/.local/share/solana/install/active_release/bin/
 --trusted-validator 7XSY3MrYnK8vq693Rju17bbPkCN3Z7KvvfvJx4kdrsSY \
 --trusted-validator Ft5fbkqNa76vnsjYNwjDZUXoTWpP7VYm3mtsaQckQADN \
 --trusted-validator 9QxCLckBiJc783jnMvXZubK4wH86Eqqvashtrwvcsgkv \
---no-untrusted-rpc \
 --expected-genesis-hash 4uhcVJyU9pJkvQyS88uRDiswHXSCkY3zQawwpjk2NsNY \
---snapshot-interval-slots 500 \
---maximum-local-snapshot-age 1000 \
+--no-untrusted-rpc \
+--private-rpc \
+--rpc-bind-address 127.0.0.1 \
 --entrypoint 'entrypoint.{{ cluster.entrypoint }}:8001' \
---limit-ledger-size 50000000 \
+--entrypoint 'entrypoint2.{{ cluster.entrypoint }}:8001' \
+--entrypoint 'entrypoint3.{{ cluster.entrypoint }}:8001' \
+--limit-ledger-size \
 --log {{ validator.log_file }} \
 --ledger {{ validator.ledger_path }} \
 --accounts {{ validator.accounts_path }} \

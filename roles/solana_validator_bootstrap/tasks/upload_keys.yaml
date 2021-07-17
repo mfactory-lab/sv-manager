@@ -1,13 +1,13 @@
 ---
 - name: Build flat keys path
   set_fact:
-    secrets_local_path: "{{ local.secrets_path }}"
-  when: local.flat_path
+    secrets_local_path: "{{ local_secrets_path }}"
+  when: flat_path
 
 - name: Build non flat keys path
   set_fact:
-    secrets_local_path: "{{ local.secrets_path }}/{{ validator.name }}/solana"
-  when: not local.flat_path
+    secrets_local_path: "{{ local_secrets_path }}/{{ validator_name }}/solana"
+  when: not flat_path
 
 - name: Check validator-keypair exists locally
   stat:
@@ -23,10 +23,10 @@
 - name: upload validator-keypair
   copy:
     src: "{{ secrets_local_path }}/validator-keypair.json"
-    dest: "{{ node.solana_home }}/.secrets/"
+    dest: "{{ solana_home }}/.secrets/"
     mode: 0400
-    owner: "{{ node.solana_user }}"
-    group: "{{ node.solana_user }}"
+    owner: "{{ solana_user }}"
+    group: "{{ solana_user }}"
     force: false
   tags:
     - validator.manage.keys.upload
@@ -46,10 +46,10 @@
 - name: upload vote-account-keypair
   copy:
     src: "{{ secrets_local_path }}/vote-account-keypair.json"
-    dest: "{{ node.solana_home }}/.secrets/"
+    dest: "{{ solana_home }}/.secrets/"
     mode: 0400
-    owner: "{{ node.solana_user }}"
-    group: "{{ node.solana_user }}"
+    owner: "{{ solana_user }}"
+    group: "{{ solana_user }}"
     force: false
   tags:
     - validator.manage.keys.upload

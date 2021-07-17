@@ -1,6 +1,6 @@
 ---
 - name: install solana validator
-  hosts: "{{ host_hosts | default('remote') }}"
+  hosts: all
   become: yes
   roles:
     - check_node

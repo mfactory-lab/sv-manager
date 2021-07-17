@@ -1,0 +1,23 @@
+---
+all:
+  children:
+    testnet_validators:
+      children:
+        remote:
+          hosts:
+            jd-testnet:
+              ansible_host: 217.160.186.47
+              validator_name: "blab labla"
+              validator_homepage: 'www.jedai.com'
+              keybase_username: 'jd'
+            jal-testnet:
+              ansible_host: 78.46.82.11
+            lk_testnet:
+              ansible_host: 82.223.17.38
+              lvm_enabled: True
+              lvm_vg: "vg00"
+            as_testnet:
+              ansible_host: 217.79.189.50
+        local:
+          hosts:
+            localhost:
