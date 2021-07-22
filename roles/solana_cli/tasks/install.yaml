@@ -1,0 +1,11 @@
+---
+- name: install solana
+  shell: sh -c "$(curl -sSfL https://release.solana.com/{{ validator.version | default('stable') }}/install)"
+  become: yes
+  become_user: "{{ node.solana_user }}"
+  tags:
+    - cli.install
+
+
+
+

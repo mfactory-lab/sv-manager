@@ -1,0 +1,9 @@
+---
+- name: set default keypair
+  shell: solana config set --keypair {{ validator.secrets_path }}/validator-keypair.json
+  become: yes
+  become_user: "{{ node.solana_user}}"
+  environment:
+    PATH: "{{ node.solana_home }}/.local/share/solana/install/active_release/bin"
+  tags:
+    validator.manage.config

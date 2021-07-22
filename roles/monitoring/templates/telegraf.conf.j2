@@ -1,0 +1,68 @@
+[agent]
+  hostname = "{{ node.name }}" # set this to a name you want to identify your node in the grafana dashboard
+  flush_interval = "30s"
+  interval = "30s"
+
+##INPUTS
+[[inputs.cpu]]
+  ## Whether to report per-cpu stats or not
+  percpu = false
+  ## Whether to report total system cpu stats or not
+  totalcpu = true
+  ## If true, collect raw CPU time metrics.
+  collect_cpu_time = false
+  ## If true, compute and report the sum of all non-idle CPU states.
+  report_active = false
+
+[[inputs.disk]]
+  ## By default stats will be gathered for all mount points.
+  ## Set mount_points will restrict the stats to only the specified mount points.
+  mount_points = ["/", "{{ validator.ledger_path }}", "{{ validator.accounts_path }}"]
+
+  ## Ignore mount points by filesystem type.
+  ignore_fs = ["devtmpfs", "devfs", "iso9660", "overlay", "aufs", "squashfs"]
+
+[[inputs.diskio]]
+
+[[inputs.net]]
+
+[[inputs.nstat]]
+
+[[inputs.procstat]]
+ pattern="{{ node.solana_user }}"
+
+[[inputs.system]]
+
+[[inputs.systemd_units]]
+    [inputs.systemd_units.tagpass]
+    name = ["solana*"]
+
+[[inputs.mem]]
+
+[[inputs.swap]]
+
+[[inputs.exec]]
+  commands = [
+               "sudo -i -u {{ node.solana_user }} {{ node.solana_home }}/monitoring/validator_monitoring_starter.sh"
+             ]
+  interval = "30s"
+  timeout = "30s"
+  json_name_key = "measurement"
+  json_time_key = "time"
+  tag_keys = ["cluster_name",
+              "url",
+              "stake_pubkey",
+              "validator_vote_key",
+              "validator_name",
+              "validator_ident",
+              "activation_epoch"]
+
+  json_string_fields = ["solana_version","validator_identity_pubkey","validator_vote_pubkey","cluster_environment","monitoring_version"]
+  json_time_format = "unix_ms"
+
+##OUPUTS
+[[outputs.influxdb]]
+  database = "{{ monitoring.telegraf_database }}"
+  urls = [ "{{ monitoring.telegraf_urls }}" ]
+  username = "{{ monitoring.telegraf_username }}"
+  password = "{{ monitoring.telegraf_password }}"
