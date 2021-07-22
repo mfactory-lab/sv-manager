@@ -15,7 +15,7 @@ def get_metrics_from_vote_account_item(item):
             'credits_epoch_delta': item['epochCredits'][-1][1] - item['epochCredits'][-1][2],
             'commission': item['commission']
         }
-    
+
 
 def find_item_in_vote_accounts_section(identity_account_pubkey, section_parent, section_name):
     if section_name in section_parent:
@@ -155,7 +155,7 @@ def get_validators_metric(validators, identity_account_pubkey):
         current_root_slot = -1
 
         for v in validators:
-            if v['delinquent'] == False:
+            if not v['delinquent']:
                 epoch_credits_l.append(v['epochCredits'])
                 last_vote_l.append(v['lastVote'])
                 root_slot_l.append(v['rootSlot'])
@@ -318,7 +318,7 @@ def calculate_influx_data(config: ValidatorConfig):
         "time": round(time.time() * 1000),
         "validator_name": config.validator_name,
         "cluster_environment": config.cluster_environment,
-        "monitoring_version": "2.0.2",
+        "monitoring_version": "2.0.3",
         "fields": calculate_influx_fields(data)
     }
 

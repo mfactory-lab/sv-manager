@@ -13,4 +13,11 @@
   become: yes
   roles:
     - solana_cli
+
+- name: start solana validator
+  hosts: "{{ host_hosts | default('remote') }}"
+  become: yes
+  tags:
+    - validator.manage.restart.service
+  roles:
     - solana_validator_restart

@@ -4,6 +4,7 @@
     name:
       - requests
       - numpy
+      - sentry-sdk
     state: present
     executable: pip3
   tags:
