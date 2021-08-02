@@ -25,7 +25,6 @@ update_validator() {
   sudo -i -u solana solana-install init "$version"
   systemctl restart solana-sys-tuner
   systemctl restart solana-validator
-  sudo -i -u solana solana config set -ut
 }
 
 catchup_info() {

@@ -46,7 +46,7 @@ install_validator () {
           mainnet-beta )
             cluster_environment="mainnet-beta"
             cluster_rpc_address="https://api.mainnet-beta.solana.com"
-            version="v1.6.20"
+            version="v1.7.9"
             break;;
           testnet )
             cluster_environment="testnet"
