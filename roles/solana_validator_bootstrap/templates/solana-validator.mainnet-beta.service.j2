@@ -32,6 +32,9 @@ ExecStart={{ node.solana_home }}/.local/share/solana/install/active_release/bin/
 --rpc-port {{ validator.solana_rpc_port }}  \
 --identity {{ validator.secrets_path }}/validator-keypair.json \
 --vote-account {{ validator.secrets_path }}/vote-account-keypair.json \
+{% if node.rpc_node == True %}
+--no-voting \
+{% endif %}
 --log {{ validator.log_file }} \
 --ledger {{ validator.ledger_path }} \
 --accounts {{ validator.accounts_path }} \

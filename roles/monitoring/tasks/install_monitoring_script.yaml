@@ -4,7 +4,6 @@
     name:
       - requests
       - numpy
-      - sentry-sdk
     state: present
     executable: pip3
   tags:
@@ -20,10 +19,10 @@
   tags: 
     monitoring.script
 
-- name: Upload monitoring library
+- name: Upload cluster monitoring library
   copy:
-    src: files/validator_monitoring_library.py
-    dest: "{{ node.solana_home }}/monitoring/validator_monitoring_library.py"
+    src: files/cluster_monitoring_library.py
+    dest: "{{ node.solana_home }}/monitoring/cluster_monitoring_library.py"
     owner: "{{ node.solana_user }}"
     group: "{{ node.solana_user }}"
     mode: 0644
@@ -35,6 +34,39 @@
   copy:
     src: files/common.py
     dest: "{{ node.solana_home }}/monitoring/common.py"
+    owner: "{{ node.solana_user }}"
+    group: "{{ node.solana_user }}"
+    mode: 0644
+  tags:
+    - monitoring.script
+    - monitoring.script.library
+
+- name: Upload measurement validator_info
+  copy:
+    src: files/measurement_validator_info.py
+    dest: "{{ node.solana_home }}/monitoring/measurement_validator_info.py"
+    owner: "{{ node.solana_user }}"
+    group: "{{ node.solana_user }}"
+    mode: 0644
+  tags:
+    - monitoring.script
+    - monitoring.script.library
+
+- name: Upload measurement validators
+  copy:
+    src: files/measurement_validators.py
+    dest: "{{ node.solana_home }}/monitoring/measurement_validators.py"
+    owner: "{{ node.solana_user }}"
+    group: "{{ node.solana_user }}"
+    mode: 0644
+  tags:
+    - monitoring.script
+    - monitoring.script.library
+
+- name: Upload ouput validator info measurement
+  copy:
+    src: files/output_validator_info.py
+    dest: "{{ node.solana_home }}/monitoring/output_validator_info.py"
     owner: "{{ node.solana_user }}"
     group: "{{ node.solana_user }}"
     mode: 0644
@@ -64,32 +96,21 @@
     - monitoring.script
     - monitoring.script.library
 
-- name: Upload monitoring script
-  copy:
-    src: files/validator_monitoring.py
-    dest: "{{ node.solana_home }}/monitoring/validator_monitoring.py"
-    owner: "{{ node.solana_user }}"
-    group: "{{ node.solana_user }}"
-    mode: 0644
-  tags:
-    - monitoring.script
-    - monitoring.script.library
 
-- name: Upload monitoring script starter
+- name: Upload output script starter
   template:
-    src: validator_monitoring_starter.sh.j2
-    dest: "{{ node.solana_home }}/monitoring/validator_monitoring_starter.sh"
+    src: output_starter.sh.j2
+    dest: "{{ node.solana_home }}/monitoring/output_starter.sh"
     owner: "{{ node.solana_user }}"
     group: "{{ node.solana_user }}"
     mode: 0755
   tags:
     - monitoring.script
 
-
 - name: Upload config script
   template:
-    src: validator_monitoring_config.py.j2
-    dest: "{{ node.solana_home }}/monitoring/validator_monitoring_config.py"
+    src: monitoring_config.py.j2
+    dest: "{{ node.solana_home }}/monitoring/monitoring_config.py"
     owner: "{{ node.solana_user }}"
     group: "{{ node.solana_user }}"
     mode: 0644

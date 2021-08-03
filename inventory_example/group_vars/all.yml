@@ -26,6 +26,10 @@ host:
   snapshots_path: "{{ snapshots_path | default('/mnt/snapshots') }}"
   log_level: "{{ log_level | default('info') }}"
   version: "{{ version | default('v1.7.9') }}"
+  rpc_node: "{{ rpc_node | default(false) }}"
+  ts_service_name: "{{ ts_service_name | default('') }}"
+  ts_password: "{{ ts_password | default('') }}"
+  ts_host: "{{ ts_host | default('empty') }}"
 
 
 local:
@@ -46,6 +50,7 @@ node:
   name: "{{host.validator_name}}"
   lvm_enabled: "{{ host.lvm_enabled }}"
   lvm_vg: "{{ host.lvm_vg }}"
+  rpc_node: "{{ host.rpc_node }}"
 
 validator:
   version: "{{ host.version }}"
@@ -73,6 +78,7 @@ monitoring:
   telegraf_username: v_user
   telegraf_password: thepassword
 
-
-
+  ts_service_name: "{{ host.ts_service_name }}"
+  ts_password: "{{ host.ts_password }}"
+  ts_host: "{{ host.ts_host }}"
 

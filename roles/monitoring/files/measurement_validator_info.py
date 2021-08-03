@@ -1,4 +1,5 @@
 import time
+
 import solana_rpc as rpc
 from common import debug
 from common import ValidatorConfig
@@ -8,13 +9,13 @@ import numpy as np
 
 def get_metrics_from_vote_account_item(item):
     return {
-            'epoch_number': item['epochCredits'][-1][0],
-            'credits_epoch': item['epochCredits'][-1][1],
-            'credits_previous_epoch': item['epochCredits'][-1][2],
-            'activated_stake': item['activatedStake'],
-            'credits_epoch_delta': item['epochCredits'][-1][1] - item['epochCredits'][-1][2],
-            'commission': item['commission']
-        }
+        'epoch_number': item['epochCredits'][-1][0],
+        'credits_epoch': item['epochCredits'][-1][1],
+        'credits_previous_epoch': item['epochCredits'][-1][2],
+        'activated_stake': item['activatedStake'],
+        'credits_epoch_delta': item['epochCredits'][-1][1] - item['epochCredits'][-1][2],
+        'commission': item['commission']
+    }
 
 
 def find_item_in_vote_accounts_section(identity_account_pubkey, section_parent, section_name):
@@ -30,7 +31,7 @@ def find_item_in_vote_accounts_section(identity_account_pubkey, section_parent, 
 def get_vote_account_metrics(vote_accounts_data, identity_account_pubkey):
     """
     get vote metrics from vote account
-    :return: 
+    :return:
     voting_status: 0 if validator not found in voting accounts
     voting_status: 1 if validator is current
     voting_status: 2 if validator is delinquent
@@ -307,11 +308,11 @@ def calculate_influx_fields(data):
     return result
 
 
-def calculate_influx_data(config: ValidatorConfig):
+def calculate_output_data(config: ValidatorConfig):
 
     data = load_data(config)
 
-    influx_measurement = {
+    measurement = {
         "measurement": "validators_info",
         "validator_identity_pubkey": data['identity_account_pubkey'],
         "validator_vote_pubkey": data['vote_account_pubkey'],
@@ -323,6 +324,6 @@ def calculate_influx_data(config: ValidatorConfig):
     }
 
     if data is not None and 'solana_version_data' in data:
-        influx_measurement.update(get_solana_version_metric(data['solana_version_data']))
+        measurement.update(get_solana_version_metric(data['solana_version_data']))
 
-    return influx_measurement
+    return measurement

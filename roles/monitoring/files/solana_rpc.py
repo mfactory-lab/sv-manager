@@ -127,6 +127,16 @@ def load_solana_validators(config: ValidatorConfig):
         return None
 
 
+def load_solana_gossip(config: ValidatorConfig):
+    cmd = f'solana gossip -ul --output json-compact'
+    data = execute_cmd_str(config, cmd, convert_to_json=True)
+
+    if (data is not None) and ('validators' in data):
+        return data['validators']
+    else:
+        return None
+
+
 def load_stakes(config: ValidatorConfig, vote_account):
     cmd = f'solana stakes ' + vote_account + ' --output json-compact'
     return execute_cmd_str(config, cmd, convert_to_json=True, default=[])
