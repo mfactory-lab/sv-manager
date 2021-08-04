@@ -13,6 +13,8 @@
   become: yes
   roles:
     - solana_cli
+  tags:
+    - validator.manage.cli
 
 - name: start solana validator
   hosts: "{{ host_hosts | default('remote') }}"

@@ -1,4 +1,7 @@
 from pprint import pprint
+import json
+import numpy
+import time
 
 
 class ValidatorConfig:
@@ -17,6 +20,42 @@ class ValidatorConfig:
         self.debug_mode = debug_mode
 
 
+class JsonEncoder(json.JSONEncoder):
+    """ Special json encoder for numpy types """
+    def default(self, obj):
+        if isinstance(obj, (numpy.int_, numpy.intc, numpy.intp, numpy.int8,
+                            numpy.int16, numpy.int32, numpy.int64, numpy.uint8,
+                            numpy.uint16, numpy.uint32, numpy.uint64)):
+            return int(obj)
+        elif isinstance(obj, (numpy.float_, numpy.float16, numpy.float32,
+                              numpy.float64)):
+            return float(obj)
+        elif isinstance(obj, (numpy.ndarray,)):
+            return obj.tolist()
+        elif isinstance(obj, bool):
+            if bool(obj):
+                return 1
+            else:
+                return 0
+        return json.JSONEncoder.default(self, obj)
+
+
 def debug(config: ValidatorConfig, data):
     if config.debug_mode:
         pprint(data)
+
+
+def print_json(data):
+    print(json.dumps(data, cls=JsonEncoder))
+
+
+def measurement_from_fields(name, data, config):
+    measurement = {
+        "measurement": name,
+        "time": round(time.time() * 1000),
+        "cluster_environment": config.cluster_environment,
+        "monitoring_version": "3.0.0",
+        "data": data
+    }
+
+    return measurement

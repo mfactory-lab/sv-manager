@@ -1,8 +1,8 @@
 import time
-
 import solana_rpc as rpc
 from common import debug
 from common import ValidatorConfig
+from common import measurement_from_fields
 import statistics
 import numpy as np
 
@@ -312,16 +312,13 @@ def calculate_output_data(config: ValidatorConfig):
 
     data = load_data(config)
 
-    measurement = {
-        "measurement": "validators_info",
+    measurement = measurement_from_fields("validators_info", calculate_influx_fields(data), config)
+
+    measurement.update({
         "validator_identity_pubkey": data['identity_account_pubkey'],
         "validator_vote_pubkey": data['vote_account_pubkey'],
-        "time": round(time.time() * 1000),
         "validator_name": config.validator_name,
-        "cluster_environment": config.cluster_environment,
-        "monitoring_version": "2.0.3",
-        "fields": calculate_influx_fields(data)
-    }
+    })
 
     if data is not None and 'solana_version_data' in data:
         measurement.update(get_solana_version_metric(data['solana_version_data']))

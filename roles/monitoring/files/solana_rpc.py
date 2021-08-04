@@ -117,6 +117,11 @@ def load_stake_account_rewards(config: ValidatorConfig, stake_account):
     return execute_cmd_str(config, cmd, convert_to_json=True)
 
 
+def load_solana_validators_full(config: ValidatorConfig):
+    cmd = f'solana validators -ul --output json-compact'
+    return execute_cmd_str(config, cmd, convert_to_json=True)
+
+
 def load_solana_validators(config: ValidatorConfig):
     cmd = f'solana validators -ul --output json-compact'
     data = execute_cmd_str(config, cmd, convert_to_json=True)
@@ -129,12 +134,7 @@ def load_solana_validators(config: ValidatorConfig):
 
 def load_solana_gossip(config: ValidatorConfig):
     cmd = f'solana gossip -ul --output json-compact'
-    data = execute_cmd_str(config, cmd, convert_to_json=True)
-
-    if (data is not None) and ('validators' in data):
-        return data['validators']
-    else:
-        return None
+    return execute_cmd_str(config, cmd, convert_to_json=True)
 
 
 def load_stakes(config: ValidatorConfig, vote_account):
