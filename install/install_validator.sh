@@ -46,12 +46,12 @@ install_validator () {
           mainnet-beta )
             cluster_environment="mainnet-beta"
             cluster_rpc_address="https://api.mainnet-beta.solana.com"
-            version="v1.7.9"
+            version="v1.6.20"
             break;;
           testnet )
             cluster_environment="testnet"
             cluster_rpc_address="https://api.testnet.solana.com"
-            version="v1.7.8"
+            version="v1.7.10"
             break;;
       esac
   done
