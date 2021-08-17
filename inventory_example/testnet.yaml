@@ -18,6 +18,8 @@ all:
               lvm_vg: "vg00"
             as_testnet:
               ansible_host: 217.79.189.50
+            ionos_test:
+              ansible_host: 217.160.170.116 
         local:
           hosts:
             localhost:

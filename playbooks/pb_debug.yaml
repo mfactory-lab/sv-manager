@@ -2,8 +2,6 @@
 - name: install solana validator
   hosts: all
   become: yes
-  roles:
-    - solana_validator_bootstrap
   
   # vars_prompt:
   #   - name: validator_key_path
@@ -31,7 +29,7 @@
       #  - ledger_path
     - name: show name
       debug:
-        msg: "{{ solana_validator_service }}"
+        msg: "{{ hostvars[inventory_hostname].cluster_environment }}"
     - name: show cpu
       debug:
         msg: "{{ group_names }}"

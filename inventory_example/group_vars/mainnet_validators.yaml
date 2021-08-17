@@ -21,3 +21,5 @@ expected_genesis_hash: '5eykt4UsFv8P8NJdTREpY1vzqKqZKvdpKuc147dw2N9d'
 limit_ledger_size: 100000000
 snapshot_interval_slots: 2000
 maximum_local_snapshot_age: 3000
+solana_version: 1.6.18
+extra_vars:

@@ -21,6 +21,7 @@ snapshots_path: '/mnt/snapshots'
 solana_home: "/home/{{ solana_user }}"
 solana_rpc_port: 8899
 validator_homepage: ''
+validator_description: 'Installed with https://sv-manager.thevalidators.io'
 validator_log_file: /var/log/solana-validator.log
 
 #monitoring:

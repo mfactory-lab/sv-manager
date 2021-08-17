@@ -37,7 +37,7 @@
 
 - name: combine with host section
   set_fact:
-    config_dict:  "{{ config_dict | combine(host) }}"
+    config_dict:  "{{ config_dict | combine(hostvars[inventory_hostname]) }}"
 
 
 - name: show new config
