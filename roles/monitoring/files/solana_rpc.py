@@ -123,7 +123,7 @@ def load_solana_validators_full(config: ValidatorConfig):
 
 
 def load_solana_validators(config: ValidatorConfig):
-    cmd = f'solana validators -ul --output json-compact'
+    cmd = f'solana validators -um --output json-compact'
     data = execute_cmd_str(config, cmd, convert_to_json=True)
 
     if (data is not None) and ('validators' in data):

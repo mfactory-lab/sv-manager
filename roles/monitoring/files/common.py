@@ -32,11 +32,6 @@ class JsonEncoder(json.JSONEncoder):
             return float(obj)
         elif isinstance(obj, (numpy.ndarray,)):
             return obj.tolist()
-        elif isinstance(obj, bool):
-            if bool(obj):
-                return 1
-            else:
-                return 0
         return json.JSONEncoder.default(self, obj)
 
 
