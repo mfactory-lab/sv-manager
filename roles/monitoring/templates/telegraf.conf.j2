@@ -45,8 +45,28 @@
   json_time_format = "unix_ms"
 
 
+[[inputs.exec]]
+  commands = [
+               "sudo -i -u {{ node.solana_user }} {{ node.solana_home }}/monitoring/output_starter.sh output_validators_info"
+             ]
+  interval = "3600s"
+  timeout = "3600s"
+  json_name_key = "measurement"
+  json_time_key = "time"
+  tag_keys = ["data_identityPubkey", "cluster_environment"]
+
+  json_string_fields = ["monitoring_version",
+                        "data_infoPubkey",
+                        "data_ipAddress",
+                        "data_info_details",
+                        "data_info_keybaseUsername",
+                        "data_info_name",
+                        "data_info_website"]
+
+  json_time_format = "unix_ms"
+
 ##OUPUTS TimeScale
 [[outputs.postgresql]]
-connection = "host={{ monitoring.ts_host }} user=tsdbadmin password={{ monitoring.ts_password }} sslmode=require dbname=tsdb"
+connection = "host={{ monitoring.ts_host }} user=tsdbadmin password={{ monitoring.ts_password }} sslmode=require dbname={{ monitoring.ts_dbname }}"
 table_template="CREATE TABLE IF NOT EXISTS {TABLE}({COLUMNS}); SELECT create_hypertable({TABLELITERAL},'time',chunk_time_interval := INTERVAL '1 day',if_not_exists := true);"
 

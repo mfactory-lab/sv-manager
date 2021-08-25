@@ -123,13 +123,19 @@ def load_solana_validators_full(config: ValidatorConfig):
 
 
 def load_solana_validators(config: ValidatorConfig):
-    cmd = f'solana validators -um --output json-compact'
+    cmd = f'solana validators -ul --output json-compact'
     data = execute_cmd_str(config, cmd, convert_to_json=True)
 
     if (data is not None) and ('validators' in data):
         return data['validators']
     else:
         return None
+
+
+def load_solana_validators_info(config: ValidatorConfig):
+    cmd = f'solana validator-info get --url ' + config.remote_rpc_address + ' --output json-compact'
+    data = execute_cmd_str(config, cmd, convert_to_json=True)
+    return data
 
 
 def load_solana_gossip(config: ValidatorConfig):

@@ -16,7 +16,7 @@
     group: "{{ node.solana_user }}"
     mode: 0755
     state: directory
-  tags: 
+  tags:
     - monitoring.script
     - monitoring.script.library
 
@@ -84,10 +84,21 @@
     - monitoring.script.library
 
 
-- name: Upload ouput validator info measurement
+- name: Upload ouput validator measurements
   copy:
-    src: files/output_validator_info.py
-    dest: "{{ node.solana_home }}/monitoring/output_validator_info.py"
+    src: files/output_validator_measurements.py
+    dest: "{{ node.solana_home }}/monitoring/output_validator_measurements.py"
+    owner: "{{ node.solana_user }}"
+    group: "{{ node.solana_user }}"
+    mode: 0644
+  tags:
+    - monitoring.script
+    - monitoring.script.library
+
+- name: Upload ouput validators info
+  copy:
+    src: files/output_validators_info.py
+    dest: "{{ node.solana_home }}/monitoring/output_validators_info.py"
     owner: "{{ node.solana_user }}"
     group: "{{ node.solana_user }}"
     mode: 0644
@@ -136,6 +147,6 @@
     owner: "{{ node.solana_user }}"
     group: "{{ node.solana_user }}"
     mode: 0644
-  tags: 
+  tags:
     - monitoring.script
     - monitoring.script.library
