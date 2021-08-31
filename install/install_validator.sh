@@ -74,13 +74,13 @@ install_validator () {
   'ramdisk_size_gb': $RAM_DISK_SIZE, \
   }"
 
-  ansible-playbook --connection=local --inventory ./inventory/$inventory --limit localhost  playbooks/pb_install_validator.yaml --extra-vars "@/etc/sv_manager/sv_manager.conf" --extra-vars "{'validator_version': $version}" --check
+  ansible-playbook --connection=local --inventory ./inventory/$inventory --limit localhost  playbooks/pb_install_validator.yaml --extra-vars "@/etc/sv_manager/sv_manager.conf" --extra-vars "{'solana_version': $2}"
 
   echo "### 'Uninstall ansible ###"
 
   $pkg_manager remove ansible --yes
   
-  echo "### Check your dashboard: https://solana.thevalidators.io/d/e-8yEOXMwerfwe/solana-monitoring-v1-0-preview?&var-server=$VALIDATOR_NAME"
+  echo "### Check your dashboard: https://solana.thevalidators.io/d/e-8yEOXMwerfwe/solana-monitoring-v1-0?&var-server=$VALIDATOR_NAME"
 
 }
 

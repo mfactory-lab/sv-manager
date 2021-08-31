@@ -28,16 +28,22 @@
 
 - name: dictionary
   set_fact:
-    config_dict:  "{{ config_data.content | b64decode | from_json | default([]) }}"
+    config_dict: "{{ config_data.content | b64decode | from_json | default([]) }}"
+  when: config_exists.stat.exists
+
+- name: create config from template
+  set_fact:
+    config_dict_template: "{{ lookup('template', 'templates/sv_manager.conf.template') }}"
   when: config_exists.stat.exists
 
 - name: show present config dictionary
   debug:
     msg: "{{ config_dict }}"
 
+
 - name: combine with host section
   set_fact:
-    config_dict:  "{{ config_dict | combine(hostvars[inventory_hostname]) }}"
+    config_dict:  "{{ config_dict | combine(config_dict_template) }}"
 
 
 - name: show new config
