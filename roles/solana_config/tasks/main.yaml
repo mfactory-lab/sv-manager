@@ -17,10 +17,10 @@
   register: config_data
   when: config_exists.stat.exists
 
-- name: show config data
-  debug:
-    msg: "{{ config_data }}"
-  when: config_exists.stat.exists
+# - name: show config data
+#   debug:
+#     msg: "{{ config_data }}"
+#   when: config_exists.stat.exists
 
 - name: set dictionary
   set_fact:

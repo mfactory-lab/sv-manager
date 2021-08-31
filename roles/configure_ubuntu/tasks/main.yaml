@@ -37,7 +37,7 @@
   tags:
     - config.ansible_user
   when:
-    - 'local' not in group_names
+    - "'local' not in group_names"
 
 - name: Create solana user
   import_tasks: solana_user.yaml
