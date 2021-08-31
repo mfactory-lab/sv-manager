@@ -2,14 +2,14 @@
 
 - name: Build flat keys path
   set_fact:
-    secrets_local_path: "{{ secrets_path }}"
+    secrets_local_path: "{{ local_secrets_path }}"
   when: flat_path
   tags:
     - check.keys
 
 - name: Build non flat keys path
   set_fact:
-    secrets_local_path: "{{ secrets_path }}/{{ validator_name }}/solana"
+    secrets_local_path: "{{ local_secrets_path }}/{{ validator_name }}/solana"
   when: not flat_path
   tags:
     - check.keys
