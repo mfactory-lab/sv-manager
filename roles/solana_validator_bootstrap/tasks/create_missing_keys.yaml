@@ -1,14 +1,14 @@
 ---
 - name: Check identity keypair exists
   stat:
-    path: ~/.secrets/validator-keypair.json
+    path: "{{ secrets_path }}/validator-keypair.json"
   register: validator_keypair_exists
   tags:
     - validator.manage.keys.create.identity
 
 - name: Check vote account keypair exists
   stat:
-    path: ~/.secrets/vote-account-keypair.json
+    path: "{{ secrets_path }}/vote-account-keypair.json"
   register: vote_account_keypair_exists
   become: yes
   tags:
@@ -49,7 +49,7 @@
     - validator.manage.keys.create.vote
 
 - name: Create identity keypair
-  shell: solana-keygen new --silent --no-bip39-passphrase --outfile ~/.secrets/validator-keypair.json
+  shell: solana-keygen new --silent --no-bip39-passphrase --outfile {{ secrets_path }}/validator-keypair.json
   environment:
     PATH: "{{ env_path }}"
   tags:
@@ -59,7 +59,7 @@
         and cluster_environment == 'testnet'
 
 - name: Create vote account keypair
-  shell: solana-keygen new --silent --no-bip39-passphrase --outfile ~/.secrets/vote-account-keypair.json
+  shell: solana-keygen new --silent --no-bip39-passphrase --outfile {{ secrets_path }}/vote-account-keypair.json
   environment:
     PATH: "{{ env_path }}"
   tags:
@@ -69,7 +69,7 @@
         and cluster_environment == 'testnet'
 
 - name: Airdrop 1 sol to validator-keypair
-  shell: solana airdrop --keypair ~/.secrets/validator-keypair.json 1
+  shell: solana airdrop --keypair {{ secrets_path }}/validator-keypair.json 1
   environment:
     PATH: "{{ env_path }}"
   tags:
@@ -78,7 +78,7 @@
         and cluster_environment == 'testnet'
 
 - name: Create vote account
-  shell: solana create-vote-account ~/.secrets/vote-account-keypair.json ~/.secrets/validator-keypair.json --keypair ~/.secrets/validator-keypair.json
+  shell: solana create-vote-account {{ secrets_path }}/vote-account-keypair.json {{ secrets_path }}/validator-keypair.json --keypair ~/.secrets/validator-keypair.json
   environment:
     PATH: "{{ env_path }}"
   tags:
@@ -89,7 +89,7 @@
 
 - name: fetch validator-keypair
   fetch:
-    src: "/home/{{ solana_user }}/.secrets/validator-keypair.json"
+    src: "{{ secrets_path }}/validator-keypair.json"
     dest: "{{ secrets_local_path }}"
     flat: true
   tags:

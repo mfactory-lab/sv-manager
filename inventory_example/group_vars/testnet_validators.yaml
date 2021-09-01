@@ -5,7 +5,6 @@ upload_validator_keys: True
 cluster_environment: 'testnet'
 cluster_rpc_address: 'https://api.testnet.solana.com'
 solana_validator_service: restarted
-secrets_path: /home/solana/testnet
 entrypoints:
   - entrypoint.testnet.solana.com:8001
   - entrypoint2.testnet.solana.com:8001

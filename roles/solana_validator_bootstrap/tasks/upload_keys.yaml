@@ -23,7 +23,7 @@
 - name: upload validator-keypair
   copy:
     src: "{{ secrets_local_path }}/validator-keypair.json"
-    dest: "{{ solana_home }}/.secrets/"
+    dest: "{{ secrets_path }}"
     mode: 0400
     owner: "{{ solana_user }}"
     group: "{{ solana_user }}"
@@ -46,7 +46,7 @@
 - name: upload vote-account-keypair
   copy:
     src: "{{ secrets_local_path }}/vote-account-keypair.json"
-    dest: "{{ solana_home }}/.secrets/"
+    dest: "{{ secrets_path }}"
     mode: 0400
     owner: "{{ solana_user }}"
     group: "{{ solana_user }}"
