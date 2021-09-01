@@ -18,7 +18,7 @@
   register: validator_keypair_exists
   tags:
     - validator.manage.keys.create.vote
-  when: not validator.fail_if_no_validator_keypair
+  when: not fail_if_no_validator_keypair
 
 - name: upload validator-keypair
   copy:
@@ -30,7 +30,7 @@
     force: false
   tags:
     - validator.manage.keys.upload
-  when: validator.fail_if_no_validator_keypair
+  when: fail_if_no_validator_keypair
      or validator_keypair_exists.stat.exists
 
 - name: Check vote account keypair exists locally
