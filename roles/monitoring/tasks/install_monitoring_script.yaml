@@ -20,7 +20,7 @@
 - name: Upload monitoring library
   copy:
     src: files/validator_monitoring_library.py
-    dest: "{{ node.solana_home }}/monitoring/validator_monitoring_library.py"
+    dest: "{{ solana_home }}/monitoring/validator_monitoring_library.py"
     owner: "{{ solana_user }}"
     group: "{{ solana_user }}"
     mode: 0644
