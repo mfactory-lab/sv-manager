@@ -51,7 +51,7 @@ install_validator () {
           testnet )
             cluster_environment="testnet"
             cluster_rpc_address="https://api.testnet.solana.com"
-            version="v1.7.10"
+            version="v1.7.11"
             break;;
       esac
   done
@@ -91,7 +91,7 @@ install_validator () {
   echo "### 'Uninstall ansible ###"
 
   $pkg_manager remove ansible --yes
-  
+
   echo "### Check your dashboard: https://solana.thevalidators.io/d/e-8yEOXMwerfwe/solana-monitoring-v1-0-preview?&var-server=$VALIDATOR_NAME"
 
 }

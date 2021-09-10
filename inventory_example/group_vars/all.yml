@@ -25,7 +25,7 @@ host:
   flat_path: "{{ flat_path | default(True) }}"
   snapshots_path: "{{ snapshots_path | default('/mnt/snapshots') }}"
   log_level: "{{ log_level | default('info') }}"
-  version: "{{ version | default('v1.7.9') }}"
+  version: "{{ version | default('v1.7.11') }}"
 
 
 local:
