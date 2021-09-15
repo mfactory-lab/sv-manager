@@ -7,11 +7,13 @@ class ValidatorConfig:
                  secrets_path: str,
                  local_rpc_address: str,
                  remote_rpc_address: str,
+                 cluster_environment: str,
                  debug_mode: bool):
         self.validator_name = validator_name
         self.secrets_path = secrets_path
         self.local_rpc_address = local_rpc_address
         self.remote_rpc_address = remote_rpc_address
+        self.cluster_environment = cluster_environment
         self.debug_mode = debug_mode
 
 

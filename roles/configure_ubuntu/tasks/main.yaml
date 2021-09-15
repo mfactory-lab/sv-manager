@@ -43,3 +43,4 @@
   import_tasks: solana_user.yaml
   tags:
     - config.solana_user
+    - validator.service.solana

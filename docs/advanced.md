@@ -23,7 +23,7 @@
   - [migrate your current setup to supported by sv-manager](#migrate-your-current-setup-to-supported-by-sv-manager)
     - [how to migrate your setup semi automatically](#how-to-migrate-your-setup-semi-automatically)
     - [how to migrate your setup manually](#how-to-migrate-your-setup-manually)
-  [Useful links](#useful-links)
+      [Useful links](#useful-links)
 - [How can you support this project](#how-can-you-support-this-project)
 - [History](history.md)
 - [Roadmap](roadmap.md)
@@ -32,7 +32,7 @@
 ## Node requirements
 
 * We have tested it only with Ubuntu 20.04, but every linux distro with apt and systemd should be supported.
-* Support for other Linux-Distributives will be implemented soon.  
+* Support for other Linux-Distributives will be implemented soon.
 * Check Solana [Validator requirements](https://docs.solana.com/running-validator/validator-reqs)
 
 ## What does it do with your Validator Node exactly
@@ -84,8 +84,8 @@ which will directly provide a support for Solana Validator Manager, until that y
 
 1. clone git repository
    git clone ...
-1. copy or rename [inventories_example directory](../inventory_example) to directory named *inventory*
-2. add to your inventories/hosts.yaml
+1. copy or rename [inventory_example directory](../inventory_example) to directory named *inventory*
+2. add to your inventory/hosts.yaml
 
 * validator name
 * ip-address of your validator node
@@ -120,7 +120,7 @@ all:
 #            swap_file_size_gb: 64
 #            ramdisk_size_gb: 64
 #            cluster_environment: testnet
-#            cluster_rpc_address: https://testnet.solana.com
+#            cluster_rpc_address: https://api.testnet.solana.com
           hosts:
             0.0.0.0 <- HERE
 ````
@@ -176,13 +176,13 @@ validator:
 
 #### How to install monitoring with ansible
 
-  ansible-playbook pb_install_monitoring.yaml  -v
+ansible-playbook pb_install_monitoring.yaml  -v
 
 #### How to install monitoring manually
 
-From server command line, user root, paste the whole command and run it: 
+From server command line, user root, paste the whole command and run it:
 
-  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/mfactory-lab/sv-manager/latest/install/install_monitoring.sh)"
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/mfactory-lab/sv-manager/latest/install/install_monitoring.sh)"
 
 ### Migrate your current setup to supported by sv-manager
 

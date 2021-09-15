@@ -1,7 +1,9 @@
 ---
 - name: Install python packages
   pip:
-    name: requests
+    name:
+      - requests
+      - numpy
     state: present
     executable: pip3
   tags:
@@ -14,7 +16,7 @@
     group: "{{ solana_user }}"
     mode: 0755
     state: directory
-  tags: 
+  tags:
     monitoring.script
 
 - name: Upload monitoring library
@@ -90,6 +92,6 @@
     owner: "{{ solana_user }}"
     group: "{{ solana_user }}"
     mode: 0644
-  tags: 
+  tags:
     - monitoring.script
-  
+

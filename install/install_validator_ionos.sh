@@ -8,7 +8,7 @@ echo "###   it to the monitoring dashboard                 ###"
 echo "###   at solana.thevalidators.io                     ###"
 echo "########################################################"
 
-install_validator () {
+install_monitoring () {
 
   rm -rf sv_manager/
 
@@ -28,7 +28,7 @@ install_validator () {
   ansible-galaxy collection install ansible.posix
   ansible-galaxy collection install community.general
 
-  echo "Downloading Solana validator manager version $1"
+  echo "Downloading Solana validator manager"
   cmd="https://github.com/mfactory-lab/sv-manager/archive/refs/tags/$1.zip"
   echo "starting $cmd"
   curl -fsSL "$cmd" --output sv_manager.zip
@@ -40,15 +40,7 @@ install_validator () {
   cd ./sv_manager || exit
   cp -r ./inventory_example ./inventory
 
-  #entry_point="https://testnet.solana.com"
-
-  echo "### Which type of validator you want to set up? ###"
-  select cluster in "mainnet-beta" "testnet"; do
-      case $cluster in
-          mainnet-beta ) entry_point="https://api.mainnet-beta.solana.com"; inventory="mainnet.yaml"; break;;
-          testnet ) entry_point="https://api.testnet.solana.com"; inventory="testnet.yaml"; break;;
-      esac
-  done
+  entry_point="https://api.testnet.solana.com"
 
   echo "Please enter a name for your validator node: "
   read VALIDATOR_NAME
@@ -67,29 +59,32 @@ install_validator () {
   echo "pwd: $(pwd)"
   ls -lah ./
 
-  ansible-playbook --connection=local --inventory ./inventory/$inventory --limit localhost  playbooks/pb_config.yaml --extra-vars "{ \
+  ansible-playbook --connection=local --inventory ./inventory --limit local  playbooks/pb_config.yaml --extra-vars "{'host_hosts': 'local', \
   'validator_name':'$VALIDATOR_NAME', \
   'local_secrets_path': '$PATH_TO_VALIDATOR_KEYS', \
+  'flat_path': 'True', \
+  'cluster_rpc_address':'$entry_point', \
   'swap_file_size_gb': $SWAP_SIZE, \
   'ramdisk_size_gb': $RAM_DISK_SIZE, \
+  'solana_user': 'solana', 'set_validator_info': 'False', 'lvm_enabled': 'True' \
   }"
 
-  ansible-playbook --connection=local --inventory ./inventory/$inventory --limit localhost  playbooks/pb_install_validator.yaml --extra-vars "@/etc/sv_manager/sv_manager.conf" --extra-vars "{'solana_version': $2}"
+  ansible-playbook --connection=local --inventory ./inventory --limit local  playbooks/pb_install_validator.yaml --extra-vars 'host_hosts=local' --extra-vars "@/etc/sv_manager/sv_manager.conf"
 
   echo "### 'Uninstall ansible ###"
 
   $pkg_manager remove ansible --yes
-
-  echo "### Check your dashboard: https://solana.thevalidators.io/d/e-8yEOXMwerfwe/solana-monitoring-v1-0?&var-server=$VALIDATOR_NAME"
+  
+  echo "### Check your dashboard: https://solana.thevalidators.io/d/e-8yEOXMwerfwe/solana-monitoring-v1-0-preview?&var-server=$VALIDATOR_NAME"
 
 }
 
 version=${1:-latest}
-echo "installing sv manager version $sv_version"
+echo "installing version: $version"
 echo "This script will bootstrap a Solana validator node. Proceed?"
 select yn in "Yes" "No"; do
     case $yn in
-        Yes ) install_validator "$version"; break;;
+        Yes ) install_monitoring "$version"; break;;
         No ) echo "Aborting install. No changes will be made."; exit;;
     esac
 done
