@@ -3,8 +3,6 @@ import solana_rpc as rpc
 from common import debug
 from common import ValidatorConfig
 import statistics
-import numpy as np
-
 
 def get_metrics_from_vote_account_item(item):
     return {
@@ -15,7 +13,7 @@ def get_metrics_from_vote_account_item(item):
             'credits_epoch_delta': item['epochCredits'][-1][1] - item['epochCredits'][-1][2],
             'commission': item['commission']
         }
-
+    
 
 def find_item_in_vote_accounts_section(identity_account_pubkey, section_parent, section_name):
     if section_name in section_parent:
@@ -145,58 +143,19 @@ def get_solana_version_metric(solana_version_data):
     return {}
 
 
-def get_validators_metric(validators, identity_account_pubkey):
+def get_cluster_credits_metric(validators):
 
     if validators is not None:
-        epoch_credits_l = []
-        last_vote_l = []
-        root_slot_l = []
-        current_last_vote = -1
-        current_root_slot = -1
+        c = []
 
         for v in validators:
-            if not v['delinquent']:
-                epoch_credits_l.append(v['epochCredits'])
-                last_vote_l.append(v['lastVote'])
-                root_slot_l.append(v['rootSlot'])
-            if identity_account_pubkey == v['identityPubkey']:
-                current_last_vote = v['lastVote']
-                current_root_slot = v['rootSlot']
-
-        epoch_credits = np.array(epoch_credits_l, dtype=np.int32)
-        last_vote = np.array(last_vote_l, dtype=np.int32)
-        root_slot = np.array(root_slot_l, dtype=np.int32)
-
-        last_vote = last_vote[last_vote > 0]
-        root_slot = root_slot[root_slot > 0]
-
-        cluster_max_last_vote = np.amax(last_vote)
-        cluster_min_last_vote = np.amin(last_vote)
-        cluster_mean_last_vote = abs((last_vote - cluster_max_last_vote).mean())
-        cluster_median_last_vote = abs(np.median(last_vote - cluster_max_last_vote))
-
-        cluster_max_root_slot = np.amax(root_slot)
-        cluster_min_root_slot = np.amin(root_slot)
-        cluster_mean_root_slot = abs((root_slot - cluster_max_root_slot).mean())
-        cluster_median_root_slot = abs(np.median(root_slot - cluster_max_root_slot))
+            c.append(v['epochCredits'])
 
         result = {
-            'cluster_mean_epoch_credits': epoch_credits.mean(),
-            'cluster_min_epoch_credits': np.amin(epoch_credits),
-            'cluster_max_epoch_credits': np.amax(epoch_credits),
-            'cluster_median_epoch_credits': np.median(epoch_credits),
-
-            'cluster_max_last_vote': cluster_max_last_vote,
-            'cluster_min_last_vote_v2': cluster_min_last_vote,
-            'cluster_mean_last_vote_v2': cluster_mean_last_vote,
-            'cluster_median_last_vote': cluster_median_last_vote,
-            'current_last_vote': current_last_vote,
-
-            'cluster_max_root_slot': cluster_max_root_slot,
-            'cluster_min_root_slot_v2': cluster_min_root_slot,
-            'cluster_mean_root_slot_v2': cluster_mean_root_slot,
-            'cluster_median_root_slot': cluster_median_root_slot,
-            'current_root_slot': current_root_slot
+            'cluster_mean_epoch_credits': statistics.mean(c),
+            'cluster_min_epoch_credits': min(c),
+            'cluster_max_epoch_credits': max(c),
+            'cluster_median_epoch_credits': statistics.median(c)
         }
 
     else:
@@ -301,8 +260,10 @@ def calculate_influx_fields(data):
         result.update(get_balance_metric(data['identity_account_balance'], 'identity_account_balance'))
         result.update(get_balance_metric(data['vote_account_balance'], 'vote_account_balance'))
         result.update(get_current_stake_metric(data['stakes_data']))
-        result.update(get_validators_metric(data['validators_data'], identity_account_pubkey))
+        result.update(get_cluster_credits_metric(data['validators_data']))
         result.update(get_block_production_cli_metrics(data['load_block_production_cli'], identity_account_pubkey))
+
+    result.update({"monitoring_version": 2})
 
     return result
 
@@ -313,12 +274,8 @@ def calculate_influx_data(config: ValidatorConfig):
 
     influx_measurement = {
         "measurement": "validators_info",
-        "validator_identity_pubkey": data['identity_account_pubkey'],
-        "validator_vote_pubkey": data['vote_account_pubkey'],
         "time": round(time.time() * 1000),
         "validator_name": config.validator_name,
-        "cluster_environment": config.cluster_environment,
-        "monitoring_version": "2.0.3",
         "fields": calculate_influx_fields(data)
     }
 

@@ -26,7 +26,7 @@
   when: force or not swap_file_exists.stat.exists
 
 - name: Create swap file
-  command: dd if=/dev/zero of=/mnt/swap/swapfile bs=1G count={{ node.swap_file_size_gb }}
+  command: dd if=/dev/zero of=/mnt/swap/swapfile bs=1G count={{ swap_file_size_gb }}
            creates="/mnt/swap/swapfile"
   tags:
     - config.swap.file.create

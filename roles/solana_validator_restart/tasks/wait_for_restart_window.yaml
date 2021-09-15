@@ -2,10 +2,10 @@
 
 - name: wait for restarting window
   become: yes
-  become_user: "{{ node.solana_user }}"
-  shell: solana-validator --ledger {{ validator.ledger_path }} wait-for-restart-window
+  become_user: "{{ solana_user }}"
+  shell: solana-validator --ledger {{ ledger_path }} wait-for-restart-window
   environment:
-    PATH: "{{ node.solana_home }}/.local/share/solana/install/active_release/bin"
+    PATH: "{{ solana_home }}/.local/share/solana/install/active_release/bin"
   ignore_errors: True
   tags:
     - validator.manage.restart.wait

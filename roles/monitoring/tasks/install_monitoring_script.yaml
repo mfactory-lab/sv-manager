@@ -1,10 +1,7 @@
 ---
 - name: Install python packages
   pip:
-    name:
-      - requests
-      - numpy
-      - sentry-sdk
+    name: requests
     state: present
     executable: pip3
   tags:
@@ -12,9 +9,9 @@
 
 - name: Create script folder
   file:
-    path: "{{ node.solana_home }}/monitoring"
-    owner: "{{ node.solana_user }}"
-    group: "{{ node.solana_user }}"
+    path: "{{ solana_home }}/monitoring"
+    owner: "{{ solana_user }}"
+    group: "{{ solana_user }}"
     mode: 0755
     state: directory
   tags: 
@@ -23,9 +20,9 @@
 - name: Upload monitoring library
   copy:
     src: files/validator_monitoring_library.py
-    dest: "{{ node.solana_home }}/monitoring/validator_monitoring_library.py"
-    owner: "{{ node.solana_user }}"
-    group: "{{ node.solana_user }}"
+    dest: "{{ solana_home }}/monitoring/validator_monitoring_library.py"
+    owner: "{{ solana_user }}"
+    group: "{{ solana_user }}"
     mode: 0644
   tags:
     - monitoring.script
@@ -34,9 +31,9 @@
 - name: Upload common
   copy:
     src: files/common.py
-    dest: "{{ node.solana_home }}/monitoring/common.py"
-    owner: "{{ node.solana_user }}"
-    group: "{{ node.solana_user }}"
+    dest: "{{ solana_home }}/monitoring/common.py"
+    owner: "{{ solana_user }}"
+    group: "{{ solana_user }}"
     mode: 0644
   tags:
     - monitoring.script
@@ -45,9 +42,9 @@
 - name: Upload request_utils
   copy:
     src: files/request_utils.py
-    dest: "{{ node.solana_home }}/monitoring/request_utils.py"
-    owner: "{{ node.solana_user }}"
-    group: "{{ node.solana_user }}"
+    dest: "{{ solana_home }}/monitoring/request_utils.py"
+    owner: "{{ solana_user }}"
+    group: "{{ solana_user }}"
     mode: 0644
   tags:
     - monitoring.script
@@ -56,9 +53,9 @@
 - name: Upload solana_rpc
   copy:
     src: files/solana_rpc.py
-    dest: "{{ node.solana_home }}/monitoring/solana_rpc.py"
-    owner: "{{ node.solana_user }}"
-    group: "{{ node.solana_user }}"
+    dest: "{{ solana_home }}/monitoring/solana_rpc.py"
+    owner: "{{ solana_user }}"
+    group: "{{ solana_user }}"
     mode: 0644
   tags:
     - monitoring.script
@@ -67,9 +64,9 @@
 - name: Upload monitoring script
   copy:
     src: files/validator_monitoring.py
-    dest: "{{ node.solana_home }}/monitoring/validator_monitoring.py"
-    owner: "{{ node.solana_user }}"
-    group: "{{ node.solana_user }}"
+    dest: "{{ solana_home }}/monitoring/validator_monitoring.py"
+    owner: "{{ solana_user }}"
+    group: "{{ solana_user }}"
     mode: 0644
   tags:
     - monitoring.script
@@ -78,9 +75,9 @@
 - name: Upload monitoring script starter
   template:
     src: validator_monitoring_starter.sh.j2
-    dest: "{{ node.solana_home }}/monitoring/validator_monitoring_starter.sh"
-    owner: "{{ node.solana_user }}"
-    group: "{{ node.solana_user }}"
+    dest: "{{ solana_home }}/monitoring/validator_monitoring_starter.sh"
+    owner: "{{ solana_user }}"
+    group: "{{ solana_user }}"
     mode: 0755
   tags:
     - monitoring.script
@@ -89,9 +86,9 @@
 - name: Upload config script
   template:
     src: validator_monitoring_config.py.j2
-    dest: "{{ node.solana_home }}/monitoring/validator_monitoring_config.py"
-    owner: "{{ node.solana_user }}"
-    group: "{{ node.solana_user }}"
+    dest: "{{ solana_home }}/monitoring/validator_monitoring_config.py"
+    owner: "{{ solana_user }}"
+    group: "{{ solana_user }}"
     mode: 0644
   tags: 
     - monitoring.script

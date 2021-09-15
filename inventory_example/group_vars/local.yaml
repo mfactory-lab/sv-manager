@@ -1,0 +1,5 @@
+become: false
+ansible_connection: local
+ansible_python_interpreter: "{{ ansible_playbook_python }}"
+upload_validator_keys: False
+flat_path: True

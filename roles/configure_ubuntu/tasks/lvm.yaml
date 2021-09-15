@@ -9,7 +9,7 @@
 
 - name: create ledger mount point
   file:
-    path: "{{ validator.ledger_path }}"
+    path: "{{ ledger_path }}"
     state: directory
     mode: '0755'
   tags:
@@ -24,15 +24,15 @@
 
     - name: Add solana lvm
       lvol:
-        vg: "{{ node.lvm_vg }}"
+        vg: "{{ lvm_vg }}"
         lv: swap
-        size: "{{ (node.swap_file_size_gb | int + 5) | int }}G"
+        size: "{{ (swap_file_size_gb | int + 5) | int }}G"
         state: present
 
     - name: Create a ext4 filesystem on swap dir
       filesystem:
         fstype: ext4
-        dev: "/dev/{{ node.lvm_vg }}/swap"
+        dev: "/dev/{{ lvm_vg }}/swap"
 
     - name: Create swap dir mount point
       file:
@@ -43,13 +43,13 @@
     - name: Write swap dir entry in fstab
       ansible.posix.mount:
         path: "/mnt/swap"
-        src: "/dev/{{ node.lvm_vg }}/swap"
+        src: "/dev/{{ lvm_vg }}/swap"
         fstype: ext4
         state: mounted
 
     - name: Add solana lvm
       lvol:
-        vg: "{{ node.lvm_vg }}"
+        vg: "{{ lvm_vg }}"
         lv: ledger
         size: 100%FREE
         state: present
@@ -57,12 +57,12 @@
     - name: Create a ext4 filesystem on ledger
       filesystem:
         fstype: ext4
-        dev: "/dev/{{ node.lvm_vg }}/ledger"
+        dev: "/dev/{{ lvm_vg }}/ledger"
 
     - name: Write ledger entry in fstab
       ansible.posix.mount:
         path: "{{ validator.ledger_path }}"
-        src: "/dev/{{ node.lvm_vg }}/ledger"
+        src: "/dev/{{ lvm_vg }}/ledger"
         fstype: ext4
         state: mounted
 

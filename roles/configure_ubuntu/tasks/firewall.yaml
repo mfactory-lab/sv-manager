@@ -28,7 +28,7 @@
     rule: allow
     proto: tcp
     direction: in
-    port: '{{ validator.solana_rpc_port }}'
+    port: '{{ solana_rpc_port }}'
   tags:
     - config.firewall
 
@@ -37,7 +37,7 @@
     rule: allow
     proto: udp
     direction: in
-    port: '{{ validator.open_solana_ports_start }}:{{ validator.open_solana_ports_end }}'
+    port: '{{ open_solana_ports_start }}:{{ open_solana_ports_end }}'
   tags:
     - config.firewall
 
@@ -46,7 +46,7 @@
     rule: allow
     proto: tcp
     direction: in
-    port: '{{ validator.open_solana_ports_start }}:{{ validator.open_solana_ports_end }}'
+    port: '{{ open_solana_ports_start }}:{{ open_solana_ports_end }}'
   tags:
     - config.firewall
 

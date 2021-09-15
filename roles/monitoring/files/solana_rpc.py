@@ -45,7 +45,7 @@ def load_identity_account_balance(config: ValidatorConfig, identity_account_pubk
 def load_epoch_info(config: ValidatorConfig):
     """
     loads epoch info
-    https://docs.solana.com/developing/clients/jsonrpc-api#getepochinfo
+    https://docs.solana.com/developing/clients/jsonrpc-api#getbalance
     """
     return smart_rpc_call(config, "getEpochInfo", [], {})
 
@@ -118,10 +118,10 @@ def load_stake_account_rewards(config: ValidatorConfig, stake_account):
 
 
 def load_solana_validators(config: ValidatorConfig):
-    cmd = f'solana validators -ul --output json-compact'
+    cmd = f'solana validators --output json-compact'
     data = execute_cmd_str(config, cmd, convert_to_json=True)
 
-    if (data is not None) and ('validators' in data):
+    if 'validators' in data:
         return data['validators']
     else:
         return None

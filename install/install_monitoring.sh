@@ -8,7 +8,7 @@ echo "########################################################"
 
 install_monitoring () {
 
-  rm -rf sv_manager/
+    rm -rf sv_manager/
 
   if [[ $(which apt | wc -l) -gt 0 ]]
   then
@@ -23,9 +23,6 @@ install_monitoring () {
   echo "### Install ansible, curl, unzip... ###"
   $pkg_manager install ansible curl unzip --yes
 
-  ansible-galaxy collection install ansible.posix
-  ansible-galaxy collection install community.general
-
   echo "### Download Solana validator manager"
   cmd="https://github.com/mfactory-lab/sv-manager/archive/refs/tags/$1.zip"
   echo "starting $cmd"
@@ -38,11 +35,11 @@ install_monitoring () {
   cd ./sv_manager || exit
   cp -r ./inventory_example ./inventory
 
-  echo "### Which cluster do you want to monitor? ###"
+  echo "### Which cluster you wnat to monitor? ###"
   select cluster in "mainnet-beta" "testnet"; do
       case $cluster in
-          mainnet-beta ) cluster_environment="mainnet-beta"; break;;
-          testnet ) cluster_environment="testnet"; break;;
+          mainnet-beta ) entry_point="https://api.mainnet-beta.solana.com"; inventory="mainnet.yaml"; break;;
+          testnet ) entry_point="https://api.testnet.solana.com"; inventory="testnet.yaml"; break;;
       esac
   done
 
@@ -60,23 +57,21 @@ install_monitoring () {
 
   read -e -p "### Please tell which user is running validator: " SOLANA_USER
   #echo $(pwd)
-  ansible-playbook --connection=local --inventory ./inventory --limit local  playbooks/pb_config.yaml --extra-vars "{'host_hosts': 'local', \
+  ansible-playbook --connection=local --inventory ./inventory/$inventory --limit local  playbooks/pb_config.yaml --extra-vars " \
   'solana_user': '$SOLANA_USER', \
   'validator_name':'$VALIDATOR_NAME', \
-  'secrets_path': '$PATH_TO_VALIDATOR_KEYS', \
-  'flat_path': 'True', \
-  'cluster_environment':'$cluster_environment'\
+  'local_secrets_path': '$PATH_TO_VALIDATOR_KEYS', \
   }"
 
-  ansible-playbook --connection=local --inventory ./inventory --limit local  playbooks/pb_install_monitoring.yaml --extra-vars "@/etc/sv_manager/sv_manager.conf" --extra-vars 'host_hosts=local'
+  ansible-playbook --connection=local --inventory ./inventory/$inventory --limit local  playbooks/pb_install_monitoring.yaml --extra-vars "@/etc/sv_manager/sv_manager.conf"
 
   echo "### Cleanup install folder ###"
   cd ..
   rm -r ./sv_manager
   echo "### Cleanup install folder done ###"
-  echo "### Check your dashboard: https://solana.thevalidators.io/d/e-8yEOXMwerfwe/solana-monitoring-v1-0-preview?&var-server="$VALIDATOR_NAME
+  echo "### Check your dashboard: https://solana.thevalidators.io/d/e-8yEOXMwerfwe/solana-monitoring-v1-0?&var-server="$VALIDATOR_NAME
 
-  echo Do you want to Uninstall ansible?
+  echo Do you want to UNinstall ansible?
   select yn in "Yes" "No"; do
       case $yn in
           Yes ) $pkg_manager remove ansible --yes; break;;

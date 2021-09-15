@@ -84,8 +84,8 @@ which will directly provide a support for Solana Validator Manager, until that y
 
 1. clone git repository
    git clone ...
-1. copy or rename [inventory_example directory](../inventory_example) to directory named *inventory*
-2. add to your inventory/hosts.yaml
+1. copy or rename [inventories_example directory](../inventory_example) to directory named *inventory*
+2. add to your inventories/hosts.yaml
 
 * validator name
 * ip-address of your validator node
@@ -120,7 +120,7 @@ all:
 #            swap_file_size_gb: 64
 #            ramdisk_size_gb: 64
 #            cluster_environment: testnet
-#            cluster_rpc_address: https://api.testnet.solana.com
+#            cluster_rpc_address: https://testnet.solana.com
           hosts:
             0.0.0.0 <- HERE
 ````
