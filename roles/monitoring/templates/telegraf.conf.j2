@@ -31,8 +31,8 @@
   commands = [
                "sudo -i -u {{ node.solana_user }} {{ node.solana_home }}/monitoring/output_starter.sh output_gossip"
              ]
-  interval = "30s"
-  timeout = "30s"
+  interval = "3600s"
+  timeout = "3600s"
   json_name_key = "measurement"
   json_time_key = "time"
   tag_keys = ["data_identityPubkey", "cluster_environment"]
@@ -49,8 +49,8 @@
   commands = [
                "sudo -i -u {{ node.solana_user }} {{ node.solana_home }}/monitoring/output_starter.sh output_validators_info"
              ]
-  interval = "3600s"
-  timeout = "3600s"
+  interval = "120s"
+  timeout = "120s"
   json_name_key = "measurement"
   json_time_key = "time"
   tag_keys = ["data_identityPubkey", "cluster_environment"]
