@@ -1,12 +1,12 @@
 ---
-- name: Check identity keypair exists
+- name: "Create keys: Check identity keypair exists"
   stat:
     path: "{{ secrets_path }}/validator-keypair.json"
   register: validator_keypair_exists
   tags:
     - validator.manage.keys.create.identity
 
-- name: Check vote account keypair exists
+- name: "Create keys: Check vote account keypair exists"
   stat:
     path: "{{ secrets_path }}/vote-account-keypair.json"
   register: vote_account_keypair_exists
@@ -14,21 +14,21 @@
   tags:
     - validator.manage.keys.create.vote
 
-- name: Build flat keys path
+- name: "Create keys: Build flat keys path"
   set_fact:
     secrets_local_path: "{{ local_secrets_path }}"
   when: flat_path
   tags:
     - validator.manage.keys.create
 
-- name: Build non flat keys path
+- name: "Create keys: Build non flat keys path"
   set_fact:
     secrets_local_path: "{{ local_secrets_path }}/{{ validator_name }}/solana/"
   when: not flat_path
   tags:
     - validator.manage.keys.create
 
-- name: Check identity keypair exists locally
+- name: "Create keys: Check identity keypair exists locally"
   connection: local
   become: no
   delegate_to: localhost
@@ -38,7 +38,7 @@
   tags:
     - validator.manage.keys.create.identity
 
-- name: Check vote account keypair exists locally
+- name: "Create keys: Check vote account keypair exists locally"
   connection: local
   become: no
   delegate_to: localhost
@@ -48,7 +48,7 @@
   tags:
     - validator.manage.keys.create.vote
 
-- name: Create identity keypair
+- name: "Create keys: Create identity keypair"
   shell: solana-keygen new --silent --no-bip39-passphrase --outfile {{ secrets_path }}/validator-keypair.json
   environment:
     PATH: "{{ env_path }}"
@@ -58,7 +58,7 @@
         and not validator_keypair_exists.stat.exists
         and cluster_environment == 'testnet'
 
-- name: Create vote account keypair
+- name: "Create keys: Create vote account keypair"
   shell: solana-keygen new --silent --no-bip39-passphrase --outfile {{ secrets_path }}/vote-account-keypair.json
   environment:
     PATH: "{{ env_path }}"
@@ -68,7 +68,7 @@
         and not vote_account_keypair_exists.stat.exists
         and cluster_environment == 'testnet'
 
-- name: Airdrop 1 sol to validator-keypair
+- name: "Create keys: Airdrop 1 sol to validator-keypair"
   shell: solana airdrop --keypair {{ secrets_path }}/validator-keypair.json 1
   environment:
     PATH: "{{ env_path }}"
@@ -77,7 +77,7 @@
   when: not vote_account_keypair_exists.stat.exists
         and cluster_environment == 'testnet'
 
-- name: Create vote account
+- name: "Create keys: Create vote account"
   shell: solana create-vote-account {{ secrets_path }}/vote-account-keypair.json {{ secrets_path }}/validator-keypair.json --keypair ~/.secrets/validator-keypair.json
   environment:
     PATH: "{{ env_path }}"
@@ -87,7 +87,7 @@
         and not vote_account_keypair_exists_locally.stat.exists
         and cluster_environment == 'testnet'
 
-- name: fetch validator-keypair
+- name: "Create keys: fetch validator-keypair"
   fetch:
     src: "{{ secrets_path }}/validator-keypair.json"
     dest: "{{ secrets_local_path }}"
@@ -98,7 +98,7 @@
         and not validator_keypair_exists_locally.stat.exists
         and "'local' not in group_names"
 
-- name: fetch vote-account-keypair
+- name: "Create keys: fetch vote-account-keypair"
   fetch:
     src: "/home/{{ solana_user }}/.secrets/vote-account-keypair.json"
     dest: "{{ secrets_local_path }}"
