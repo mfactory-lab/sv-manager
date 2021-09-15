@@ -9,7 +9,7 @@ entrypoints:
   - entrypoint.testnet.solana.com:8001
   - entrypoint2.testnet.solana.com:8001
   - entrypoint3.testnet.solana.com:8001
-trusted_validators:
+known_validators:
   - 5D1fNXzvv5NjV1ysLjirC4WY92RNsVH18vjmcszZd8on
   - 7XSY3MrYnK8vq693Rju17bbPkCN3Z7KvvfvJx4kdrsSY
   - Ft5fbkqNa76vnsjYNwjDZUXoTWpP7VYm3mtsaQckQADN

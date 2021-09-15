@@ -28,8 +28,8 @@ ExecStart={{ env_path }}/solana-validator \
 {% for entrypoint in entrypoints %}
 --entrypoint {{ entrypoint }} \
 {% endfor %}
-{% for trusted_validator in trusted_validators %}
---trusted-validator {{ trusted_validator }} \
+{% for known_validator in known_validators %}
+--known-validator {{ known_validator }} \
 {% endfor %}
 {%if 'mainnet_validators' in group_names %}
 --private-rpc \
