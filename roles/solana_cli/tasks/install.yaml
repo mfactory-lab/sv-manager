@@ -12,7 +12,7 @@
   block:
     - name: download latest solana release installer
       get_url:
-        url: https://release.solana.com/{{ solana_version | default('stable') }}/install
+        url: "https://release.solana.com/{{ solana_version | default('stable') }}/install"
         dest: /tmp/solana/
         mode: 0755
 
