@@ -6,6 +6,7 @@ ansible_user: 'root'
 #all:
 accounts_path: "{{ ramdisk_path }}/solana"
 env_path: "{{ solana_home }}/.local/share/solana/install/active_release/bin"
+fail_if_no_validator_keypair: True
 flat_path: True
 keybase_username: ''
 ledger_path: '/mnt/ledger'
@@ -29,71 +30,3 @@ telegraf_database: v_metrics
 telegraf_urls: http://influx.thevalidators.io:8086
 telegraf_username: v_user
 telegraf_password: thepassword
-
-
-
-
-
-
-
-
-
-####################################################################################################
-
-#cluster_environment: 'testnet'
-#cluster_rpc_address: 'https://api.testnet.solana.com' --> testnet/mainnet
-
-#lvm_vg: 'vg00'
-
-
-
-#set_validator_info: True
-service_user: 'solana'
-solana_validator_service: 'restarted'
-
-#
-# ??
-#flat_path: True
-##from input
-##keybase_username: '' -> hosts
-ramdisk_size_gb: 64
-swap_file_size_gb: 64
-upload_validator_keys: True
-
-
-vhosts: 'remote'
-  
-#local:
-#secrets_path: "{{ host.local_secrets_path }}"
-#flat_path: "{{ host.flat_path }}"
-
-#cluster:
-environment: '{{ cluster_environment }}'
-entrypoint: "{{ cluster_environment }}.solana.com"
-rpc_address: "{{ cluster_rpc_address }}"
-
-
-
-#ramdisk_size_gb: "{{ host.ramdisk_size_gb }}"
-#solana_user: "{{ host.solana_user }}"
-#solana_home: "/home/{{ solana_user }}"
-#swap_file_size_gb: "{{ host.swap_file_size_gb }}"
-
-#validator:
-
-fail_if_no_validator_keypair: True
-#  name: "{{ host.validator_name }}"
-
-#secrets_path: "{{ host.secrets_path }}"
-#set_validator_info: "{{ host.set_validator_info }}"
-#service_user: "{{ service_user }}"
-#solana_validator_service: "{{ host.solana_validator_service }}"
-#solana_rpc_port: 8899
-#upload_validator_keys: "{{ host.upload_validator_keys }}"
-#version: v1.6.9
-  
-
-
-
-
-
