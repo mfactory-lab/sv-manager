@@ -18,7 +18,7 @@
   register: validator_keypair_exists
   tags:
     - validator.manage.keys.create.vote
-  when: fail_if_no_validator_keypair
+  when: not fail_if_no_validator_keypair
 
 - name: "Upload keys: upload validator-keypair"
   copy:
