@@ -49,7 +49,7 @@
     - validator.manage.keys.create.vote
 
 - name: "Create keys: Create identity keypair"
-  shell: solana-keygen new --silent --no-bip39-passphrase --outfile {{ secrets_path }}/validator-keypair.json
+  shell: "solana-keygen new --silent --no-bip39-passphrase --outfile {{ secrets_path }}/validator-keypair.json"
   environment:
     PATH: "{{ env_path }}"
   tags:
@@ -59,7 +59,7 @@
         and cluster_environment == 'testnet'
 
 - name: "Create keys: Create vote account keypair"
-  shell: solana-keygen new --silent --no-bip39-passphrase --outfile {{ secrets_path }}/vote-account-keypair.json
+  shell: "solana-keygen new --silent --no-bip39-passphrase --outfile {{ secrets_path }}/vote-account-keypair.json"
   environment:
     PATH: "{{ env_path }}"
   tags:
@@ -69,7 +69,7 @@
         and cluster_environment == 'testnet'
 
 - name: "Create keys: Airdrop 1 sol to validator-keypair"
-  shell: solana airdrop --keypair {{ secrets_path }}/validator-keypair.json 1
+  shell: "solana airdrop --keypair {{ secrets_path }}/validator-keypair.json 1"
   environment:
     PATH: "{{ env_path }}"
   tags:
@@ -78,7 +78,7 @@
         and cluster_environment == 'testnet'
 
 - name: "Create keys: Create vote account"
-  shell: solana create-vote-account {{ secrets_path }}/vote-account-keypair.json {{ secrets_path }}/validator-keypair.json --keypair ~/.secrets/validator-keypair.json
+  shell: "solana create-vote-account {{ secrets_path }}/vote-account-keypair.json {{ secrets_path }}/validator-keypair.json --keypair ~/.secrets/validator-keypair.json"
   environment:
     PATH: "{{ env_path }}"
   tags:
