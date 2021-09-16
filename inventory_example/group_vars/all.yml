@@ -6,8 +6,8 @@ ansible_user: 'root'
 #all:
 accounts_path: "{{ ramdisk_path }}/solana"
 env_path: "{{ solana_home }}/.local/share/solana/install/active_release/bin"
-fail_if_no_validator_keypair: true
-flat_path: true
+fail_if_no_validator_keypair: True
+flat_path: True
 keybase_username: ''
 ledger_path: '/mnt/ledger'
 local_secrets_path: '../.secrets'
@@ -21,6 +21,7 @@ secrets_path: "/home/{{ solana_user }}/.secrets'"
 snapshots_path: '/mnt/snapshots'
 solana_home: "/home/{{ solana_user }}"
 solana_rpc_port: 8899
+upload_validator_keys: True
 validator_homepage: ''
 validator_description: 'Installed with https://sv-manager.thevalidators.io'
 validator_log_file: /var/log/solana-validator.log

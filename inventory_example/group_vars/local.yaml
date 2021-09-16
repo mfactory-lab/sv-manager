@@ -1,5 +1,4 @@
-become: false
+become: False
 ansible_connection: local
 ansible_python_interpreter: "{{ ansible_playbook_python }}"
-upload_validator_keys: true
-flat_path: true
+flat_path: True

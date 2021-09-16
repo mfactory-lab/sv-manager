@@ -1,6 +1,5 @@
 ---
-set_validator_info: false
-upload_validator_keys: true
+set_validator_info: False
 cluster_environment: 'mainnet-beta'
 cluster_rpc_address: 'https://api.mainnet-beta.solana.com'
 solana_validator_service: stopped
