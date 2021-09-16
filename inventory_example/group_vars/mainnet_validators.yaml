@@ -1,6 +1,6 @@
 ---
-set_validator_info: False
-upload_validator_keys: True
+set_validator_info: false
+upload_validator_keys: true
 cluster_environment: 'mainnet-beta'
 cluster_rpc_address: 'https://api.mainnet-beta.solana.com'
 solana_validator_service: stopped
@@ -21,5 +21,5 @@ expected_genesis_hash: '5eykt4UsFv8P8NJdTREpY1vzqKqZKvdpKuc147dw2N9d'
 limit_ledger_size: 100000000
 snapshot_interval_slots: 2000
 maximum_local_snapshot_age: 3000
-solana_version: 1.6.20
+solana_version: 1.6.25
 extra_vars:

@@ -6,8 +6,8 @@ ansible_user: 'root'
 #all:
 accounts_path: "{{ ramdisk_path }}/solana"
 env_path: "{{ solana_home }}/.local/share/solana/install/active_release/bin"
-fail_if_no_validator_keypair: True
-flat_path: True
+fail_if_no_validator_keypair: true
+flat_path: true
 keybase_username: ''
 ledger_path: '/mnt/ledger'
 local_secrets_path: '../.secrets'
