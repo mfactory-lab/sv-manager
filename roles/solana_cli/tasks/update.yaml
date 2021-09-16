@@ -1,5 +1,5 @@
 - name: update solana
-  shell: solana-install init {{ validator_version | default('stable') }}
+  shell: solana-install init {{ solana_version | default('stable') }}
   become: yes
   become_user: "{{ solana_user }}"
   environment:
