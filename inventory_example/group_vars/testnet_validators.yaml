@@ -1,5 +1,5 @@
 ---
-set_validator_info: False
+set_validator_info: true
 validator_name: "{{ inventory_hostname }}"
 upload_validator_keys: true
 cluster_environment: 'testnet'
