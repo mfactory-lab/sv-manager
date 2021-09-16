@@ -33,7 +33,7 @@
   become: no
   delegate_to: localhost
   stat:
-    path: "{{ secrets_local_path }}\validator-keypair.json"
+    path: "{{ secrets_local_path }}/validator-keypair.json"
   register: validator_keypair_exists_locally
   tags:
     - validator.manage.keys.create.identity
@@ -43,7 +43,7 @@
   become: no
   delegate_to: localhost
   stat:
-    path: "{{ secrets_local_path }}\vote-account-keypair.json"
+    path: "{{ secrets_local_path }}/vote-account-keypair.json"
   register: vote_account_keypair_exists_locally
   tags:
     - validator.manage.keys.create.vote
