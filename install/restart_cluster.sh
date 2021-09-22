@@ -32,7 +32,7 @@ create_config() {
   cd ./sv_manager || exit
   cp -r ./inventory_example ./inventory
 
-  echo "### Which cluster do you want to monitor? ###"
+  echo "### Which cluster do you want to configure? ###"
   select cluster in "mainnet-beta" "testnet"; do
       case $cluster in
           mainnet-beta ) cluster_environment="mainnet-beta"; break;;
@@ -113,5 +113,12 @@ echo "### Validator has been already installed. Start update?"
   done
 else
   echo '### Validator is not installed, or the version is too old. ###'
-  create_config "${1:-latest}"
+  echo '### should we create valiadtor config. ###'
+  select yn in "Yes" "No"; do
+      case $yn in
+          Yes ) create_config "${1:-latest}"; break;;
+          No ) echo "### Aborting update. No changes are made on the system."; exit;;
+      esac
+  done
+
 fi
