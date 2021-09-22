@@ -9,14 +9,16 @@
     - validator.cluster.restart.stop
 
 - name: install solana 1.7.12
-  shell: sh -c "$(curl -sSfL https://release.solana.com/1.7.12/install)"
+  shell: solana-init init 1.7.12
+  environment:
+    PATH: "{{ node.solana_home }}/.local/share/solana/install/active_release/bin"
   become: yes
   become_user: "{{ node.solana_user }}"
   tags:
     - validator.cluster.restart
     - validator.cluster.restart.cli.install
 
-- name: wait for restarting window
+- name: create snapshot from ledger
   become: yes
   become_user: "{{ node.solana_user }}"
   shell: "solana-ledger-tool --ledger {{ validator.ledger_path }} create-snapshot 95038710 {{ validator.snapshots_path }} --hard-fork 95038710 --wal-recovery-mode skip_any_corrupted_record"
