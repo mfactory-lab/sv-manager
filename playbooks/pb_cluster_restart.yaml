@@ -1,0 +1,9 @@
+---
+
+- name: restart cluster
+  hosts: "{{ host_hosts | default('remote') }}"
+  become: yes
+  tags:
+    - validator.manage.restart.service
+  roles:
+    - restart_cluster

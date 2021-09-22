@@ -1,0 +1,58 @@
+---
+
+- name: stop solana validator service
+  systemd:
+    name: solana-validator
+    state: stopped
+  tags:
+    - validator.cluster.restart
+    - validator.cluster.restart.stop
+
+- name: install solana 1.7.12
+  shell: sh -c "$(curl -sSfL https://release.solana.com/1.7.12/install)"
+  become: yes
+  become_user: "{{ node.solana_user }}"
+  tags:
+    - validator.cluster.restart
+    - validator.cluster.restart.cli.install
+
+- name: wait for restarting window
+  become: yes
+  become_user: "{{ node.solana_user }}"
+  shell: "solana-ledger-tool --ledger {{ validator.ledger_path }} create-snapshot 95038710 {{ validator.snapshots_path }} --hard-fork 95038710 --wal-recovery-mode skip_any_corrupted_record"
+  environment:
+    PATH: "{{ node.solana_home }}/.local/share/solana/install/active_release/bin"
+  ignore_errors: True
+  tags:
+    - validator.cluster.restart
+    - validator.cluster.restart.ledger.snapshot
+
+- name: backup solana validator service
+  copy:
+    src:  /etc/systemd/system/solana-validator.service
+    dest: /etc/systemd/system/solana-validator.service.backup
+    mode: 0644
+    owner: root
+    group: root
+  tags:
+    - validator.cluster.restart
+    - validator.cluster.restart.backup
+
+- name: Create solana validator service
+  template:
+    src: solana-validator.{{ cluster.environment }}.service.j2
+    dest: /etc/systemd/system/solana-validator.service
+    mode: 0644
+    owner: root
+    group: root
+  tags:
+    - validator.cluster.restart
+    - validator.cluster.restart.service
+
+- name: stop solana validator service
+  systemd:
+    name: solana-validator
+    state: started
+  tags:
+    - validator.cluster.restart
+    - validator.cluster.restart.start
