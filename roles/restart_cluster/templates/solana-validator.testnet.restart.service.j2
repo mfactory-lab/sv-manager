@@ -30,6 +30,7 @@ ExecStart={{ node.solana_home }}/.local/share/solana/install/active_release/bin/
 --entrypoint 'entrypoint.{{ cluster.entrypoint }}:8001' \
 --entrypoint 'entrypoint2.{{ cluster.entrypoint }}:8001' \
 --entrypoint 'entrypoint3.{{ cluster.entrypoint }}:8001' \
+--no-port-check \
 --limit-ledger-size \
 --log {{ validator.log_file }} \
 --ledger {{ validator.ledger_path }} \

@@ -79,6 +79,14 @@
 - name: start solana validator service
   systemd:
     name: solana-validator
+    state: reloaded
+  tags:
+    - validator.cluster.restart
+    - validator.cluster.restart.start
+
+- name: start solana validator service
+  systemd:
+    name: solana-validator
     state: started
   tags:
     - validator.cluster.restart
