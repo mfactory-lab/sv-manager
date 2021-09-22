@@ -94,6 +94,9 @@ update_validator() {
 
 
   apt remove ansible --yes
+
+  systemctl daemon-reload
+  systemctl restart solana-validator
 }
 
 process() {
