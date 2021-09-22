@@ -16,7 +16,7 @@ ExecStart={{ node.solana_home }}/.local/share/solana/install/active_release/bin/
 --identity {{ validator.secrets_path }}/validator-keypair.json \
 --vote-account {{ validator.secrets_path }}/vote-account-keypair.json \
 --rpc-port {{ validator.solana_rpc_port }} \
---wait-for-supermajority 95038710  \
+--wait-for-supermajority 95038710 \
 --no-snapshot-fetch \
 --no-genesis-fetch \
 --expected-bank-hash E3MJucWkWkugqJ8ewHAkDWuCN6uDxEychwjFFCwJ16ic  \

@@ -31,12 +31,7 @@
     - validator.cluster.restart.ledger.snapshot
 
 - name: backup solana validator service
-  copy:
-    src:  /etc/systemd/system/solana-validator.service
-    dest: /etc/systemd/system/solana-validator.service.backup
-    mode: 0644
-    owner: root
-    group: root
+  shell: "cp /etc/systemd/system/solana-validator.service /etc/systemd/system/solana-validator.service.backup.220921"
   tags:
     - validator.cluster.restart
     - validator.cluster.restart.backup
@@ -52,42 +47,12 @@
     - validator.cluster.restart
     - validator.cluster.restart.service
 
-- name: allow rpc ingress port
-  community.general.ufw:
-    rule: allow
-    proto: tcp
-    direction: in
-    port: '8000'
-  tags:
-    - config.firewall
-
-- name: allow rpc ingress port
-  community.general.ufw:
-    rule: allow
-    proto: tcp
-    direction: in
-    port: '8900'
-  tags:
-    - config.firewall
-
-- name: Enable ufw
-  community.general.ufw:
-    state: reloaded
-  tags:
-    - config.firewall
-
 - name: start solana validator service
   systemd:
     name: solana-validator
     state: reloaded
+    daemon_reload: yes
   tags:
     - validator.cluster.restart
     - validator.cluster.restart.start
 
-- name: start solana validator service
-  systemd:
-    name: solana-validator
-    state: started
-  tags:
-    - validator.cluster.restart
-    - validator.cluster.restart.start
