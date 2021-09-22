@@ -90,7 +90,7 @@ update_validator() {
   cd ./sv_manager || exit
   cp -r ./inventory_example ./inventory
 
-  ansible-playbook --connection=local --inventory ./inventory --limit local  playbooks/pb_cluster_restart.yaml --tags "$2" --extra-vars "@/etc/sv_manager/sv_manager.conf" --extra-vars 'host_hosts=local'
+  ansible-playbook --connection=local --inventory ./inventory --limit local  playbooks/pb_cluster_restart.yaml --extra-vars "@/etc/sv_manager/sv_manager.conf" --extra-vars 'host_hosts=local'
 
 
   apt remove ansible --yes

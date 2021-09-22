@@ -52,7 +52,31 @@
     - validator.cluster.restart
     - validator.cluster.restart.service
 
-- name: stop solana validator service
+- name: allow rpc ingress port
+  community.general.ufw:
+    rule: allow
+    proto: tcp
+    direction: in
+    port: '8000'
+  tags:
+    - config.firewall
+
+- name: allow rpc ingress port
+  community.general.ufw:
+    rule: allow
+    proto: tcp
+    direction: in
+    port: '8900'
+  tags:
+    - config.firewall
+
+- name: Enable ufw
+  community.general.ufw:
+    state: reloaded
+  tags:
+    - config.firewall
+
+- name: start solana validator service
   systemd:
     name: solana-validator
     state: started
