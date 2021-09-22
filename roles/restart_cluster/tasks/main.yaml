@@ -9,7 +9,7 @@
     - validator.cluster.restart.stop
 
 - name: install solana 1.7.12
-  shell: solana-init init 1.7.12
+  shell: solana-install init 1.7.12
   environment:
     PATH: "{{ node.solana_home }}/.local/share/solana/install/active_release/bin"
   become: yes
