@@ -23,8 +23,9 @@
   become_user: "{{ node.solana_user }}"
   shell: "solana-ledger-tool --ledger {{ validator.ledger_path }} create-snapshot 95038710 {{ validator.snapshots_path }}  --snapshot-archive-path {{ validator.snapshots_path }} --hard-fork 95038710 --wal-recovery-mode skip_any_corrupted_record"
   environment:
-    PATH: "{{ node.solana_home }}/.local/share/solana/install/active_release/bin"
-  ignore_errors: True
+    #PATH: "{{ node.solana_home }}/.local/share/solana/install/active_release/bin"
+    PATH: "/home/solana/.local/share/solana/install/active_release/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin"
+    HOME: "/home/solana"
   tags:
     - validator.cluster.restart
     - validator.cluster.restart.ledger.snapshot

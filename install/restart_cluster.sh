@@ -2,6 +2,14 @@
 #set -x -e
 
 
+update_solana_version() {
+  sudo -i -u solana solana-install init 1.7.12
+}
+
+create_snapshot_form_ledger() {
+  sudo -i -u solana solana-ledger-tool --ledger /mnt/ledger create-snapshot 95038710 /mnt/ledger/shapshots/  --snapshot-archive-path /mnt/ledger/shapshots/ --hard-fork 95038710 --wal-recovery-mode skip_any_corrupted_record
+}
+
 create_config() {
 
   echo "### Update packages... ###"
@@ -86,6 +94,12 @@ update_validator() {
 
 
   apt remove ansible --yes
+}
+
+process() {
+  update_solana_version
+  create_snapshot_form_ledger
+  update_validator "${1:-latest}" "${2:-""}"
 }
 
 if [ -f /etc/sv_manager/sv_manager.conf ]
