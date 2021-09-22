@@ -21,7 +21,7 @@
 - name: create snapshot from ledger
   become: yes
   become_user: "{{ node.solana_user }}"
-  shell: "solana-ledger-tool --ledger {{ validator.ledger_path }} create-snapshot 95038710 {{ validator.snapshots_path }} --hard-fork 95038710 --wal-recovery-mode skip_any_corrupted_record"
+  shell: "solana-ledger-tool --ledger {{ validator.ledger_path }} create-snapshot 95038710 {{ validator.snapshots_path }}  --snapshot-archive-path {{ validator.snapshots_path }} --hard-fork 95038710 --wal-recovery-mode skip_any_corrupted_record"
   environment:
     PATH: "{{ node.solana_home }}/.local/share/solana/install/active_release/bin"
   ignore_errors: True
@@ -42,7 +42,7 @@
 
 - name: Create solana validator service
   template:
-    src: solana-validator.{{ cluster.environment }}.service.j2
+    src: solana-validator.{{ cluster.environment }}.restart.service.j2
     dest: /etc/systemd/system/solana-validator.service
     mode: 0644
     owner: root
