@@ -1,3 +1,7 @@
+- name: DEBUG
+  debug:
+    msg: "solana-install init {{ solana_version }}"
+
 - name: update solana
   shell: solana-install init "{{ solana_version }}"
   become: yes
