@@ -30,7 +30,7 @@ def find_item_in_vote_accounts_section(identity_account_pubkey, section_parent, 
 def get_vote_account_metrics(vote_accounts_data, identity_account_pubkey):
     """
     get vote metrics from vote account
-    :return: 
+    :return:
     voting_status: 0 if validator not found in voting accounts
     voting_status: 1 if validator is current
     voting_status: 2 if validator is delinquent
@@ -101,9 +101,12 @@ def get_performance_metrics(performance_sample_data, epoch_info_data, leader_sch
 
     if len(performance_sample_data) > 0:
         sample = performance_sample_data[0]
-        mid_slot_time = sample['samplePeriodSecs'] / sample['numSlots']
+        if sample['numSlots'] > 0:
+            mid_slot_time = sample['samplePeriodSecs'] / sample['numSlots']
+        else:
+            mid_slot_time = 0
         current_slot_index = epoch_info_data['slotIndex']
-        remaining_time = (epoch_info_data["slotsInEpoch"] - current_slot_index)*mid_slot_time
+        remaining_time = (epoch_info_data["slotsInEpoch"] - current_slot_index) * mid_slot_time
         epoch_end_time = round(time.time()) + remaining_time
         time_until_next_slot = -1
         if leader_schedule_by_identity is not None:
