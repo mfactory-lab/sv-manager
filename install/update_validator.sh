@@ -68,7 +68,7 @@ update_validator() {
 
 #  wait_for_restart_window
 
-  ansible-playbook --connection=local --inventory ./inventory --limit local  playbooks/pb_install_validator.yaml --tags "$2" --extra-vars "@/etc/sv_manager/sv_manager.conf" --extra-vars 'host_hosts=local'
+  ansible-playbook --connection=local --inventory ./inventory --limit local  playbooks/pb_install_validator.yaml --tags "$3" --extra-vars "@/etc/sv_manager/sv_manager.conf" --extra-vars 'host_hosts=local' --extra-vars "version=$2"
 
   catchup_info
 
@@ -86,7 +86,7 @@ then
 echo "### Validator has been already installed. Start update?"
 select yn in "Yes" "No"; do
     case $yn in
-        Yes ) update_validator "${1:-latest}" "${2:-""}"; break;;
+        Yes ) update_validator "${1:-latest}" "${2:-""}" "${3:-""}"; break;;
         No ) echo "### Aborting update. No changes are made on the system."; exit;;
     esac
 done
