@@ -22,7 +22,7 @@
   tags:
     validator.service.sys-tuner
 
-- name: Start solana-sys-tuner service
+- name: Restart solana-sys-tuner service
   systemd:
     name: solana-sys-tuner
     state: restarted

@@ -101,9 +101,12 @@ def get_performance_metrics(performance_sample_data, epoch_info_data, leader_sch
 
     if len(performance_sample_data) > 0:
         sample = performance_sample_data[0]
-        mid_slot_time = sample['samplePeriodSecs'] / sample['numSlots']
+        if sample['numSlots'] > 0:
+            mid_slot_time = sample['samplePeriodSecs'] / sample['numSlots']
+        else:
+            mid_slot_time = 0
         current_slot_index = epoch_info_data['slotIndex']
-        remaining_time = (epoch_info_data["slotsInEpoch"] - current_slot_index)*mid_slot_time
+        remaining_time = (epoch_info_data["slotsInEpoch"] - current_slot_index) * mid_slot_time
         epoch_end_time = round(time.time()) + remaining_time
         time_until_next_slot = -1
         if leader_schedule_by_identity is not None:

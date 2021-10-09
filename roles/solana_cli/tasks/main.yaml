@@ -20,11 +20,13 @@
 - name: install solana cli
   import_tasks: install.yaml
   tags:
+    - cli
     - cli.install
   when: force == 'true' or not solana_exists.stat.exists
 
 - name: update solana cli
   import_tasks: update.yaml
   tags:
+    - cli
     - cli.update
   when: force != 'true' and solana_exists.stat.exists

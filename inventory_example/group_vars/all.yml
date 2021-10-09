@@ -11,6 +11,7 @@ flat_path: True
 keybase_username: ''
 ledger_path: '/mnt/ledger'
 local_secrets_path: '../.secrets'
+log_level: "WARN"
 lvm_enabled: False
 name: "{{ inventory_hostname }}"
 open_solana_ports_start: 8000
@@ -24,7 +25,7 @@ solana_rpc_port: 8899
 upload_validator_keys: True
 validator_homepage: ''
 validator_description: 'Installed with https://sv-manager.thevalidators.io'
-validator_log_file: /var/log/solana-validator.log
+validator_log_file: /mnt/ledger/log/solana-validator.log
 
 #monitoring:
 telegraf_database: v_metrics

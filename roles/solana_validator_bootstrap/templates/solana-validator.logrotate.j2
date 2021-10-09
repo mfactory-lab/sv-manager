@@ -1,4 +1,5 @@
-{{ validator_log_file }} {
+{{ validator.log_file }} {
+  su root root
   rotate 1
   daily
   size 1G
@@ -8,3 +9,4 @@
     systemctl kill -s USR1 solana-validator.service
   endscript
 }
+
