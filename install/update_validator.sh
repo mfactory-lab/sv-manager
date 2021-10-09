@@ -55,7 +55,7 @@ update_validator() {
   ansible-galaxy collection install community.general
 
   echo "### Download Solana validator manager"
-  cmd="https://github.com/mfactory-lab/sv-manager/archive/refs/tags/$1.zip"
+  cmd="https://github.com/mfactory-lab/sv-manager/archive/refs/tags/$3.zip"
   echo "starting $cmd"
   curl -fsSL "$cmd" --output sv_manager.zip
   echo "### Unpack Solana validator manager ###"
@@ -66,9 +66,12 @@ update_validator() {
   cd ./sv_manager || exit
   cp -r ./inventory_example ./inventory
 
-  wait_for_restart_window
+  if [ "$4" = "wait" ]
+  then
+    wait_for_restart_window
+  fi
 
-  ansible-playbook --connection=local --inventory ./inventory --limit local  playbooks/pb_install_validator.yaml --tags "$2" --extra-vars "@/etc/sv_manager/sv_manager.conf" --extra-vars 'host_hosts=local'
+  ansible-playbook --connection=local --inventory ./inventory --limit local  playbooks/pb_install_validator.yaml --tags "$2" --extra-vars "@/etc/sv_manager/sv_manager.conf" --extra-vars 'host_hosts=local' --extra-vars "version=$1"
 
   catchup_info
 
@@ -86,7 +89,7 @@ then
 echo "### Validator has been already installed. Start update?"
 select yn in "Yes" "No"; do
     case $yn in
-        Yes ) update_validator "${1:-latest}" "${2:-""}"; break;;
+        Yes ) update_validator "${1:-""}" "${2:-""}" "${3:-latest}" "${4:-wait}";  sobreak;;
         No ) echo "### Aborting update. No changes are made on the system."; exit;;
     esac
 done
