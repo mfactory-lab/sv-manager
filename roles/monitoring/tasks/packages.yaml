@@ -2,7 +2,7 @@
   apt:
     update_cache: yes
 
-- name: Install additinal packages
+- name: Install additional packages
   apt:
     pkg:
       - gpg

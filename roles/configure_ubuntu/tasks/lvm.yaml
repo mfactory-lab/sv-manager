@@ -61,7 +61,7 @@
 
     - name: Write ledger entry in fstab
       ansible.posix.mount:
-        path: "{{ validator.ledger_path }}"
+        path: "{{ ledger_path }}"
         src: "/dev/{{ lvm_vg }}/ledger"
         fstype: ext4
         state: mounted

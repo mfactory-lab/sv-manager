@@ -1,12 +1,12 @@
 ---
 
-- name: wait for restart windows
-  hosts: all
-  become: yes
-  tags:
-    - validator.manage.restart.wait
-  roles:
-    - solana_validator_restart
+# - name: wait for restart windows
+#   hosts: all
+#   become: yes
+#   tags:
+#     - validator.manage.restart.wait
+#   roles:
+#     - solana_validator_restart
 
 - name: update solana validator
   hosts: all

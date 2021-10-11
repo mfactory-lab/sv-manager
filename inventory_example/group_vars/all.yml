@@ -25,7 +25,7 @@ solana_rpc_port: 8899
 upload_validator_keys: True
 validator_homepage: ''
 validator_description: 'Installed with https://sv-manager.thevalidators.io'
-validator_log_file: /mnt/ledger/log/solana-validator.log
+validator_log_path: /mnt/ledger/log
 
 #monitoring:
 telegraf_database: v_metrics

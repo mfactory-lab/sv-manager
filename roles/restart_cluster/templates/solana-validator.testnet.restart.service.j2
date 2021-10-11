@@ -32,7 +32,7 @@ ExecStart={{ env_path }}/solana-validator \
 {% endfor %}
 --no-port-check \
 --limit-ledger-size \
---log {{ validator_log_file }} \
+--log {{ validator_log_path }} \
 --ledger {{ ledger_path }} \
 --accounts {{ accounts_path }} \
 --accounts-db-caching-enabled \
