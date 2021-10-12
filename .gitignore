@@ -1,6 +1,6 @@
 .secrets/
 .idea/
 __pycache__/
-inventory/
+inventory_backup/
 inventory_/
 tmp/

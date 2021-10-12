@@ -66,3 +66,14 @@
     - config.solana_user
     - validator.service.solana
 
+- name: Create logs directory
+  become: yes
+  file:
+    path: "{{ validator_log_path }}"
+    owner: "{{ solana_user }}"
+    group: "{{ solana_user }}"
+    state: directory
+    mode: '0755'
+  tags:
+    - config.solana_user
+    - validator.service.solana
