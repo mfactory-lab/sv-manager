@@ -4,28 +4,33 @@ solana_user: 'solana'
 ansible_user: 'root'
 
 #all:
-accounts_path: "{{ ramdisk_path }}/solana"
+accounts_path: "{{ ramdisk_path }}/accounts"
 env_path: "{{ solana_home }}/.local/share/solana/install/active_release/bin"
 fail_if_no_validator_keypair: True
 flat_path: True
 keybase_username: ''
-ledger_path: '/mnt/ledger'
+ledger_path: "{{ mount_base_path }}/ledger"
 local_secrets_path: '../.secrets'
 log_level: "WARN"
 lvm_enabled: False
+lvm_log_volume_size: '25G'
+lvm_vg: 'vg00'
+mount_base_path: '/mnt/solana'
 name: "{{ inventory_hostname }}"
 open_solana_ports_start: 8000
 open_solana_ports_end: 10000
-ramdisk_path: '/mnt/ramdisk'
+ramdisk_path: "{{ mount_base_path }}/ramdisk"
+ramdisk_size_gb: 48
 set_validator_info: False
 secrets_path: "/home/{{ solana_user }}/.secrets"
-snapshots_path: '/mnt/snapshots'
+snapshots_path: "{{ mount_base_path }}/snapshots"
 solana_home: "/home/{{ solana_user }}"
 solana_rpc_port: 8899
+swap_file_size_gb: 64
 upload_validator_keys: True
 validator_homepage: ''
 validator_description: 'Installed with https://sv-manager.thevalidators.io'
-validator_log_path: /mnt/ledger/log
+validator_log_path: "{{ mount_base_path }}/log"
 
 #monitoring:
 telegraf_database: v_metrics

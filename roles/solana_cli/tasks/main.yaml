@@ -7,7 +7,6 @@
     - cli.install
     - cli.update
 
-
 - name: check solana cli installed
   stat:
     path: /home/solana/.local/share/solana/install/active_release/bin/solana-install

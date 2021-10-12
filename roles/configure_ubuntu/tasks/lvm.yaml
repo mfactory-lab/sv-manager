@@ -6,6 +6,13 @@
     - config.lvm
   register: lvm_configured
 
+- name: create mount base path
+  file:
+    path: "{{ mount_base_path }}"
+    state: directory
+    mode: '0755'
+  tags:
+    - config.lvm
 
 - name: create ledger mount point
   file:
@@ -15,14 +22,42 @@
   tags:
     - config.lvm
 
+- name: create ledger log point
+  file:
+    path: "{{ validator_log_path }}"
+    state: directory
+    mode: '0755'
+  tags:
+    - config.lvm
+
 - name: configured lvm
   block:
-    - name: set lvm configured
-      file:
-        path: "/.lvm.done"
-        state: touch
+    - name: Add solana lvm log volume
+      lvol:
+        vg: "{{ lvm_vg }}"
+        lv: log
+        size: "{{ lvm_log_volume_size }}"
+        state: present
 
-    - name: Add solana lvm
+    - name: Create a ext4 filesystem on log dir
+      filesystem:
+        fstype: ext4
+        dev: "/dev/{{ lvm_vg }}/log"
+
+    - name: Create log dir mount point
+      file:
+        path: "{{ mount_base_path }}/log"
+        state: directory
+        mode: '0755'
+
+    - name: Write log dir entry in fstab
+      ansible.posix.mount:
+        path: "{{ mount_base_path }}/log"
+        src: "/dev/{{ lvm_vg }}/log"
+        fstype: ext4
+        state: mounted
+
+    - name: Add solana lvm swap volume
       lvol:
         vg: "{{ lvm_vg }}"
         lv: swap
@@ -36,18 +71,18 @@
 
     - name: Create swap dir mount point
       file:
-        path: "/mnt/swap"
+        path: "{{ mount_base_path }}/swap"
         state: directory
         mode: '0755'
 
     - name: Write swap dir entry in fstab
       ansible.posix.mount:
-        path: "/mnt/swap"
+        path: "{{ mount_base_path }}/swap"
         src: "/dev/{{ lvm_vg }}/swap"
         fstype: ext4
         state: mounted
 
-    - name: Add solana lvm
+    - name: Add solana lvm ledger volume
       lvol:
         vg: "{{ lvm_vg }}"
         lv: ledger
@@ -65,7 +100,11 @@
         src: "/dev/{{ lvm_vg }}/ledger"
         fstype: ext4
         state: mounted
-
+        
+    - name: set lvm configured
+      file:
+        path: "/.lvm.done"
+        state: touch
 
   when: not lvm_configured.stat.exists
   tags:

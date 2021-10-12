@@ -1,6 +1,13 @@
 .secrets/
 .idea/
 __pycache__/
-inventory/
+inventory_backup/
 inventory_/
 tmp/
+inventory/mainnet.yaml
+inventory/testnet.yaml
+inventory/group_vars/all.yml
+inventory/group_vars/local.yaml
+inventory/group_vars/mainnet_validators.yaml
+inventory/group_vars/remote.yaml
+inventory/group_vars/testnet_validators.yaml
