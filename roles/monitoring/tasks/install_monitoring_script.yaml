@@ -74,6 +74,17 @@
     - monitoring.script
     - monitoring.script.library
 
+- name: Upload tds_info script
+  copy:
+    src: files/tds_info.py
+    dest: "{{ solana_home }}/monitoring/tds_info.py"
+    owner: "{{ solana_user }}"
+    group: "{{ solana_user }}"
+    mode: 0644
+  tags:
+    - monitoring.script
+    - monitoring.script.library
+
 - name: Upload monitoring script starter
   template:
     src: validator_monitoring_starter.sh.j2

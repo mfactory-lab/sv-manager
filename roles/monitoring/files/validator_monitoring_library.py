@@ -4,6 +4,7 @@ from common import debug
 from common import ValidatorConfig
 import statistics
 import numpy as np
+import tds_info as tds
 
 
 def get_metrics_from_vote_account_item(item):
@@ -253,6 +254,7 @@ def load_data(config: ValidatorConfig):
         solana_version_data = rpc.load_solana_version(config)
         stakes_data = rpc.load_stakes(config, vote_account_pubkey)
         validators_data = rpc.load_solana_validators(config)
+        tds_data = tds.load_tds_info(config, identity_account_pubkey)
 
         result = {
             'identity_account_pubkey': identity_account_pubkey,
@@ -267,7 +269,8 @@ def load_data(config: ValidatorConfig):
             'performance_sample': performance_sample_data,
             'solana_version_data': solana_version_data,
             'stakes_data': stakes_data,
-            'validators_data': validators_data
+            'validators_data': validators_data,
+            'tds_data': tds_data
         }
 
         debug(config, str(result))
@@ -306,6 +309,7 @@ def calculate_influx_fields(data):
         result.update(get_current_stake_metric(data['stakes_data']))
         result.update(get_validators_metric(data['validators_data'], identity_account_pubkey))
         result.update(get_block_production_cli_metrics(data['load_block_production_cli'], identity_account_pubkey))
+        result.update(data['tds_data'])
 
     return result
 
@@ -321,7 +325,7 @@ def calculate_influx_data(config: ValidatorConfig):
         "time": round(time.time() * 1000),
         "validator_name": config.validator_name,
         "cluster_environment": config.cluster_environment,
-        "monitoring_version": "2.0.3",
+        "monitoring_version": "2.1.0",
         "fields": calculate_influx_fields(data)
     }
 
