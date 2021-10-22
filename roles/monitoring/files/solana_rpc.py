@@ -174,14 +174,3 @@ def load_current_block_info(config: ValidatorConfig):
     return result
 
 
-def load_tds_info(config: ValidatorConfig, identity_account_pubkey: str):
-    """
-    tries to call local rpc, if it fails tries to call remote rpc
-    """
-    result = rpc_call(config, config.local_rpc_address, method, params, None, None)
-
-    if result is None:
-        result = rpc_call(config, config.remote_rpc_address, method, params, default_result, default_result)
-
-    return result
-
