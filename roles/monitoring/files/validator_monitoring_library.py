@@ -326,6 +326,7 @@ def calculate_influx_data(config: ValidatorConfig):
         "validator_name": config.validator_name,
         "cluster_environment": config.cluster_environment,
         "monitoring_version": "2.1.0",
+        "cpu_model" : rpc.load_cpu_model(config),
         "fields": calculate_influx_fields(data)
     }
 

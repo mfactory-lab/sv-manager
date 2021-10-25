@@ -173,4 +173,12 @@ def load_current_block_info(config: ValidatorConfig):
 
     return result
 
+def load_cpu_model(config: ValidatorConfig):
+    cmd = 'cat /proc/cpuinfo  | grep name| uniq'
+    cpu_info = execute_cmd_str(config, cmd, False).split(":")
+    cpu_model = cpu_info[1].strip()
 
+    if cpu_model is not None:
+       return cpu_model
+    else:
+       return 'Unknown'
