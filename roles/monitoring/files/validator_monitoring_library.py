@@ -312,7 +312,7 @@ def calculate_influx_fields(data):
         result.update(data['tds_data'])
 
     return result
-
+        
 
 def calculate_influx_data(config: ValidatorConfig):
 
@@ -322,12 +322,14 @@ def calculate_influx_data(config: ValidatorConfig):
         "measurement": "validators_info",
         "validator_identity_pubkey": data['identity_account_pubkey'],
         "validator_vote_pubkey": data['vote_account_pubkey'],
+        "validator_id": data['identity_account_pubkey'],
         "time": round(time.time() * 1000),
         "validator_name": config.validator_name,
         "cluster_environment": config.cluster_environment,
         "monitoring_version": "2.1.0",
         "cpu_model" : rpc.load_cpu_model(config),
-        "fields": calculate_influx_fields(data)
+        "fields": calculate_influx_fields(data),
+        "cluster_name": config.cluster_environment
     }
 
     if data is not None and 'solana_version_data' in data:

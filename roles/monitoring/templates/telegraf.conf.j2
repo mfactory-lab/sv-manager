@@ -3,6 +3,9 @@
   flush_interval = "30s"
   interval = "30s"
 
+[global_tags]
+  validator_id = "{{  }}"
+
 ##INPUTS
 [[inputs.cpu]]
   ## Whether to report per-cpu stats or not
@@ -50,12 +53,7 @@
   json_name_key = "measurement"
   json_time_key = "time"
   tag_keys = ["cluster_name",
-              "url",
-              "stake_pubkey",
-              "validator_vote_key",
-              "validator_name",
-              "validator_ident",
-              "activation_epoch"]
+              "validator_id"]
 
   json_string_fields = [
             "solana_version",
