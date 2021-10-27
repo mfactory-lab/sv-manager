@@ -29,7 +29,7 @@ def load_tds_info(config: ValidatorConfig, identity_account_pubkey: str):
     tds_data = tds_rpc_call(config, identity_account_pubkey)
     result = {}
     if tds_data is not None:
-        if 'tn_calculated_stats' in tds_data[0]:
+        if 'tn_calculated_stats' in tds_data[0] and tds_data[0]['onboarding_number'] != None:
             result = {
                 'tds': tds_data[0]['tn_calculated_stats'],
             }
