@@ -31,6 +31,7 @@ upload_validator_keys: True
 validator_homepage: ''
 validator_description: 'Installed with https://sv-manager.thevalidators.io'
 validator_log_path: "{{ mount_base_path }}/log"
+validator_name: "{{ inventory_hostname }}"
 
 #monitoring:
 telegraf_database: v_metrics

@@ -1,6 +1,5 @@
 ---
 set_validator_info: True
-validator_name: "{{ inventory_hostname }}"
 cluster_environment: 'testnet'
 cluster_rpc_address: 'https://api.testnet.solana.com'
 solana_validator_service: restarted
