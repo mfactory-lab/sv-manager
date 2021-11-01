@@ -35,9 +35,12 @@ ExecStart={{ env_path }}/solana-validator \
 --private-rpc \
 --wal-recovery-mode skip_any_corrupted_record \
 --snapshot-compression none \
---no-port-check \
 --rpc-bind-address 127.0.0.1 \
-{%endif%}
+{% endif %}
+{% if 'rpc' in group_names %}
+--no-voting \
+{% endif %}
+--no-port-check \
 --limit-ledger-size {{ limit_ledger_size }} \
 --log {{ validator_log_path }}/solana-validator.log \
 --ledger {{ ledger_path }} \

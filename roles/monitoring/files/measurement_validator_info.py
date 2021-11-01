@@ -5,6 +5,7 @@ from common import ValidatorConfig
 import statistics
 import numpy as np
 import tds_info as tds
+from common import measurement_from_fields
 
 
 def get_metrics_from_vote_account_item(item):
@@ -312,27 +313,37 @@ def calculate_influx_fields(data):
         result.update(data['tds_data'])
 
     return result
-        
 
-def calculate_influx_data(config: ValidatorConfig):
+
+def calculate_output_data(config: ValidatorConfig):
 
     data = load_data(config)
 
-    influx_measurement = {
-        "measurement": "validators_info",
+    tags = {
         "validator_identity_pubkey": data['identity_account_pubkey'],
         "validator_vote_pubkey": data['vote_account_pubkey'],
-        "validator_id": data['identity_account_pubkey'],
-        "time": round(time.time() * 1000),
         "validator_name": config.validator_name,
-        "cluster_environment": config.cluster_environment,
-        "monitoring_version": "2.1.0",
-        "cpu_model" : rpc.load_cpu_model(config),
-        "fields": calculate_influx_fields(data),
-        "cluster_name": config.cluster_environment
+        "cluster_environment": config.cluster_environment
     }
 
-    if data is not None and 'solana_version_data' in data:
-        influx_measurement.update(get_solana_version_metric(data['solana_version_data']))
+    legacy_tags = {
+        "validator_identity_pubkey": data['identity_account_pubkey'],
+        "validator_vote_pubkey": data['vote_account_pubkey'],
+        "validator_name": config.validator_name,
+    }
 
-    return influx_measurement
+    measurement = measurement_from_fields(
+        "validators_info",
+        calculate_influx_fields(data),
+        tags,
+        config,
+        legacy_tags
+    )
+
+    if data is not None and 'solana_version_data' in data:
+        measurement.update(get_solana_version_metric(data['solana_version_data']))
+
+    return measurement
+
+
+
