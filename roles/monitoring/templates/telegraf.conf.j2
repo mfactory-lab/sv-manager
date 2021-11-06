@@ -43,8 +43,7 @@
 
 [[inputs.exec]]
   commands = [
-               "sudo -i -u {{ solana_user }} {{ solana_home }}/monitoring/validator_monitoring_starter.sh"
-               "sudo -i -u {{ solana_user }} {{ solana_home }}/monitoring/output_starter.sh output_validators_info"
+               "sudo -i -u {{ solana_user }} {{ solana_home }}/monitoring/output_starter.sh output_validator_measurements"
              ]
   interval = "30s"
   timeout = "30s"
@@ -54,17 +53,16 @@
               "tags_validator_identity_pubkey",
               "tags_validator_vote_pubkey",
               "tags_cluster_environment",
-              "validator_identity_pubkey",
-              "validator_vote_pubkey",
+              "validator_id",
               "validator_name"]
 
   json_string_fields = [
             "monitoring_version",
-            "fields_solana_version",
-            "fields_validator_identity_pubkey",
-            "fields_validator_vote_pubkey",
-            "fields_field_cluster_environment",
-            "fields_cpu_model"]
+            "solana_version",
+            "validator_identity_pubkey",
+            "validator_vote_pubkey",
+            "cluster_environment",
+            "cpu_model"]
 
   json_time_format = "unix_ms"
 

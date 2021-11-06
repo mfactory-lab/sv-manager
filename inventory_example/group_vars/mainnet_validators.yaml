@@ -17,8 +17,8 @@ known_validators:
   - CakcnaRDHka2gXyfbEd2d3xsvkJkqsLw2akB3zsN1D2S
 solana_metrics_url: 'https://metrics.solana.com:8086,db=mainnet-beta,u=mainnet-beta_write,p=password'
 expected_genesis_hash: '5eykt4UsFv8P8NJdTREpY1vzqKqZKvdpKuc147dw2N9d'
-limit_ledger_size: 100000000
+limit_ledger_size: 50000000
 snapshot_interval_slots: 2000
 maximum_local_snapshot_age: 3000
-solana_version: 1.7.14
-extra_vars:
+solana_version: 1.8.2
+extra_params:

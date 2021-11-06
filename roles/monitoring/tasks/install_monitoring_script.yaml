@@ -9,6 +9,13 @@
   tags:
     monitoring.script
 
+- name: Delete script folder
+  file:
+    path: "{{ solana_home }}/monitoring"
+    state: absent
+  tags:
+    monitoring.script     
+
 - name: Create script folder
   file:
     path: "{{ solana_home }}/monitoring"
@@ -21,74 +28,32 @@
 
 - name: Upload monitoring library
   copy:
-    src: files/validator_monitoring_library.py
-    dest: "{{ solana_home }}/monitoring/validator_monitoring_library.py"
+    src: "files/{{ item }}"
+    dest: "{{ solana_home }}/monitoring/{{ item }}"
     owner: "{{ solana_user }}"
     group: "{{ solana_user }}"
     mode: 0644
+  with_items:
+    - "cluster_monitoring_library.py"
+    - "common.py"
+    - "measurement_validator_info.py"
+    - "output_gossip.py"
+    - "output_validator_measurements.py"
+    - "output_validators_info.py"
+    - "output_validators.py"
+    - "request_utils.py"
+    - "solana_rpc.py"
+    - "tds_info.py"
+    - "validator_monitoring.py"
   tags:
     - monitoring.script
     - monitoring.script.library
 
-- name: Upload common
-  copy:
-    src: files/common.py
-    dest: "{{ solana_home }}/monitoring/common.py"
-    owner: "{{ solana_user }}"
-    group: "{{ solana_user }}"
-    mode: 0644
-  tags:
-    - monitoring.script
-    - monitoring.script.library
-
-- name: Upload request_utils
-  copy:
-    src: files/request_utils.py
-    dest: "{{ solana_home }}/monitoring/request_utils.py"
-    owner: "{{ solana_user }}"
-    group: "{{ solana_user }}"
-    mode: 0644
-  tags:
-    - monitoring.script
-    - monitoring.script.library
-
-- name: Upload solana_rpc
-  copy:
-    src: files/solana_rpc.py
-    dest: "{{ solana_home }}/monitoring/solana_rpc.py"
-    owner: "{{ solana_user }}"
-    group: "{{ solana_user }}"
-    mode: 0644
-  tags:
-    - monitoring.script
-    - monitoring.script.library
-
-- name: Upload monitoring script
-  copy:
-    src: files/validator_monitoring.py
-    dest: "{{ solana_home }}/monitoring/validator_monitoring.py"
-    owner: "{{ solana_user }}"
-    group: "{{ solana_user }}"
-    mode: 0644
-  tags:
-    - monitoring.script
-    - monitoring.script.library
-
-- name: Upload tds_info script
-  copy:
-    src: files/tds_info.py
-    dest: "{{ solana_home }}/monitoring/tds_info.py"
-    owner: "{{ solana_user }}"
-    group: "{{ solana_user }}"
-    mode: 0644
-  tags:
-    - monitoring.script
-    - monitoring.script.library
 
 - name: Upload monitoring script starter
   template:
-    src: validator_monitoring_starter.sh.j2
-    dest: "{{ solana_home }}/monitoring/validator_monitoring_starter.sh"
+    src: output_starter.sh.j2
+    dest: "{{ solana_home }}/monitoring/output_starter.sh"
     owner: "{{ solana_user }}"
     group: "{{ solana_user }}"
     mode: 0755
@@ -98,8 +63,8 @@
 
 - name: Upload config script
   template:
-    src: validator_monitoring_config.py.j2
-    dest: "{{ solana_home }}/monitoring/validator_monitoring_config.py"
+    src: monitoring_config.py.j2
+    dest: "{{ solana_home }}/monitoring/monitoring_config.py"
     owner: "{{ solana_user }}"
     group: "{{ solana_user }}"
     mode: 0644

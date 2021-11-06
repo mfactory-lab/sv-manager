@@ -17,5 +17,6 @@
 "swap_file_size_gb": "{{ hostvars[inventory_hostname]['swap_file_size_gb'] }}",
 "upload_validator_keys": {{ hostvars[inventory_hostname]['upload_validator_keys'] }},
 "validator_homepage": "{{ hostvars[inventory_hostname]['validator_homepage'] }}",
+"validator_keybase": "validator_name": "{{ hostvars[inventory_hostname]['validator_keybase'] }}",
 "validator_name": "{{ hostvars[inventory_hostname]['validator_name'] }}"
 }

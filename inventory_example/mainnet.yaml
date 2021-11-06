@@ -9,7 +9,9 @@ all:
               ansible_host: <ip address>
               #any var from group vars:
               ramdisk_size_gb: <number>
-              keybase_username: '<your keybase name>'
+              validator_description: 'Bootstrapped with https://sv-manager.thevalidators.io'
+              validator_homepage: ''
+              validator_keybase: ''
             server2:
               ansible_host: <ip address>
               #any var from group vars:

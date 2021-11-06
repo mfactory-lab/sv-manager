@@ -47,14 +47,16 @@ def print_json(data):
 def measurement_from_fields(name, data, tags, config, legacy_tags=None):
     if legacy_tags is None:
         legacy_tags = {}
-
+    data.update({"cluster_environment": config.cluster_environment})
     measurement = {
         "measurement": name,
         "time": round(time.time() * 1000),
         "monitoring_version": "3.0.0",
         "cluster_environment": config.cluster_environment,
-        "fields": data.update({"field_cluster_environment": config.cluster_environment}),
-        "tags": tags.update({"tag_cluster_environment": config.cluster_environment})
-    }.update(legacy_tags)
+        "fields": data,
+        "tags": tags
+    }
+    
+    measurement.update(legacy_tags)
 
     return measurement

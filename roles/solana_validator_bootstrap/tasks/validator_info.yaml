@@ -22,7 +22,7 @@
   block:
     - name: Check if keybase is present
       uri:
-        url: https://keybase.pub/{{ keybase_username }}/solana/validator-{{ validator_pubkey.stdout_lines[0] }}
+        url: https://keybase.pub/{{ validator_keybase }}/solana/validator-{{ validator_pubkey.stdout_lines[0] }}
     - name: set keybase-check passed shell-command
       set_fact:
         cmd_keybase_param: -n "{{ keybase_username }}" # hosts.yaml
@@ -36,9 +36,7 @@
 - name: Set compose set info command
   set_fact:
     shell_cmd: |
-      solana validator-info publish \
-      --keypair {{ secrets_path }}/validator-keypair.json \
-      "{{ validator_name }} {{ cmd_keybase_param | default('') }} {{ cmd_homepage_param | default('') }}"
+      solana validator-info publish --keypair {{ secrets_path }}/validator-keypair.json -n {{ validator_keybase }} -w "{{ validator_homepage }}" -d "{{ validator_description }}" {{ validator_name }}
   tags:
     validator.manage.info
 

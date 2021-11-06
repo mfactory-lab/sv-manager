@@ -271,7 +271,8 @@ def load_data(config: ValidatorConfig):
             'solana_version_data': solana_version_data,
             'stakes_data': stakes_data,
             'validators_data': validators_data,
-            'tds_data': tds_data
+            'tds_data': tds_data,
+            'cpu_model': rpc.load_cpu_model(config)
         }
 
         debug(config, str(result))
@@ -311,6 +312,7 @@ def calculate_influx_fields(data):
         result.update(get_validators_metric(data['validators_data'], identity_account_pubkey))
         result.update(get_block_production_cli_metrics(data['load_block_production_cli'], identity_account_pubkey))
         result.update(data['tds_data'])
+   #    result.update({"cpu_model": data['cpu_model']})
 
     return result
 
@@ -339,7 +341,7 @@ def calculate_output_data(config: ValidatorConfig):
         config,
         legacy_tags
     )
-
+    measurement.update({"cpu_model": data['cpu_model']})
     if data is not None and 'solana_version_data' in data:
         measurement.update(get_solana_version_metric(data['solana_version_data']))
 
