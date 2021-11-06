@@ -45,8 +45,8 @@ install_validator () {
   echo "### Which type of validator you want to set up? ###"
   select cluster in "mainnet-beta" "testnet"; do
       case $cluster in
-          mainnet-beta ) entry_point="https://api.mainnet-beta.solana.com"; inventory="mainnet.yaml"; break;;
-          testnet ) entry_point="https://api.testnet.solana.com"; inventory="testnet.yaml"; break;;
+          mainnet-beta ) inventory="mainnet.yaml"; break;;
+          testnet ) inventory="testnet.yaml"; break;;
       esac
   done
 

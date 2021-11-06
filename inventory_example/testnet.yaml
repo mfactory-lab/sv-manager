@@ -8,9 +8,9 @@ all:
             server1:
               ansible_host: <ip address>
               #any var from group vars:
-                validator_description: 'Bootstrapped with https://sv-manager.thevalidators.io'
-                validator_homepage: ''
-                validator_keybase: ''
+                validator_description: "Bootstrapped with https://sv-manager.thevalidators.io"
+                validator_homepage: ""
+                validator_keybase: ""
             server2:
               ansible_host: <ip address>
         local:
@@ -18,3 +18,6 @@ all:
             localhost:
               #any var from group vars:
               validator_name: "Localhost"
+              validator_description: "Bootstrapped with https://sv-manager.thevalidators.io"
+              validator_homepage: ""
+              validator_keybase: ""
