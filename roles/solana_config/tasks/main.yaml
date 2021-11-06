@@ -43,7 +43,7 @@
 
 - name: combine with host section
   set_fact:
-    config_dict:  "{{ config_dict | combine(config_dict_template) }}"
+    config_dict:  "{{ config_dict.params | combine(config_dict_template.params) }}"
 
 
 - name: show new config
