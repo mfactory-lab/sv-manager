@@ -8,7 +8,6 @@ accounts_path: "{{ ramdisk_path }}/accounts"
 env_path: "{{ solana_home }}/.local/share/solana/install/active_release/bin"
 fail_if_no_validator_keypair: True
 flat_path: True
-keybase_username: ''
 ledger_path: "{{ mount_base_path }}/ledger"
 local_secrets_path: '../.secrets'
 log_level: "WARN"
@@ -32,9 +31,9 @@ validator_name: "{{ inventory_hostname }}"
 validator_log_path: "{{ mount_base_path }}/log"
 
 #validator info
-validator_description: 'Bootstrapped with https://sv-manager.thevalidators.io'
-validator_homepage: ''
-validator_keybase: ''
+validator_description: "Bootstrapped with https://sv-manager.thevalidators.io"
+validator_homepage: ""
+keybase_username: ''
 
 #monitoring:
 telegraf_database: v_metrics

@@ -13,7 +13,7 @@
 
 - name: Set homepage parameter
   set_fact:
-    cmd_homepage_param: -w "{{ validator_homepage }}" # hosts.yaml
+    cmd_homepage_param: "-w {{ validator_homepage }}" # hosts.yaml
   when: validator_homepage != ""
   tags:
     validator.manage.info
@@ -36,7 +36,7 @@
 - name: Set compose set info command
   set_fact:
     shell_cmd: |
-      solana validator-info publish --keypair {{ secrets_path }}/validator-keypair.json -n {{ validator_keybase }} -w "{{ validator_homepage }}" -d "{{ validator_description }}" {{ validator_name }}
+      solana validator-info publish --keypair {{ secrets_path }}/validator-keypair.json {{ cmd_keybase_param }} "{{ cmd_homepage_param }}" -d "{{ validator_description }}" {{ validator_name }}
   tags:
     validator.manage.info
 

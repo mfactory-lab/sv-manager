@@ -24,12 +24,12 @@
 
 - name: set dictionary
   set_fact:
-    config_dict: "{{ config_data.content | default({}) }}"
+    config_dict: "{{ config_data.content | default([]) }}"
   when: not config_exists.stat.exists
 
 - name: dictionary
   set_fact:
-    config_dict: "{{ config_data.content | b64decode | from_json | default({}) }}"
+    config_dict: "{{ config_data.content | b64decode | from_json | default([]) }}"
   when: config_exists.stat.exists
 
 - name: create config from template
@@ -43,7 +43,7 @@
 
 - name: combine with host section
   set_fact:
-    config_dict:  "{{ config_dict.params | combine(config_dict_template.params) }}"
+    config_dict:  "{{ config_dict_template | combine(config_dict) }}"
 
 
 - name: show new config
