@@ -17,14 +17,14 @@
 - name: "Create keys: Build flat keys path"
   set_fact:
     secrets_local_path: "{{ local_secrets_path }}"
-  when: flat_path
+  when: flat_path|bool
   tags:
     - validator.manage.keys.create
 
 - name: "Create keys: Build non flat keys path"
   set_fact:
     secrets_local_path: "{{ local_secrets_path }}/{{ validator_name }}/solana/"
-  when: not flat_path
+  when: not flat_path|bool
   tags:
     - validator.manage.keys.create
 

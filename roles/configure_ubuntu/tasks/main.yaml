@@ -1,7 +1,7 @@
 ---
 - name: Configure lvm
   import_tasks: lvm.yaml
-  when: lvm_enabled
+  when: lvm_enabled|bool
   tags:
     config.lvm
 
