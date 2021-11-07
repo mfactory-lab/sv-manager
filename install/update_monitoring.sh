@@ -2,9 +2,9 @@
 #set -x -e
 
 update_monitoring() {
-
+  cd
   rm -rf sv_manager/
-
+  
   if [[ $(which apt | wc -l) -gt 0 ]]
   then
   pkg_manager=apt
