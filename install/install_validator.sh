@@ -85,7 +85,7 @@ install_validator () {
 
   $pkg_manager remove ansible --yes
 
-  echo "### Check your dashboard: https://solana.thevalidators.io/d/e-8yEOXMwerfwe/solana-monitoring-v1-0?&var-server=$VALIDATOR_NAME"
+  echo "### Check your dashboard: https://solana.thevalidators.io/d/e-8yEOXMwerfwe/solana-monitoring?&var-server=$VALIDATOR_NAME"
 
 }
 

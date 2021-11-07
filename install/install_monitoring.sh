@@ -41,8 +41,8 @@ install_monitoring () {
   echo "### Which cluster you wnat to monitor? ###"
   select cluster in "mainnet-beta" "testnet"; do
       case $cluster in
-          mainnet-beta ) entry_point="https://api.mainnet-beta.solana.com"; inventory="mainnet.yaml"; break;;
-          testnet ) entry_point="https://api.testnet.solana.com"; inventory="testnet.yaml"; break;;
+          mainnet-beta ) inventory="mainnet.yaml"; break;;
+          testnet ) inventory="testnet.yaml"; break;;
       esac
   done
 
@@ -72,7 +72,7 @@ install_monitoring () {
   cd ..
   rm -r ./sv_manager
   echo "### Cleanup install folder done ###"
-  echo "### Check your dashboard: https://solana.thevalidators.io/d/e-8yEOXMwerfwe/solana-monitoring-v1-0?&var-server="$VALIDATOR_NAME
+  echo "### Check your dashboard: https://solana.thevalidators.io/d/e-8yEOXMwerfwe/solana-monitoring?&var-server="$VALIDATOR_NAME
 
   echo Do you want to UNinstall ansible?
   select yn in "Yes" "No"; do

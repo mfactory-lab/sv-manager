@@ -30,7 +30,7 @@ update_monitoring() {
   cd ./sv_manager || exit
   cp -r ./inventory_example ./inventory
 
-  ansible-playbook --connection=local --inventory ./inventory --limit local  playbooks/pb_install_monitoring.yaml --tags telegraf.configure,monitoring.script --extra-vars "@/etc/sv_manager/sv_manager.conf" --extra-vars 'host_hosts=local'
+  ansible-playbook --connection=local --inventory ./inventory/$inventory --limit local  playbooks/pb_install_monitoring.yaml --tags telegraf.configure,monitoring.script --extra-vars "@/etc/sv_manager/sv_manager.conf"
 }
 
 if [ -f /etc/sv_manager/sv_manager.conf ]
