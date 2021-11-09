@@ -73,7 +73,7 @@ install_validator () {
   'ramdisk_size_gb': $RAM_DISK_SIZE, \
   }"
 
-  if [ ! -z ${solana_version+x} ]
+  if [ ! -z $solana_version ]
   then
     SOLANA_VERSION="--extra-vars {'solana_version':$solana_version}"
   fi
