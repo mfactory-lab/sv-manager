@@ -12,7 +12,7 @@
     - config.swap
   register: swap_file_exists
 
-  - name: check OLD swap file exists
+- name: check OLD swap file exists
   stat:
     path: "{{ old_swap_file }}"
   tags:
