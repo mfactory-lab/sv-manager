@@ -1,4 +1,8 @@
 ---
+#backward compatibility
+old_swap_file: "/mnt/swap/swapfile"
+old_ramdisk_path: /mnt/ramdisk
+
 # users:
 solana_user: 'solana'
 ansible_user: 'root'

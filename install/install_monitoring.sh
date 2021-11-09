@@ -8,6 +8,27 @@ echo "########################################################"
 
 install_monitoring () {
 
+  echo "### Which cluster you wnat to monitor? ###"
+  select cluster in "mainnet-beta" "testnet"; do
+      case $cluster in
+          mainnet-beta ) inventory="mainnet.yaml"; break;;
+          testnet ) inventory="testnet.yaml"; break;;
+      esac
+  done
+
+
+  echo "### Please type your validator name: "
+  read VALIDATOR_NAME
+  echo "### Please type the full path to your validator keys: "
+  read PATH_TO_VALIDATOR_KEYS
+
+  if [ ! -f "$PATH_TO_VALIDATOR_KEYS/validator-keypair.json" ]
+  then
+    echo "key $PATH_TO_VALIDATOR_KEYS/validator-keypair.json not found. Pleas verify and run the script again"
+    exit
+  fi
+
+  read -e -p "### Please tell which user is running validator: " SOLANA_USER
   rm -rf sv_manager/
 
   if [[ $(which apt | wc -l) -gt 0 ]]
@@ -38,27 +59,6 @@ install_monitoring () {
   cd ./sv_manager || exit
   cp -r ./inventory_example ./inventory
 
-  echo "### Which cluster you wnat to monitor? ###"
-  select cluster in "mainnet-beta" "testnet"; do
-      case $cluster in
-          mainnet-beta ) inventory="mainnet.yaml"; break;;
-          testnet ) inventory="testnet.yaml"; break;;
-      esac
-  done
-
-
-  echo "### Please type your validator name: "
-  read VALIDATOR_NAME
-  echo "### Please type the full path to your validator keys: "
-  read PATH_TO_VALIDATOR_KEYS
-
-  if [ ! -f "$PATH_TO_VALIDATOR_KEYS/validator-keypair.json" ]
-  then
-    echo "key $PATH_TO_VALIDATOR_KEYS/validator-keypair.json not found. Pleas verify and run the script again"
-    exit
-  fi
-
-  read -e -p "### Please tell which user is running validator: " SOLANA_USER
   #echo $(pwd)
   ansible-playbook --connection=local --inventory ./inventory/$inventory --limit local  playbooks/pb_config.yaml --extra-vars " \
   'solana_user': '$SOLANA_USER', \

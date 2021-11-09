@@ -10,6 +10,13 @@
   tags:
     - config.ramdisk
 
+- name: check OLD ramdisk mount point extsts
+  stat:
+    path: "{{ old_ramdisk_path }}"
+  register: old_ramdisk_exists
+  tags:
+    - config.ramdisk
+
 - name: create ramdisk mount point
   file:
     path: "{{ ramdisk_path }}"
@@ -17,7 +24,7 @@
     mode: '0755'
   tags:
     - config.ramdisk.directory
-  when: force or not ramdisk_exists.stat.exists
+  when: force or (not ramdisk_exists.stat.exists and not old_ramdisk_exists.stat.exists)
 
 - name: Write ramdisk entry in fstab
   mount: name={{ ramdisk_path }}
@@ -29,4 +36,4 @@
          state=mounted
   tags:
     - config.ramdisk.fstab
-  when: force or not ramdisk_exists.stat.exists
+  when: force or (not ramdisk_exists.stat.exists and not old_ramdisk_exists.stat.exists)

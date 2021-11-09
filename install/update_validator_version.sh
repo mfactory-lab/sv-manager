@@ -11,6 +11,9 @@ echo "###   * wait for catchup                                          ###"
 echo "#####################################################################"
 
 update_validator() {
+  sudo -i -u solana solana-install init "$version"
+  systemctl restart solana-sys-tuner
+  sudo -i -u solana solana config set -ut  
   if [ -d /mnt/ledger ]
   then
     sudo -i -u solana bash -c "$(echo 'set -x &&  cd /mnt && solana-validator wait-for-restart-window')"
@@ -22,10 +25,8 @@ update_validator() {
       sudo -i -u solana solana-validator wait-for-restart-window
     fi
   fi
-  sudo -i -u solana solana-install init "$version"
-  systemctl restart solana-sys-tuner
+
   systemctl restart solana-validator
-  sudo -i -u solana solana config set -ut
 }
 
 catchup_info() {

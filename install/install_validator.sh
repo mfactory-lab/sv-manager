@@ -10,6 +10,27 @@ echo "########################################################"
 
 install_validator () {
 
+  echo "### Which type of validator you want to set up? ###"
+  select cluster in "mainnet-beta" "testnet"; do
+      case $cluster in
+          mainnet-beta ) inventory="mainnet.yaml"; break;;
+          testnet ) inventory="testnet.yaml"; break;;
+      esac
+  done
+
+  echo "Please enter a name for your validator node: "
+  read VALIDATOR_NAME
+  read -e -p "Please enter the full path to your validator key pair file: " -i "/root/" PATH_TO_VALIDATOR_KEYS
+
+  if [ ! -f "$PATH_TO_VALIDATOR_KEYS/validator-keypair.json" ]
+  then
+    echo "key $PATH_TO_VALIDATOR_KEYS/validator-keypair.json not found. Pleas verify and run the script again"
+    exit
+  fi
+
+  read -e -p "Enter new RAM drive size, GB (recommended size: server RAM minus 16GB):" -i "48" RAM_DISK_SIZE
+  read -e -p "Enter new server swap size, GB (recommended size: equal to server RAM): " -i "64" SWAP_SIZE
+
   rm -rf sv_manager/
 
   if [[ $(which apt | wc -l) -gt 0 ]]
@@ -40,28 +61,6 @@ install_validator () {
   cd ./sv_manager || exit
   cp -r ./inventory_example ./inventory
 
-  #entry_point="https://testnet.solana.com"
-
-  echo "### Which type of validator you want to set up? ###"
-  select cluster in "mainnet-beta" "testnet"; do
-      case $cluster in
-          mainnet-beta ) inventory="mainnet.yaml"; break;;
-          testnet ) inventory="testnet.yaml"; break;;
-      esac
-  done
-
-  echo "Please enter a name for your validator node: "
-  read VALIDATOR_NAME
-  read -e -p "Please enter the full path to your validator key pair file: " -i "/root/" PATH_TO_VALIDATOR_KEYS
-
-  if [ ! -f "$PATH_TO_VALIDATOR_KEYS/validator-keypair.json" ]
-  then
-    echo "key $PATH_TO_VALIDATOR_KEYS/validator-keypair.json not found. Pleas verify and run the script again"
-    exit
-  fi
-
-  read -e -p "Enter new RAM drive size, GB (recommended size: server RAM minus 16GB):" -i "48" RAM_DISK_SIZE
-  read -e -p "Enter new server swap size, GB (recommended size: equal to server RAM): " -i "64" SWAP_SIZE
 
   # shellcheck disable=SC2154
   echo "pwd: $(pwd)"
