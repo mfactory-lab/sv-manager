@@ -1,9 +1,9 @@
 - name: DEBUG
   debug:
-    msg: "{{ solana_version }}"
+    msg: "{{ solana_version }}""
 
 - name: update solana
-  shell: solana-install init "{{ solana_version }}"
+  shell: "solana-install init {{ solana_version }}"
   become: yes
   become_user: "{{ solana_user }}"
   environment:
