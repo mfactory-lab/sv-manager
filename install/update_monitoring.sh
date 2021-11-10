@@ -4,7 +4,15 @@
 update_monitoring() {
   cd
   rm -rf sv_manager/
-  
+  if [[ $(grep cluster_environment /etc/sv_manager/sv_manager.conf | cut -d':' -f2) == *"testnet"* ]];
+  then
+  inventory=testnet
+  else
+  inventory=mainnet
+  fi
+  echo ansible-playbook --connection=local --inventory ./inventory/$inventory.yaml --limit local  playbooks/pb_install_monitoring.yaml --tags telegraf.configure,monitoring.script --extra-vars "@/etc/sv_manager/sv_manager.conf"
+  exit
+
   if [[ $(which apt | wc -l) -gt 0 ]]
   then
   pkg_manager=apt
@@ -30,7 +38,7 @@ update_monitoring() {
   cd ./sv_manager || exit
   cp -r ./inventory_example ./inventory
 
-  ansible-playbook --connection=local --inventory ./inventory/$inventory --limit local  playbooks/pb_install_monitoring.yaml --tags telegraf.configure,monitoring.script --extra-vars "@/etc/sv_manager/sv_manager.conf"
+  ansible-playbook --connection=local --inventory ./inventory/$inventory.yaml --limit local  playbooks/pb_install_monitoring.yaml --tags telegraf.configure,monitoring.script --extra-vars "@/etc/sv_manager/sv_manager.conf"
 }
 
 if [ -f /etc/sv_manager/sv_manager.conf ]
