@@ -29,6 +29,7 @@ install_monitoring () {
   fi
 
   read -e -p "### Please tell which user is running validator: " SOLANA_USER
+  cd
   rm -rf sv_manager/
 
   if [[ $(which apt | wc -l) -gt 0 ]]
