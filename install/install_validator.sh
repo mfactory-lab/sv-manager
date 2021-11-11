@@ -61,7 +61,6 @@ install_validator () {
   cd ./sv_manager || exit
   cp -r ./inventory_example ./inventory
 
-
   # shellcheck disable=SC2154
   echo "pwd: $(pwd)"
   ls -lah ./
