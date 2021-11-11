@@ -21,7 +21,6 @@ def tds_rpc_call(config: ValidatorConfig, identity_account_pubkey: str):
 
     debug(config, result)
 
-
     return result
 
 
@@ -29,7 +28,7 @@ def load_tds_info(config: ValidatorConfig, identity_account_pubkey: str):
     tds_data = tds_rpc_call(config, identity_account_pubkey)
     result = {}
     if tds_data != []:
-        if 'tn_calculated_stats' in tds_data[0] and 'tn_calculated_stats' != None:
+        if 'tn_calculated_stats' in tds_data[0] and tds_data[0]['tn_calculated_stats'] is not None:
             result = {
                 'tds': tds_data[0]['tn_calculated_stats'],
             }
