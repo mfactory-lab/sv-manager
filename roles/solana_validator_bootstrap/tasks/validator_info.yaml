@@ -36,7 +36,7 @@
 - name: Set compose set info command
   set_fact:
     shell_cmd: |
-      solana validator-info publish --keypair {{ secrets_path }}/validator-keypair.json {{ cmd_keybase_param | default('') }} "{{ cmd_homepage_param  | default('') }}" -d "{{ validator_description }}" {{ validator_name }}
+      "solana validator-info publish --keypair {{ secrets_path }}/validator-keypair.json {{ cmd_keybase_param | default('') }} {{ cmd_homepage_param  | default('') }} -d {{ validator_description }} {{ validator_name }}"
   tags:
     validator.manage.info
 
