@@ -10,8 +10,6 @@ update_monitoring() {
   else
   inventory=mainnet
   fi
-  echo ansible-playbook --connection=local --inventory ./inventory/$inventory.yaml --limit local  playbooks/pb_install_monitoring.yaml --tags telegraf.configure,monitoring.script --extra-vars "@/etc/sv_manager/sv_manager.conf"
-  exit
 
   if [[ $(which apt | wc -l) -gt 0 ]]
   then
