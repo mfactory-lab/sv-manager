@@ -1,7 +1,7 @@
 ---
 - name: Create solana validator service
   template:
-    src: solana-validator.{{ cluster.environment }}.service.j2
+    src: solana-validator.service.j2
     dest: /etc/systemd/system/solana-validator.service
     mode: 0644
     owner: root
@@ -25,7 +25,7 @@
 - name: Start solana service
   systemd:
     name: solana-validator
-    state: "{{ validator.solana_validator_service }}"
+    state: "{{ solana_validator_service }}"
   tags:
     - validator.service.solana
 

@@ -4,17 +4,19 @@ from common import debug
 from common import ValidatorConfig
 import statistics
 import numpy as np
+import tds_info as tds
+from common import measurement_from_fields
 
 
 def get_metrics_from_vote_account_item(item):
     return {
-            'epoch_number': item['epochCredits'][-1][0],
-            'credits_epoch': item['epochCredits'][-1][1],
-            'credits_previous_epoch': item['epochCredits'][-1][2],
-            'activated_stake': item['activatedStake'],
-            'credits_epoch_delta': item['epochCredits'][-1][1] - item['epochCredits'][-1][2],
-            'commission': item['commission']
-        }
+        'epoch_number': item['epochCredits'][-1][0],
+        'credits_epoch': item['epochCredits'][-1][1],
+        'credits_previous_epoch': item['epochCredits'][-1][2],
+        'activated_stake': item['activatedStake'],
+        'credits_epoch_delta': item['epochCredits'][-1][1] - item['epochCredits'][-1][2],
+        'commission': item['commission']
+    }
 
 
 def find_item_in_vote_accounts_section(identity_account_pubkey, section_parent, section_name):
@@ -253,6 +255,7 @@ def load_data(config: ValidatorConfig):
         solana_version_data = rpc.load_solana_version(config)
         stakes_data = rpc.load_stakes(config, vote_account_pubkey)
         validators_data = rpc.load_solana_validators(config)
+        tds_data = tds.load_tds_info(config, identity_account_pubkey)
 
         result = {
             'identity_account_pubkey': identity_account_pubkey,
@@ -267,7 +270,9 @@ def load_data(config: ValidatorConfig):
             'performance_sample': performance_sample_data,
             'solana_version_data': solana_version_data,
             'stakes_data': stakes_data,
-            'validators_data': validators_data
+            'validators_data': validators_data,
+            'tds_data': tds_data,
+            'cpu_model': rpc.load_cpu_model(config)
         }
 
         debug(config, str(result))
@@ -306,26 +311,41 @@ def calculate_influx_fields(data):
         result.update(get_current_stake_metric(data['stakes_data']))
         result.update(get_validators_metric(data['validators_data'], identity_account_pubkey))
         result.update(get_block_production_cli_metrics(data['load_block_production_cli'], identity_account_pubkey))
+        result.update(data['tds_data'])
+   #    result.update({"cpu_model": data['cpu_model']})
 
     return result
 
 
-def calculate_influx_data(config: ValidatorConfig):
+def calculate_output_data(config: ValidatorConfig):
 
     data = load_data(config)
 
-    influx_measurement = {
-        "measurement": "validators_info",
+    tags = {
         "validator_identity_pubkey": data['identity_account_pubkey'],
         "validator_vote_pubkey": data['vote_account_pubkey'],
-        "time": round(time.time() * 1000),
         "validator_name": config.validator_name,
-        "cluster_environment": config.cluster_environment,
-        "monitoring_version": "2.0.3",
-        "fields": calculate_influx_fields(data)
+        "cluster_environment": config.cluster_environment
     }
 
-    if data is not None and 'solana_version_data' in data:
-        influx_measurement.update(get_solana_version_metric(data['solana_version_data']))
+    legacy_tags = {
+        "validator_identity_pubkey": data['identity_account_pubkey'],
+        "validator_vote_pubkey": data['vote_account_pubkey'],
+        "validator_name": config.validator_name,
+    }
 
-    return influx_measurement
+    measurement = measurement_from_fields(
+        "validators_info",
+        calculate_influx_fields(data),
+        tags,
+        config,
+        legacy_tags
+    )
+    measurement.update({"cpu_model": data['cpu_model']})
+    if data is not None and 'solana_version_data' in data:
+        measurement.update(get_solana_version_metric(data['solana_version_data']))
+
+    return measurement
+
+
+

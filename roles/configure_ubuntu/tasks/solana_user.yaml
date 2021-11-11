@@ -1,19 +1,19 @@
 ---
 - name: Ensure group solana exists
   ansible.builtin.group:
-    name: "{{ node.solana_user }}"
+    name: "{{ solana_user }}"
     state: present
 
 - name: Create user solana
   user:
-    name: "{{ node.solana_user }}"
+    name: "{{ solana_user }}"
     state: present
     create_home: yes
     shell: /bin/bash
     skeleton: /etc/skel
     force: yes
     groups:
-      - "{{ node.solana_user }}"
+      - "{{ solana_user }}"
       - syslog
   tags:
     - config.solana_user
@@ -21,9 +21,9 @@
 
 - name: Create secrets dir
   become: yes
-  become_user: "{{ node.solana_user }}"
+  become_user: "{{ solana_user }}"
   file:
-    path: "{{ validator.secrets_path }}"
+    path: "{{ secrets_path }}"
     state: directory
     mode: '0700'
   tags:
@@ -33,9 +33,9 @@
 - name: Create ledger directory
   become: yes
   file:
-    path: "{{ validator.ledger_path }}"
-    owner: "{{ node.solana_user }}"
-    group: "{{ node.solana_user }}"
+    path: "{{ ledger_path }}"
+    owner: "{{ solana_user }}"
+    group: "{{ solana_user }}"
     state: directory
     mode: '0755'
   tags:
@@ -45,9 +45,9 @@
 - name: Create accounts directory
   become: yes
   file:
-    path: "{{ validator.accounts_path }}"
-    owner: "{{ node.solana_user }}"
-    group: "{{ node.solana_user }}"
+    path: "{{ accounts_path }}"
+    owner: "{{ solana_user }}"
+    group: "{{ solana_user }}"
     state: directory
     mode: '0755'
   tags:
@@ -57,12 +57,23 @@
 - name: Create snapshots directory
   become: yes
   file:
-    path: "{{ validator.snapshots_path }}"
-    owner: "{{ node.solana_user }}"
-    group: "{{ node.solana_user }}"
+    path: "{{ snapshots_path }}"
+    owner: "{{ solana_user }}"
+    group: "{{ solana_user }}"
     state: directory
     mode: '0755'
   tags:
     - config.solana_user
     - validator.service.solana
 
+- name: Create logs directory
+  become: yes
+  file:
+    path: "{{ validator_log_path }}"
+    owner: "{{ solana_user }}"
+    group: "{{ solana_user }}"
+    state: directory
+    mode: '0755'
+  tags:
+    - config.solana_user
+    - validator.service.solana

@@ -4,83 +4,58 @@
     name:
       - requests
       - numpy
-      - sentry-sdk
     state: present
     executable: pip3
   tags:
     monitoring.script
 
+- name: Delete script folder
+  file:
+    path: "{{ solana_home }}/monitoring"
+    state: absent
+  tags:
+    monitoring.script     
+
 - name: Create script folder
   file:
-    path: "{{ node.solana_home }}/monitoring"
-    owner: "{{ node.solana_user }}"
-    group: "{{ node.solana_user }}"
+    path: "{{ solana_home }}/monitoring"
+    owner: "{{ solana_user }}"
+    group: "{{ solana_user }}"
     mode: 0755
     state: directory
-  tags: 
+  tags:
     monitoring.script
 
 - name: Upload monitoring library
   copy:
-    src: files/validator_monitoring_library.py
-    dest: "{{ node.solana_home }}/monitoring/validator_monitoring_library.py"
-    owner: "{{ node.solana_user }}"
-    group: "{{ node.solana_user }}"
+    src: "files/{{ item }}"
+    dest: "{{ solana_home }}/monitoring/{{ item }}"
+    owner: "{{ solana_user }}"
+    group: "{{ solana_user }}"
     mode: 0644
+  with_items:
+    - "cluster_monitoring_library.py"
+    - "common.py"
+    - "measurement_validator_info.py"
+    - "output_gossip.py"
+    - "output_validator_measurements.py"
+    - "output_validators_info.py"
+    - "output_validators.py"
+    - "request_utils.py"
+    - "solana_rpc.py"
+    - "tds_info.py"
+    - "validator_monitoring.py"
   tags:
     - monitoring.script
     - monitoring.script.library
 
-- name: Upload common
-  copy:
-    src: files/common.py
-    dest: "{{ node.solana_home }}/monitoring/common.py"
-    owner: "{{ node.solana_user }}"
-    group: "{{ node.solana_user }}"
-    mode: 0644
-  tags:
-    - monitoring.script
-    - monitoring.script.library
-
-- name: Upload request_utils
-  copy:
-    src: files/request_utils.py
-    dest: "{{ node.solana_home }}/monitoring/request_utils.py"
-    owner: "{{ node.solana_user }}"
-    group: "{{ node.solana_user }}"
-    mode: 0644
-  tags:
-    - monitoring.script
-    - monitoring.script.library
-
-- name: Upload solana_rpc
-  copy:
-    src: files/solana_rpc.py
-    dest: "{{ node.solana_home }}/monitoring/solana_rpc.py"
-    owner: "{{ node.solana_user }}"
-    group: "{{ node.solana_user }}"
-    mode: 0644
-  tags:
-    - monitoring.script
-    - monitoring.script.library
-
-- name: Upload monitoring script
-  copy:
-    src: files/validator_monitoring.py
-    dest: "{{ node.solana_home }}/monitoring/validator_monitoring.py"
-    owner: "{{ node.solana_user }}"
-    group: "{{ node.solana_user }}"
-    mode: 0644
-  tags:
-    - monitoring.script
-    - monitoring.script.library
 
 - name: Upload monitoring script starter
   template:
-    src: validator_monitoring_starter.sh.j2
-    dest: "{{ node.solana_home }}/monitoring/validator_monitoring_starter.sh"
-    owner: "{{ node.solana_user }}"
-    group: "{{ node.solana_user }}"
+    src: output_starter.sh.j2
+    dest: "{{ solana_home }}/monitoring/output_starter.sh"
+    owner: "{{ solana_user }}"
+    group: "{{ solana_user }}"
     mode: 0755
   tags:
     - monitoring.script
@@ -88,11 +63,11 @@
 
 - name: Upload config script
   template:
-    src: validator_monitoring_config.py.j2
-    dest: "{{ node.solana_home }}/monitoring/validator_monitoring_config.py"
-    owner: "{{ node.solana_user }}"
-    group: "{{ node.solana_user }}"
+    src: monitoring_config.py.j2
+    dest: "{{ solana_home }}/monitoring/monitoring_config.py"
+    owner: "{{ solana_user }}"
+    group: "{{ solana_user }}"
     mode: 0644
-  tags: 
+  tags:
     - monitoring.script
-  
+

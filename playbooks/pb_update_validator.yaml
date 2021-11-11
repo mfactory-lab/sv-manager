@@ -1,23 +1,8 @@
 ---
 
-- name: wait for restart windows
-  hosts: "{{ host_hosts | default('remote') }}"
-  become: yes
-  tags:
-    - validator.manage.restart.wait
-  roles:
-    - solana_validator_restart
-
 - name: update solana validator
-  hosts: "{{ host_hosts | default('remote') }}"
+  hosts: all
   become: yes
   roles:
     - solana_cli
-
-- name: start solana validator
-  hosts: "{{ host_hosts | default('remote') }}"
-  become: yes
-  tags:
-    - validator.manage.restart.service
-  roles:
     - solana_validator_restart

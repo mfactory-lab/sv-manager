@@ -11,6 +11,7 @@
     state: restarted
   tags:
     - validator.manage.restart.service
+    - validator.manage.restart
 
 - name: restart solana validator service
   systemd:
@@ -18,5 +19,6 @@
     state: restarted
   tags:
     - validator.manage.restart.service
+    - validator.manage.restart
 
 

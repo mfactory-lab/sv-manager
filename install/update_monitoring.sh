@@ -2,8 +2,14 @@
 #set -x -e
 
 update_monitoring() {
-
+  cd
   rm -rf sv_manager/
+  if [[ $(grep cluster_environment /etc/sv_manager/sv_manager.conf | cut -d':' -f2) == *"testnet"* ]];
+  then
+  inventory=testnet
+  else
+  inventory=mainnet
+  fi
 
   if [[ $(which apt | wc -l) -gt 0 ]]
   then
@@ -30,9 +36,7 @@ update_monitoring() {
   cd ./sv_manager || exit
   cp -r ./inventory_example ./inventory
 
-  sed -i 's/\/\/testnet.solana.com/\/\/api.testnet.solana.com/g' /etc/sv_manager/sv_manager.conf
-
-  ansible-playbook --connection=local --inventory ./inventory --limit local  playbooks/pb_install_monitoring.yaml --tags telegraf.configure,monitoring.script --extra-vars "@/etc/sv_manager/sv_manager.conf" --extra-vars 'host_hosts=local'
+  ansible-playbook --connection=local --inventory ./inventory/$inventory.yaml --limit local  playbooks/pb_install_monitoring.yaml --tags telegraf.configure,monitoring.script --extra-vars "@/etc/sv_manager/sv_manager.conf"
 }
 
 if [ -f /etc/sv_manager/sv_manager.conf ]

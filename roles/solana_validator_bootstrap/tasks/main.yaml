@@ -8,12 +8,12 @@
   import_tasks: upload_keys.yaml
   tags:
     - validator.manage.keys
-  when: validator.upload_validator_keys == True
+  when: upload_validator_keys|bool
 
 - name: Create missing keys
   import_tasks: create_missing_keys.yaml
   become: yes
-  become_user: "{{ node.solana_user }}"
+  become_user: "{{ solana_user }}"
   tags:
     - validator.manage.keys
 
@@ -41,6 +41,6 @@
   import_tasks: validator_info.yaml
   tags:
     - validator.manage.info
-  when: validator.set_validator_info
+  when: set_validator_info|bool
 
 

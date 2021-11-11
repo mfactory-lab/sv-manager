@@ -23,7 +23,7 @@
   - [migrate your current setup to supported by sv-manager](#migrate-your-current-setup-to-supported-by-sv-manager)
     - [how to migrate your setup semi automatically](#how-to-migrate-your-setup-semi-automatically)
     - [how to migrate your setup manually](#how-to-migrate-your-setup-manually)
-  [Useful links](#useful-links)
+      [Useful links](#useful-links)
 - [How can you support this project](#how-can-you-support-this-project)
 - [History](history.md)
 - [Roadmap](roadmap.md)
@@ -32,7 +32,7 @@
 ## Node requirements
 
 * We have tested it only with Ubuntu 20.04, but every linux distro with apt and systemd should be supported.
-* Support for other Linux-Distributives will be implemented soon.  
+* Support for other Linux-Distributives will be implemented soon.
 * Check Solana [Validator requirements](https://docs.solana.com/running-validator/validator-reqs)
 
 ## What does it do with your Validator Node exactly
@@ -176,13 +176,13 @@ validator:
 
 #### How to install monitoring with ansible
 
-  ansible-playbook pb_install_monitoring.yaml  -v
+ansible-playbook pb_install_monitoring.yaml  -v
 
 #### How to install monitoring manually
 
-From server command line, user root, paste the whole command and run it: 
+From server command line, user root, paste the whole command and run it:
 
-  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/mfactory-lab/sv-manager/latest/install/install_monitoring.sh)"
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/mfactory-lab/sv-manager/latest/install/install_monitoring.sh)"
 
 ### Migrate your current setup to supported by sv-manager
 

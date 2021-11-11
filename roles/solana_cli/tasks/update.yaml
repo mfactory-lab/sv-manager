@@ -1,8 +1,12 @@
+- name: DEBUG
+  debug:
+    msg: "{{ solana_version }}"
+
 - name: update solana
-  shell: solana-install init {{ validator.version | default('stable') }}
+  shell: "solana-install init {{ solana_version }}"
   become: yes
-  become_user: "{{ node.solana_user }}"
+  become_user: "{{ solana_user }}"
   environment:
-    PATH: "{{ node.solana_home }}/.local/share/solana/install/active_release/bin"
+    PATH: "{{ solana_home }}/.local/share/solana/install/active_release/bin"
   tags:
     - cli.update

@@ -172,3 +172,32 @@ def load_current_block_info(config: ValidatorConfig):
         current_try = current_try + 1
 
     return result
+
+
+def load_cpu_model(config: ValidatorConfig):
+    cmd = 'cat /proc/cpuinfo  | grep name| uniq'
+    cpu_info = execute_cmd_str(config, cmd, False).split(":")
+    cpu_model = cpu_info[1].strip()
+
+    if cpu_model is not None:
+        return cpu_model
+    else:
+        return 'Unknown'
+
+
+def load_solana_validators_full(config: ValidatorConfig):
+    cmd = f'solana validators -ul --output json-compact'
+    return execute_cmd_str(config, cmd, convert_to_json=True)
+
+
+def load_solana_validators_info(config: ValidatorConfig):
+    cmd = f'solana validator-info get --url ' + config.remote_rpc_address + ' --output json-compact'
+    data = execute_cmd_str(config, cmd, convert_to_json=True)
+    return data
+
+
+def load_solana_gossip(config: ValidatorConfig):
+    cmd = f'solana gossip -ul --output json-compact'
+    return execute_cmd_str(config, cmd, convert_to_json=True)
+
+

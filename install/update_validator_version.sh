@@ -4,13 +4,16 @@
 echo "###################### WARNING!!! ###################################"
 echo "###   This script will perform the following operations:          ###"
 echo "###   * wait for validator restart window                         ###"
-echo "###   * download validator binaries                               ###"
+echo "###   * validator binaries                                        ###"
 echo "###   * restart sys tuner service                                 ###"
 echo "###   * restart validator service                                 ###"
 echo "###   * wait for catchup                                          ###"
 echo "#####################################################################"
 
 update_validator() {
+  sudo -i -u solana solana-install init "$version"
+  systemctl restart solana-sys-tuner
+  sudo -i -u solana solana config set -ut  
   if [ -d /mnt/ledger ]
   then
     sudo -i -u solana bash -c "$(echo 'set -x &&  cd /mnt && solana-validator wait-for-restart-window')"
@@ -22,8 +25,7 @@ update_validator() {
       sudo -i -u solana solana-validator wait-for-restart-window
     fi
   fi
-  sudo -i -u solana solana-install init "$version"
-  systemctl restart solana-sys-tuner
+
   systemctl restart solana-validator
 }
 
