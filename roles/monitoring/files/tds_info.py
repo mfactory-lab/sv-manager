@@ -32,7 +32,7 @@ def load_tds_info(config: ValidatorConfig, identity_account_pubkey: str):
             result = {
                 'tds': tds_data[0]['tn_calculated_stats'],
             }
-            if 'onboarding_number' in result['tds']:
+            if 'onboarding_number' in tds_data[0]:
                 result['tds']['onboarding_number'] = tds_data[0]['onboarding_number']
                 result['tds']['onboarding_group'] = tds_data[0]['tds_onboarding_group']
 
