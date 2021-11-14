@@ -33,8 +33,7 @@
   when: force or (not swap_file_exists.stat.exists and not old_swap_file_exists.stat.exists)
 
 - name: Create swap file
-  command: dd if=/dev/zero of={{ mount_base_path }}/swap/swapfile bs=1G count={{ swap_file_size_gb }}
-           creates="{{ mount_base_path }}/swap/swapfile"
+  command: fallocate -l {{ swap_file_size_gb }}G {{ mount_base_path }}/swap/swapfile 
   tags:
     - config.swap.file.create
   when: force or (not swap_file_exists.stat.exists and not old_swap_file_exists.stat.exists)
