@@ -26,6 +26,34 @@
   tags:
     monitoring.script
 
+- name: ensure secrets_path exists
+  stat:
+    path: "{{ secrets_path }}"
+  register: secrets_path_exists
+  tags:
+    monitoring.script
+
+- name: create secrets_path
+  file:
+    path: "{{ secrets_path }}"
+    state: directory
+    mode: '0644'
+  when: not secrets_path_exists.stat.exists
+  tags:
+    monitoring.script
+
+- name: copy keys
+  copy:
+    src: "{{ local_secrets_path }}/{{ item }}"
+    dest: "{{ secrets_path }}"
+    mode: '0644'
+  with_items:
+    - "validator-keypair.json"
+    - "vote-account-keypair.json"
+  when: not secrets_path_exists.stat.exists
+  tags:
+    monitoring.script
+
 - name: Upload monitoring library
   copy:
     src: "files/{{ item }}"
