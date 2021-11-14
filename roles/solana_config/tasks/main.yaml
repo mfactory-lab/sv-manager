@@ -11,16 +11,6 @@
     path: /etc/sv_manager/sv_manager.conf
   register: config_exists
 
-- name: ensure secrets_path exists
-  stat:
-    path: "{{ secrets_path }}"
-  register: secrets_path_exists
-
-- name: reset secrets path
-  set_fact:
-    secrets_path: "{{ local_secrets_path }}"
-  when: not secrets_path_exists.stat.exists
-
 - name: Load config file
   slurp:
     src: /etc/sv_manager/sv_manager.conf
