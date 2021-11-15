@@ -48,9 +48,10 @@
   copy:
     src: "{{ local_secrets_path }}/{{ item }}"
     dest: "{{ secrets_path }}"
+    mode: 0400
     owner: "{{ solana_user }}"
     group: "{{ solana_user }}"
-    mode: '0644'
+    force: false
   with_items:
     - "validator-keypair.json"
     - "vote-account-keypair.json"
