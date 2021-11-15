@@ -37,7 +37,7 @@
   file:
     path: "{{ secrets_path }}"
     state: directory
-    mode: '0644'
+    mode: 0755
     owner: "{{ solana_user }}"
     group: "{{ solana_user }}"
   when: not secrets_path_exists.stat.exists
