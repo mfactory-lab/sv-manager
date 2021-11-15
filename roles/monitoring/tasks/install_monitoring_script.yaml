@@ -37,7 +37,9 @@
   file:
     path: "{{ secrets_path }}"
     state: directory
-    mode: '0644'
+    mode: 0755
+    owner: "{{ solana_user }}"
+    group: "{{ solana_user }}"
   when: not secrets_path_exists.stat.exists
   tags:
     monitoring.script
@@ -46,7 +48,10 @@
   copy:
     src: "{{ local_secrets_path }}/{{ item }}"
     dest: "{{ secrets_path }}"
-    mode: '0644'
+    mode: 0400
+    owner: "{{ solana_user }}"
+    group: "{{ solana_user }}"
+    force: false
   with_items:
     - "validator-keypair.json"
     - "vote-account-keypair.json"
