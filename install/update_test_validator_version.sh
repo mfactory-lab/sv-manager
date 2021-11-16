@@ -11,17 +11,17 @@ echo "###   * wait for catchup                                          ###"
 echo "#####################################################################"
 
 update_validator() {
-  sudo -i -u $SOLANA_USER solana-install init "$version"
+  sudo -i -u solana solana-install init "$version"
   echo "Version "$version" successfully downloaded"
   systemctl restart solana-sys-tuner
-  sudo -i -u $SOLANA_USER solana config set -ut  
+  sudo -i -u solana solana config set -ut  
 
   echo "Searching for ledger directory..."
   l_path=$(find / -name admin.rpc | sed 's|/admin.rpc||')
   echo "Found ledger at "$l_path". Is it correct?"
   select yn in "Yes" "No"; do
     case $yn in
-        Yes ) sudo -i -u $SOLANA_USER solana-validator --ledger $l_path wait-for-restart-window; break;;
+        Yes ) sudo -i -u solana solana-validator --ledger $l_path wait-for-restart-window; break;;
         No ) echo "### Aborting install. Please restart your solana services manually."; exit;;
     esac
 done
@@ -32,7 +32,7 @@ catchup_info() {
 
   while true; do
 
-    sudo -i -u $SOLANA_USER solana catchup --our-localhost
+    sudo -i -u solana solana catchup --our-localhost
     status=$?
 
     if [ $status -eq 0 ]
@@ -50,7 +50,7 @@ catchup_info() {
 version=${1:-latest}
 
 echo "updating to version $version"
-read -e -p "### Please tell which user is running validator [solana]: " SOLANA_USER
-SOLANA_USER=${SOLANA_USER:-solana}
+#read -e -p "### Please tell which user is running validator [solana]: " SOLANA_USER
+#SOLANA_USER=${SOLANA_USER:-solana}
 update_validator
 catchup_info
