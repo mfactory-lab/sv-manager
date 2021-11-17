@@ -31,6 +31,8 @@
   import_tasks: firewall.yaml
   tags:
     - config.firewall
+  when:
+    use_firewall
 
 - name: Create ansible user
   import_tasks: ansible_user.yaml

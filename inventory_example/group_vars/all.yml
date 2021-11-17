@@ -10,6 +10,7 @@ ansible_user: 'root'
 
 #all:
 accounts_path: "{{ ramdisk_path }}/accounts"
+use_firewall: True
 env_path: "{{ solana_home }}/.local/share/solana/install/active_release/bin"
 fail_if_no_validator_keypair: True
 flat_path: True
