@@ -72,12 +72,17 @@ install_validator () {
   'ramdisk_size_gb': $RAM_DISK_SIZE, \
   }"
 
-  if [ ! -z $solana_version ]
+  if [[ -n $2 ]]
   then
-    SOLANA_VERSION="--extra-vars {'solana_version':$solana_version}"
+    SOLANA_VERSION="--extra-vars {'solana_version':$2}"
   fi
 
-  ansible-playbook --connection=local --inventory ./inventory/$inventory --limit localhost  playbooks/pb_install_validator.yaml --extra-vars "@/etc/sv_manager/sv_manager.conf" $SOLANA_VERSION
+  if [[ -n $3 ]]
+  then
+    EXTRA_INSTALL_VARS="--extra-vars $3"
+  fi
+
+  ansible-playbook --connection=local --inventory ./inventory/$inventory --limit localhost  playbooks/pb_install_validator.yaml --extra-vars "@/etc/sv_manager/sv_manager.conf" "$SOLANA_VERSION" "$EXTRA_INSTALL_VARS"
 
   echo "### 'Uninstall ansible ###"
 
@@ -87,13 +92,20 @@ install_validator () {
 
 }
 
-version=${1:-latest}
+sv_manager_version=${1:-latest}
 solana_version=$2
-echo "installing sv manager version $sv_version"
+extra_install_vars=$3
+echo "installing sv manager version $sv_manager_version"
+
+if [[ -n $extra_install_vars ]]
+then
+  echo "using extra_install_vars $extra_install_vars"
+fi
+
 echo "This script will bootstrap a Solana validator node. Proceed?"
 select yn in "Yes" "No"; do
     case $yn in
-        Yes ) install_validator "$version" "$solana_version"; break;;
+        Yes ) install_validator "$sv_manager_version" "$solana_version" "$extra_install_vars"; break;;
         No ) echo "Aborting install. No changes will be made."; exit;;
     esac
 done
