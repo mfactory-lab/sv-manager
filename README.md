@@ -25,14 +25,12 @@ Please use them, enjoy them, and improve them.
 ### Quick Install
 
 * Log in to your server
-* __If you don’t have a key pair yet, skip this step: it will be generated automatically__.
-
-  If you have a key pair, create the key pair file in your home directory (you can also upload it via scp if you prefer):
+* Create the key pair file in your home directory (you can also upload it via scp if you prefer):
   ````shell
   nano ~/validator-keypair.json
   ````   
   Paste your key pair, save the file (ctrl-O) and exit (ctrl-X).
-* __If you don’t have a *vote account* key pair yet, skip this step: it will be generated automatically__.
+* __If you don’t have a *vote account* key pair yet, skip this step for TESTNET: it will be generated automatically__.
 
   If you have a *vote account* key pair, create the key pair file in your home directory (or upload it via scp):
   ````shell
