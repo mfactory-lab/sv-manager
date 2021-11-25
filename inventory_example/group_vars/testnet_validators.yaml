@@ -1,5 +1,5 @@
 ---
-set_validator_info: True
+set_validator_info: False
 cluster_environment: 'testnet'
 cluster_rpc_address: 'https://api.testnet.solana.com'
 solana_validator_service: restarted

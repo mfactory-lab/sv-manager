@@ -24,7 +24,13 @@ install_validator () {
 
   if [ ! -f "$PATH_TO_VALIDATOR_KEYS/validator-keypair.json" ]
   then
-    echo "key $PATH_TO_VALIDATOR_KEYS/validator-keypair.json not found. Pleas verify and run the script again"
+    echo "OOPS! Key $PATH_TO_VALIDATOR_KEYS/validator-keypair.json not found. Please verify and run the script again"
+    exit
+  fi
+
+  if [ ! -f "$PATH_TO_VALIDATOR_KEYS/vote-account-keypair.json" ] && [ "$inventory" = "mainnet.yaml" ]
+  then
+    echo "OOPS! Key $PATH_TO_VALIDATOR_KEYS/vote-account-keypair.json not found. Please verify and run the script again. For security reasons we do not create any keys for mainnet."
     exit
   fi
 
@@ -49,8 +55,8 @@ install_validator () {
   ansible-galaxy collection install ansible.posix
   ansible-galaxy collection install community.general
 
-  echo "Downloading Solana validator manager version $1"
-  cmd="https://github.com/mfactory-lab/sv-manager/archive/refs/tags/$1.zip"
+  echo "Downloading Solana validator manager version $sv_manager_version"
+  cmd="https://github.com/mfactory-lab/sv-manager/archive/refs/tags/$sv_manager_version.zip"
   echo "starting $cmd"
   curl -fsSL "$cmd" --output sv_manager.zip
   echo "Unpacking"
@@ -74,10 +80,18 @@ install_validator () {
 
   if [ ! -z $solana_version ]
   then
-    SOLANA_VERSION="--extra-vars {'solana_version':$solana_version}"
+    SOLANA_VERSION="--extra-vars {\"solana_version\":\"$solana_version\"}"
   fi
-
-  ansible-playbook --connection=local --inventory ./inventory/$inventory --limit localhost  playbooks/pb_install_validator.yaml --extra-vars "@/etc/sv_manager/sv_manager.conf" $SOLANA_VERSION
+  if [ ! -z $extra_vars ]
+  then
+    EXTRA_INSTALL_VARS="--extra-vars {$extra_vars}"
+  fi
+  if [ ! -z $tags ]
+  then
+    TAGS="--tags {$tags}"
+  fi
+set -x
+  ansible-playbook --connection=local --inventory ./inventory/$inventory --limit localhost  playbooks/pb_install_validator.yaml --extra-vars "@/etc/sv_manager/sv_manager.conf" $SOLANA_VERSION $EXTRA_INSTALL_VARS $TAGS
 
   echo "### 'Uninstall ansible ###"
 
@@ -87,13 +101,26 @@ install_validator () {
 
 }
 
-version=${1:-latest}
-solana_version=$2
-echo "installing sv manager version $sv_version"
+
+while [ $# -gt 0 ]; do
+
+   if [[ $1 == *"--"* ]]; then
+        param="${1/--/}"
+        declare ${param}="$2"
+        #echo $1 $2 // Optional to see the parameter:value result
+   fi
+
+  shift
+done
+
+sv_manager_version=${sv_manager_version:-latest}
+
+echo "installing sv manager version $sv_manager_version"
+
 echo "This script will bootstrap a Solana validator node. Proceed?"
 select yn in "Yes" "No"; do
     case $yn in
-        Yes ) install_validator "$version" "$solana_version"; break;;
+        Yes ) install_validator "$sv_manager_version" "$extra_vars" "$solana_version" "$tags"; break;;
         No ) echo "Aborting install. No changes will be made."; exit;;
     esac
 done
