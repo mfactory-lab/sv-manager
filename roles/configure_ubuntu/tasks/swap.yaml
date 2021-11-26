@@ -55,7 +55,7 @@
 
 - name: Write swap entry in fstab
   mount: name=none
-         src=/mnt/swap/swapfile
+         src={{ mount_base_path }}/swap/swapfile
          fstype=swap
          opts=sw
          passno=0
