@@ -68,8 +68,8 @@ install_validator () {
   cp -r ./inventory_example ./inventory
 
   # shellcheck disable=SC2154
-  echo "pwd: $(pwd)"
-  ls -lah ./
+  #echo "pwd: $(pwd)"
+  #ls -lah ./
 
   ansible-playbook --connection=local --inventory ./inventory/$inventory --limit localhost  playbooks/pb_config.yaml --extra-vars "{ \
   'validator_name':'$VALIDATOR_NAME', \
@@ -90,12 +90,15 @@ install_validator () {
   then
     TAGS="--tags {$tags}"
   fi
-set -x
+
   ansible-playbook --connection=local --inventory ./inventory/$inventory --limit localhost  playbooks/pb_install_validator.yaml --extra-vars "@/etc/sv_manager/sv_manager.conf" $SOLANA_VERSION $EXTRA_INSTALL_VARS $TAGS
 
   echo "### 'Uninstall ansible ###"
 
   $pkg_manager remove ansible --yes
+  if [ "$inventory" = "mainnet.yaml" ]
+  echo "WARNING: solana is ready to go. But you must start it by the hand. Use \"systemctl start solana-validator\" command."
+
 
   echo "### Check your dashboard: https://solana.thevalidators.io/d/e-8yEOXMwerfwe/solana-monitoring?&var-server=$VALIDATOR_NAME"
 
