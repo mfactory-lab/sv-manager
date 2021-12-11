@@ -3,7 +3,7 @@
 ## Problem
 
 Solana is a high speed blockchain network which requires fast, stable validator nodes, with high decentralisation across the data centers in the world.
-There are currently about 2200 validators on the Testnet and about 670 on the Mainnet. The majority of them are set up using various guides and information available on the Internet. 
+At the time of writing, there are currently about 3500 validators on the Testnet and about 1400 on the Mainnet. The majority of them are set up using various guides and information available on the Internet. 
 These are ad-hoc, unique installations with different software versions, settings, configurations and user profiles.
 Many people running validator nodes have little to zero knowledge about system administration, troubleshooting and monitoring.
 High (knowledge) entry barrier attracts people to start their nodes only in a small count of data centers mentioned in guides and YouTube videos.
@@ -11,23 +11,20 @@ These facts lead to less cluster performance, stability, resilience and decentra
 
 ## Solution
 
-A toolkit allowing to set up a validator node and monitoring in one-click manner with consistent common settings for everyone by providing an interactive shell script.
+A toolkit allowing to set up a validator node and monitoring in one-click manner with consistent common settings for everyone by providing an interactive shell script. It includes an Infrastructure-As-Code solution with an Ansible pack for experienced users to use as references and best practice documents.
 
 The monitoring can be installed separately using a shell script.
 
-The experienced team stands behind the project for further development, and for multilingual user support.
+An experienced team stands behind the project for further development and for multilingual user support.
 
 Features already implemented:
 - Node bootstrapping
 - Solana version upgrade
 - Various node and cluster monitoring dashboards
-- Alerts (via Telegram bot and other channels)
-
-Currently being developed:
-- The Infrastructure-As-Code with an Ansible pack for experienced users to use as references and best practice documents.
+- Simple alerts (via Telegram bot and other channels)
 
 Future plans:
-- Advanced version of the alerting system
+- Advanced alerting system
 - Disaster recovery
 - Mobile cockpit for alerts, notifications, and node control on the go
 - Open API enabling anyone to use the monitoring data
