@@ -11,7 +11,7 @@ These facts lead to less cluster performance, stability, resilience and decentra
 
 ## Solution
 
-A toolkit allowing to set up a validator node and monitoring in one-click manner with consistent common settings for everyone by providing an interactive shell script. It includes an Infrastructure-As-Code solution with an Ansible pack for experienced users to use as references and best practice documents.
+A toolkit allowing to set up a validator node and monitoring in one-click manner with consistent common settings for everyone by providing an interactive shell script. It is based on an Infrastructure-As-Code solution and includes an Ansible pack for experienced users to use as references and best practice documents.
 
 The monitoring can be installed separately using a shell script.
 
@@ -22,6 +22,9 @@ Features already implemented:
 - Solana version upgrade
 - Various node and cluster monitoring dashboards
 - Simple alerts (via Telegram bot and other channels)
+
+Currently being developed:
+- Standalone solution enabling anyone to launch a private monitoring and alerting system, including dashboard and all other sv-manager features
 
 Future plans:
 - Advanced alerting system
@@ -57,6 +60,7 @@ engineering, development, monitoring, operations and security in both applicatio
 - profiter: https://profiter.mfactory.de/
 - pltool: https://pl-tool.com/
 - github: https://github.com/mfactory-lab
+- JPool: https://jpool.one/
 
 ## Amount
 
