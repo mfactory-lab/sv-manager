@@ -11,33 +11,37 @@ These facts lead to less cluster performance, stability, resilience and decentra
 
 ## Solution
 
-The toolkit, allowing to set up a validator node and monitoring in one-click manner with consistent common settings for everyone by providing an interactive shell script.
+A toolkit allowing to set up a validator node and monitoring in one-click manner with consistent common settings for everyone by providing an interactive shell script.
 
-The Infrastructure-As-A-Code with ansible pack for experienced users to use as references and best practice documents.
-
-It is possible to install a monitoring part only by using a shell script.
+The monitoring can be installed separately using a shell script.
 
 The experienced team stands behind the project for further development, and for multilingual user support.
 
-Solution Features:
+Features already implemented:
 - Node bootstrapping
 - Solana version upgrade
 - Various node and cluster monitoring dashboards
-- Disaster recovery
 - Alerts (via Telegram bot and other channels)
+
+Currently being developed:
+- The Infrastructure-As-Code with an Ansible pack for experienced users to use as references and best practice documents.
+
+Future plans:
+- Advanced version of the alerting system
+- Disaster recovery
 - Mobile cockpit for alerts, notifications, and node control on the go
-- Open API to monitoring data
+- Open API enabling anyone to use the monitoring data
+- Automated node startup in case of cluster restart
 
-Our solution increases network decentralization through a lowered barrier to entry: the toolkit enables a much larger audience to set up and run a validator node with
-higher efficiency and resiliency of the network
+Our solution increases network decentralization by lowering the barrier to entry: the toolkit enables a much larger audience to set up and run a validator node with higher efficiency and resiliency of the network.
 
-With our SV (Solana Validator) Manager (https://sv-manager.thevalidators.io/) we currently implemented a minimum viable product (MVP) which is actively used by at least 40 validators.
+With our SV (Solana Validator) Manager (https://sv-manager.thevalidators.io/) we currently implemented a minimum viable product (MVP) which is actively used by more than 100 validators.
 
 ## Competition
 
 - Setup: Various guidelines offered on GitHub, YouTube, a number of blogs.
 - Monitoring: validators.app, stakeconomy
-- *Nobody provides a full package from one hand.*
+- *Nobody provides a full package*
 
 ## Team
 
@@ -62,9 +66,3 @@ engineering, development, monitoring, operations and security in both applicatio
 Depending on the available funding, we would be able to dedicate a varying amount of our time to this project. Better funding means we would be able to fully achieve the goals listed above and do it faster, while also offering more support for the Solana Validator community.
 
 We see the SV-Manager as a long-term project that needs to be constantly developed and enhanced together with Solana, and we see its future as being most successful in close cooperation with the Solana Foundation
-
-
-
-
-
-
