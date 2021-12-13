@@ -20,5 +20,6 @@
       - python3
       - python3-pip
       - ufw
+      - rsyslog
   tags:
     - config.packages
