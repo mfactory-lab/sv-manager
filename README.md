@@ -52,7 +52,7 @@ That's it, you are all set!
 ### How to update validator
 
 ````shell
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/mfactory-lab/sv-manager/latest/install/update_test_validator_version.sh)" --version 1.8.5
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/mfactory-lab/sv-manager/latest/install/update_test_validator_version.sh)" --version 1.8.10
 ````
 
 ### how to update monitoring
@@ -63,18 +63,6 @@ That's it, you are all set!
 
 
 ### If you want more control over the configuration of your node, please refer to the [advanced technical specifications](docs/advanced.md)
-
-## We fixed a bug that sometimes caused the sv-manager to fail to copy the keypair file.
-If you launched sv-manager on May 16, between 0:00 and 12:00 UTC and
-you have only about *1 SOL* on your identity account,
-
-then please run our quick fix:
-
-`````shell
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/mfactory-lab/sv-manager/latest/install/quick_fix_wrong_keys.sh)"
-`````
-
-It will backup your keypair, copy your correct keypair to /home/solana/secrets, set up your vote account, create a vote account keypair, and link your Identity keypair to your Vote account keypair. It will then restart the validator node.
 
 
 ## Useful links
