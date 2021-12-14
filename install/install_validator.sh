@@ -97,7 +97,9 @@ install_validator () {
 
   $pkg_manager remove ansible --yes
   if [ "$inventory" = "mainnet.yaml" ]
-  echo "WARNING: solana is ready to go. But you must start it by the hand. Use \"systemctl start solana-validator\" command."
+  then
+    echo "WARNING: solana is ready to go. But you must start it by the hand. Use \"systemctl start solana-validator\" command."
+  fi
 
 
   echo "### Check your dashboard: https://solana.thevalidators.io/d/e-8yEOXMwerfwe/solana-monitoring?&var-server=$VALIDATOR_NAME"
