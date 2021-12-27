@@ -65,7 +65,7 @@ install_rpc () {
   #echo "pwd: $(pwd)"
   #ls -lah ./
 
-  ansible-playbook --connection=local --inventory ./inventory/$inventory --limit localhost  playbooks/pb_config.yaml --extra-vars "{ \
+  ansible-playbook --connection=local --inventory ./inventory/$inventory --limit localhost_rpc  playbooks/pb_config.yaml --extra-vars "{ \
   'validator_name':'$VALIDATOR_NAME', \
   'local_secrets_path': '$PATH_TO_VALIDATOR_KEYS', \
   'swap_file_size_gb': $SWAP_SIZE, \
@@ -106,7 +106,7 @@ while [ $# -gt 0 ]; do
    if [[ $1 == *"--"* ]]; then
         param="${1/--/}"
         declare ${param}="$2"
-        #echo $1 $2 // Optional to see the parameter:value result
+        echo $1 $2 // Optional to see the parameter:value result
    fi
 
   shift
