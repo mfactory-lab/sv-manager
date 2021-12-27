@@ -67,6 +67,7 @@
   when: not vote_account_keypair_exists_locally.stat.exists
         and not vote_account_keypair_exists.stat.exists
         and cluster_environment == 'testnet'
+        and not rpc_node
 
 - name: "Create keys: Airdrop 1 sol to validator-keypair"
   shell: "solana airdrop --keypair {{ secrets_path }}/validator-keypair.json 1"
@@ -108,3 +109,4 @@
   when: not vote_account_keypair_exists.stat.exists
         and not vote_account_keypair_exists_locally.stat.exists
         and "'local' not in group_names"
+        and not rpc_node

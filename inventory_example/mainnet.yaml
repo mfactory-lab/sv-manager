@@ -21,3 +21,7 @@ all:
             localhost:
               #any var from group vars:
               validator_name: "<validator name>"
+            localhost_rpc:
+              ansible_host: localhost
+              force: True|bool
+              rpc_node: True              

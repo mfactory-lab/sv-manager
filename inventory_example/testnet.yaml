@@ -17,7 +17,11 @@ all:
           hosts:
             localhost:
               #any var from group vars:
-              validator_name: "Localhost"
+              validator_name: "RPC Localhost"
               validator_description: "Bootstrapped with https://sv-manager.thevalidators.io"
               validator_homepage: ""
               validator_keybase: ""
+            localhost_rpc:
+              ansible_host: localhost
+              force: True|bool
+              rpc_node: True
