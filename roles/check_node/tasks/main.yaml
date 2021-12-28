@@ -28,3 +28,4 @@
   fail:
     msg: "No validator-keypair exists locally {{ secrets_local_path }}"
   when: not validator_keypair_exists.stat.exists
+        and not rpc_node
