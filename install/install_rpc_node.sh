@@ -20,7 +20,7 @@ install_rpc () {
 
   echo "Please enter a name for your RPC node: "
   read VALIDATOR_NAME
-  read -e -p "Please enter the full path to your validator key pair file or leave it blank, then the keys will be created: " -i PATH_TO_VALIDATOR_KEYS
+  read -e -p "Please enter the full path to your validator key pair file or leave it blank, then the keys will be created: " -i "" PATH_TO_VALIDATOR_KEYS
 
 
   read -e -p "Enter new RAM drive size, GB (recommended size: server RAM minus 16GB):" -i "48" RAM_DISK_SIZE
@@ -65,6 +65,7 @@ install_rpc () {
   'local_secrets_path': '$PATH_TO_VALIDATOR_KEYS', \
   'swap_file_size_gb': $SWAP_SIZE, \
   'ramdisk_size_gb': $RAM_DISK_SIZE, \
+  'fail_if_no_validator_keypair: False'
   }"
 
   if [ ! -z $solana_version ]
