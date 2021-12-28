@@ -23,6 +23,6 @@ all:
               validator_name: "<validator name>"
             localhost_rpc:
               ansible_host: localhost
-              force: True|bool
-              rpc_node: True
+              force: true
+              rpc_node: true
               solana_validator_service: started              
