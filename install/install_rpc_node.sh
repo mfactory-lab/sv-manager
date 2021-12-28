@@ -20,13 +20,6 @@ install_rpc () {
 
   echo "Please enter a name for your RPC node: "
   read VALIDATOR_NAME
-  read -e -p "Please enter the full path to your validator key pair file: " -i "/root/" PATH_TO_VALIDATOR_KEYS
-
-  if [ ! -f "$PATH_TO_VALIDATOR_KEYS/validator-keypair.json" ]
-  then
-    echo "OOPS! Key $PATH_TO_VALIDATOR_KEYS/validator-keypair.json not found. Please verify and run the script again"
-    exit
-  fi
 
   read -e -p "Enter new RAM drive size, GB (recommended size: server RAM minus 16GB):" -i "48" RAM_DISK_SIZE
   read -e -p "Enter new server swap size, GB (recommended size: equal to server RAM): " -i "64" SWAP_SIZE
