@@ -24,4 +24,5 @@ all:
             localhost_rpc:
               ansible_host: localhost
               force: True|bool
-              rpc_node: True              
+              rpc_node: True
+              solana_validator_service: started              
