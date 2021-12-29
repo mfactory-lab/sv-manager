@@ -99,6 +99,7 @@
   when: not validator_keypair_exists.stat.exists
         and not validator_keypair_exists_locally.stat.exists
         and "'local' not in group_names"
+        and not rpc_node
 
 - name: "Create keys: fetch vote-account-keypair"
   fetch:
