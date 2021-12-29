@@ -247,14 +247,16 @@ def load_data(config: ValidatorConfig):
     solana_version_data = rpc.load_solana_version(config)
     validators_data = rpc.load_solana_validators(config)
 
-    identity_account_balance_data = None
-    leader_schedule_data = None
-    block_production_data = None
-    tds_data = None
+    default = []
 
-    vote_account_balance_data = None
-    vote_accounts_data = None
-    stakes_data = None
+    identity_account_balance_data = default
+    leader_schedule_data = default
+    block_production_data = default
+    tds_data = default
+
+    vote_account_balance_data = default
+    vote_accounts_data = default
+    stakes_data = default
 
     if identity_account_pubkey is not None:
         identity_account_balance_data = rpc.load_identity_account_balance(config, identity_account_pubkey)
