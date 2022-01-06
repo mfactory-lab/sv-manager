@@ -42,6 +42,7 @@
   register: vote_account_keypair_exists
   tags:
     - validator.manage.keys.create.vote
+  when: not fail_if_no_validator_keypair
 
 - name: "Upload keys: upload vote-account-keypair"
   copy:
@@ -54,5 +55,6 @@
   tags:
     - validator.manage.keys.upload
   when:
-    vote_account_keypair_exists.stat.exists
+    fail_if_no_validator_keypair
+    or vote_account_keypair_exists.stat.exists
 

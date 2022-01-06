@@ -100,7 +100,6 @@ def get_block_production_cli_metrics(block_production_data_cli, identity_account
 
 
 def get_performance_metrics(performance_sample_data, epoch_info_data, leader_schedule_by_identity):
-
     if len(performance_sample_data) > 0:
         sample = performance_sample_data[0]
         if sample['numSlots'] > 0:
@@ -115,7 +114,7 @@ def get_performance_metrics(performance_sample_data, epoch_info_data, leader_sch
             for slot in leader_schedule_by_identity:
                 if current_slot_index < slot:
                     next_slot = slot
-                    time_until_next_slot = (next_slot - current_slot_index)*mid_slot_time
+                    time_until_next_slot = (next_slot - current_slot_index) * mid_slot_time
                     break
         else:
             time_until_next_slot = None
@@ -151,7 +150,6 @@ def get_solana_version_metric(solana_version_data):
 
 
 def get_validators_metric(validators, identity_account_pubkey):
-
     if validators is not None:
         epoch_credits_l = []
         last_vote_l = []
@@ -243,43 +241,55 @@ def load_data(config: ValidatorConfig):
     identity_account_pubkey = rpc.load_identity_account_pubkey(config)
     vote_account_pubkey = rpc.load_vote_account_pubkey(config)
 
-    if (identity_account_pubkey is not None) and (vote_account_pubkey is not None):
+    epoch_info_data = rpc.load_epoch_info(config)
+    block_production_cli = rpc.load_block_production_cli(config)
+    performance_sample_data = rpc.load_recent_performance_sample(config)
+    solana_version_data = rpc.load_solana_version(config)
+    validators_data = rpc.load_solana_validators(config)
+
+    default = []
+
+    identity_account_balance_data = default
+    leader_schedule_data = default
+    block_production_data = default
+    tds_data = default
+
+    vote_account_balance_data = default
+    vote_accounts_data = default
+    stakes_data = default
+
+    if identity_account_pubkey is not None:
         identity_account_balance_data = rpc.load_identity_account_balance(config, identity_account_pubkey)
-        vote_account_balance_data = rpc.load_vote_account_balance(config, vote_account_pubkey)
-        epoch_info_data = rpc.load_epoch_info(config)
         leader_schedule_data = rpc.load_leader_schedule(config, identity_account_pubkey)
         block_production_data = rpc.load_block_production(config, identity_account_pubkey)
-        block_production_cli = rpc.load_block_production_cli(config)
-        vote_accounts_data = rpc.load_vote_accounts(config, vote_account_pubkey)
-        performance_sample_data = rpc.load_recent_performance_sample(config)
-        solana_version_data = rpc.load_solana_version(config)
-        stakes_data = rpc.load_stakes(config, vote_account_pubkey)
-        validators_data = rpc.load_solana_validators(config)
         tds_data = tds.load_tds_info(config, identity_account_pubkey)
 
-        result = {
-            'identity_account_pubkey': identity_account_pubkey,
-            'vote_account_pubkey': vote_account_pubkey,
-            'identity_account_balance':  identity_account_balance_data,
-            'vote_account_balance': vote_account_balance_data,
-            'epoch_info': epoch_info_data,
-            'leader_schedule': leader_schedule_data,
-            'block_production': block_production_data,
-            'load_block_production_cli': block_production_cli,
-            'vote_accounts': vote_accounts_data,
-            'performance_sample': performance_sample_data,
-            'solana_version_data': solana_version_data,
-            'stakes_data': stakes_data,
-            'validators_data': validators_data,
-            'tds_data': tds_data,
-            'cpu_model': rpc.load_cpu_model(config)
-        }
+    if vote_account_pubkey is not None:
+        vote_account_balance_data = rpc.load_vote_account_balance(config, vote_account_pubkey)
+        vote_accounts_data = rpc.load_vote_accounts(config, vote_account_pubkey)
+        stakes_data = rpc.load_stakes(config, vote_account_pubkey)
 
-        debug(config, str(result))
+    result = {
+        'identity_account_pubkey': identity_account_pubkey,
+        'vote_account_pubkey': vote_account_pubkey,
+        'identity_account_balance': identity_account_balance_data,
+        'vote_account_balance': vote_account_balance_data,
+        'epoch_info': epoch_info_data,
+        'leader_schedule': leader_schedule_data,
+        'block_production': block_production_data,
+        'load_block_production_cli': block_production_cli,
+        'vote_accounts': vote_accounts_data,
+        'performance_sample': performance_sample_data,
+        'solana_version_data': solana_version_data,
+        'stakes_data': stakes_data,
+        'validators_data': validators_data,
+        'tds_data': tds_data,
+        'cpu_model': rpc.load_cpu_model(config)
+    }
 
-        return result
-    else:
-        return None
+    debug(config, str(result))
+
+    return result
 
 
 def calculate_influx_fields(data):
@@ -312,13 +322,12 @@ def calculate_influx_fields(data):
         result.update(get_validators_metric(data['validators_data'], identity_account_pubkey))
         result.update(get_block_production_cli_metrics(data['load_block_production_cli'], identity_account_pubkey))
         result.update(data['tds_data'])
-   #    result.update({"cpu_model": data['cpu_model']})
+    #    result.update({"cpu_model": data['cpu_model']})
 
     return result
 
 
 def calculate_output_data(config: ValidatorConfig):
-
     data = load_data(config)
 
     tags = {
@@ -346,6 +355,3 @@ def calculate_output_data(config: ValidatorConfig):
         measurement.update(get_solana_version_metric(data['solana_version_data']))
 
     return measurement
-
-
-
