@@ -25,7 +25,7 @@ name: "{{ inventory_hostname }}"
 open_solana_ports_start: 8000
 open_solana_ports_end: 10000
 ramdisk_path: "{{ mount_base_path }}/ramdisk"
-ramdisk_size_gb: 48
+ramdisk_size_gb: 200
 rpc_node: False
 set_validator_info: False
 secrets_path: "/home/{{ solana_user }}/.secrets"
