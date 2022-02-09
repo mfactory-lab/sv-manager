@@ -4,7 +4,7 @@ from common import debug
 from common import ValidatorConfig
 import statistics
 import numpy as np
-import tds_info as tds
+# import tds_info as tds
 from common import measurement_from_fields
 
 
@@ -252,7 +252,7 @@ def load_data(config: ValidatorConfig):
     identity_account_balance_data = default
     leader_schedule_data = default
     block_production_data = default
-    tds_data = default
+#    tds_data = default
 
     vote_account_balance_data = default
     vote_accounts_data = default
@@ -262,7 +262,7 @@ def load_data(config: ValidatorConfig):
         identity_account_balance_data = rpc.load_identity_account_balance(config, identity_account_pubkey)
         leader_schedule_data = rpc.load_leader_schedule(config, identity_account_pubkey)
         block_production_data = rpc.load_block_production(config, identity_account_pubkey)
-        tds_data = tds.load_tds_info(config, identity_account_pubkey)
+#        tds_data = tds.load_tds_info(config, identity_account_pubkey)
 
     if vote_account_pubkey is not None:
         vote_account_balance_data = rpc.load_vote_account_balance(config, vote_account_pubkey)
@@ -283,7 +283,7 @@ def load_data(config: ValidatorConfig):
         'solana_version_data': solana_version_data,
         'stakes_data': stakes_data,
         'validators_data': validators_data,
-        'tds_data': tds_data,
+#        'tds_data': tds_data,
         'cpu_model': rpc.load_cpu_model(config)
     }
 
@@ -321,8 +321,8 @@ def calculate_influx_fields(data):
         result.update(get_current_stake_metric(data['stakes_data']))
         result.update(get_validators_metric(data['validators_data'], identity_account_pubkey))
         result.update(get_block_production_cli_metrics(data['load_block_production_cli'], identity_account_pubkey))
-        result.update(data['tds_data'])
-    #    result.update({"cpu_model": data['cpu_model']})
+#        result.update(data['tds_data'])
+        result.update({"cpu_model": data['cpu_model']})
 
     return result
 

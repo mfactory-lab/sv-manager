@@ -41,6 +41,9 @@ ExecStart={{ env_path }}/solana-validator \
 {% endif %}
 {% if rpc_node %}
 --no-voting \
+--account-index program-id \
+--account-index spl-token-mint \
+--account-index spl-token-owner \
 {% endif %}
 --no-port-check \
 --limit-ledger-size {{ limit_ledger_size }} \
