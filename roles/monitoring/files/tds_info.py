@@ -9,9 +9,7 @@ def tds_rpc_call(config: ValidatorConfig, identity_account_pubkey: str):
 
     try:
         debug(config, address)
-
-        json_response = requests.post(address, timeout=3).json()
-
+        json_response = requests.get(address, timeout=5).json()
         if 'data' not in json_response:
             result = {}
         else:
