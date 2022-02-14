@@ -19,3 +19,4 @@ snapshot_interval_slots: 500
 maximum_local_snapshot_age: 1000
 solana_version: 1.9.6
 extra_params:
+  - --full-rpc-api
