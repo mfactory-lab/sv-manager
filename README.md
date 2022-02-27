@@ -52,8 +52,8 @@ That's it, you are all set!
 ### How to update validator
 
 ````shell
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/mfactory-lab/sv-manager/latest/install/update_test_validator_version.sh)" --version 1.8.14
-````
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/mfactory-lab/sv-manager/latest/install/update_test_validator_version.sh)" --version 1.9.9
+
 
 ### how to update monitoring
 
