@@ -20,7 +20,7 @@ ExecStart={{ env_path }}/solana-validator \
 --rpc-port {{ solana_rpc_port }} \
 --no-untrusted-rpc \
 --expected-genesis-hash {{ expected_genesis_hash }} \
---snapshot-interval-slots {{ snapshot_interval_slots }} \
+--incremental-snapshots \
 --maximum-local-snapshot-age {{ maximum_local_snapshot_age }} \
 {% if not extra_params is none %}
 {% for extra_var in extra_params %}
@@ -35,6 +35,7 @@ ExecStart={{ env_path }}/solana-validator \
 {% endfor %}
 {%if 'mainnet_validators' in group_names and not rpc_node %}
 --private-rpc \
+--full-rpc-api \
 --rpc-bind-address 127.0.0.1 \
 --wal-recovery-mode skip_any_corrupted_record \
 --snapshot-compression none \
