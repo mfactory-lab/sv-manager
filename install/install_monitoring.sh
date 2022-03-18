@@ -61,13 +61,13 @@ install_monitoring () {
   cp -r ./inventory_example ./inventory
 
   #echo $(pwd)
-  ansible-playbook --connection=local --inventory ./inventory/$inventory --limit local  playbooks/pb_config.yaml -vvv --extra-vars "{ \
+  ansible-playbook --connection=local --inventory ./inventory/$inventory --limit localhost  playbooks/pb_config.yaml -vvv --extra-vars "{ \
   'solana_user': '$SOLANA_USER', \
   'validator_name':'$VALIDATOR_NAME', \
   'local_secrets_path': '$PATH_TO_VALIDATOR_KEYS' \
   }"
 
-  ansible-playbook --connection=local --inventory ./inventory/$inventory --limit local  playbooks/pb_install_monitoring.yaml --extra-vars "@/etc/sv_manager/sv_manager.conf"
+  ansible-playbook --connection=local --inventory ./inventory/$inventory --limit localhost  playbooks/pb_install_monitoring.yaml --extra-vars "@/etc/sv_manager/sv_manager.conf"
 
   echo "### Cleanup install folder ###"
   cd ..

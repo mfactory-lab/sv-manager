@@ -51,7 +51,7 @@ def measurement_from_fields(name, data, tags, config, legacy_tags=None):
     measurement = {
         "measurement": name,
         "time": round(time.time() * 1000),
-        "monitoring_version": "3.0.1",
+        "monitoring_version": "3.1.0",
         "cluster_environment": config.cluster_environment,
         "fields": data,
         "tags": tags

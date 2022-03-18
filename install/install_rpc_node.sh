@@ -2,15 +2,15 @@
 #set -x -e
 
 echo "###################### WARNING!!! ######################"
-echo "###   This script will bootstrap a validator node    ###"
-echo "###   for the Solana Testnet cluster, and connect    ###"
+echo "###   This script will bootstrap an RPC node         ###"
+echo "###   for the Solana blockchain, and connect         ###"
 echo "###   it to the monitoring dashboard                 ###"
 echo "###   at solana.thevalidators.io                     ###"
 echo "########################################################"
 
-install_validator () {
+install_rpc () {
 
-  echo "### Which type of validator you want to set up? ###"
+  echo "### Please choose the cluster: ###"
   select cluster in "mainnet-beta" "testnet"; do
       case $cluster in
           mainnet-beta ) inventory="mainnet.yaml"; break;;
@@ -18,23 +18,12 @@ install_validator () {
       esac
   done
 
-  echo "Please enter a name for your validator node: "
+  echo "Please enter a name for your RPC node: "
   read VALIDATOR_NAME
-  read -e -p "Please enter the full path to your validator key pair file: " -i "/root/" PATH_TO_VALIDATOR_KEYS
+  read -e -p "Please enter the full path to your validator key pair file or leave it blank, then the keys will be created: " -i "" PATH_TO_VALIDATOR_KEYS
 
-  if [ ! -f "$PATH_TO_VALIDATOR_KEYS/validator-keypair.json" ]
-  then
-    echo "OOPS! Key $PATH_TO_VALIDATOR_KEYS/validator-keypair.json not found. Please verify and run the script again"
-    exit
-  fi
 
-  if [ ! -f "$PATH_TO_VALIDATOR_KEYS/vote-account-keypair.json" ] && [ "$inventory" = "mainnet.yaml" ]
-  then
-    echo "OOPS! Key $PATH_TO_VALIDATOR_KEYS/vote-account-keypair.json not found. Please verify and run the script again. For security reasons we do not create any keys for mainnet."
-    exit
-  fi
-
-  read -e -p "Enter new RAM drive size, GB (recommended size: 200GB):" -i "200" RAM_DISK_SIZE
+  read -e -p "Enter new RAM drive size, GB (recommended size: server RAM minus 16GB):" -i "48" RAM_DISK_SIZE
   read -e -p "Enter new server swap size, GB (recommended size: equal to server RAM): " -i "64" SWAP_SIZE
 
   rm -rf sv_manager/
@@ -71,11 +60,12 @@ install_validator () {
   #echo "pwd: $(pwd)"
   #ls -lah ./
 
-  ansible-playbook --connection=local --inventory ./inventory/$inventory --limit localhost  playbooks/pb_config.yaml --extra-vars "{ \
+  ansible-playbook --connection=local --inventory ./inventory/$inventory --limit localhost_rpc  playbooks/pb_config.yaml --extra-vars "{ \
   'validator_name':'$VALIDATOR_NAME', \
   'local_secrets_path': '$PATH_TO_VALIDATOR_KEYS', \
   'swap_file_size_gb': $SWAP_SIZE, \
   'ramdisk_size_gb': $RAM_DISK_SIZE, \
+  'fail_if_no_validator_keypair: False'
   }"
 
   if [ ! -z $solana_version ]
@@ -91,16 +81,11 @@ install_validator () {
     TAGS="--tags {$tags}"
   fi
 
-  ansible-playbook --connection=local --inventory ./inventory/$inventory --limit localhost  playbooks/pb_install_validator.yaml --extra-vars "@/etc/sv_manager/sv_manager.conf" $SOLANA_VERSION $EXTRA_INSTALL_VARS $TAGS
+  ansible-playbook --connection=local --inventory ./inventory/$inventory --limit localhost_rpc  playbooks/pb_install_validator.yaml --extra-vars "@/etc/sv_manager/sv_manager.conf" $SOLANA_VERSION $EXTRA_INSTALL_VARS $TAGS
 
   echo "### 'Uninstall ansible ###"
 
   $pkg_manager remove ansible --yes
-  if [ "$inventory" = "mainnet.yaml" ]
-  then
-    echo "WARNING: solana is ready to go. But you must start it by the hand. Use \"systemctl start solana-validator\" command."
-  fi
-
 
   echo "### Check your dashboard: https://solana.thevalidators.io/d/e-8yEOXMwerfwe/solana-monitoring?&var-server=$VALIDATOR_NAME"
 
@@ -122,10 +107,10 @@ sv_manager_version=${sv_manager_version:-latest}
 
 echo "installing sv manager version $sv_manager_version"
 
-echo "This script will bootstrap a Solana validator node. Proceed?"
+echo "This script will bootstrap a Solana RPC node. Proceed?"
 select yn in "Yes" "No"; do
     case $yn in
-        Yes ) install_validator "$sv_manager_version" "$extra_vars" "$solana_version" "$tags"; break;;
+        Yes ) install_rpc "$sv_manager_version" "$extra_vars" "$solana_version" "$tags"; break;;
         No ) echo "Aborting install. No changes will be made."; exit;;
     esac
 done

@@ -71,7 +71,7 @@ update_validator() {
     wait_for_restart_window
   fi
 
-  ansible-playbook --connection=local --inventory ./inventory --limit local  playbooks/pb_install_validator.yaml --tags "$2" --extra-vars "@/etc/sv_manager/sv_manager.conf" --extra-vars 'host_hosts=local' --extra-vars "version=$1"
+  ansible-playbook --connection=local --inventory ./inventory --limit localhost  playbooks/pb_install_validator.yaml --tags "$2" --extra-vars "@/etc/sv_manager/sv_manager.conf" --extra-vars "version=$1"
 
   catchup_info
 
