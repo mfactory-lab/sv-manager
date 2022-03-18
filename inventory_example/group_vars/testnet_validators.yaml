@@ -9,13 +9,14 @@ entrypoints:
   - entrypoint3.testnet.solana.com:8001
 known_validators:
   - 5D1fNXzvv5NjV1ysLjirC4WY92RNsVH18vjmcszZd8on
-  - 7XSY3MrYnK8vq693Rju17bbPkCN3Z7KvvfvJx4kdrsSY
+  - dDzy5SR3AXdYWVqbDEkVFdvSPCtS9ihF5kJkHCtXoFs
   - Ft5fbkqNa76vnsjYNwjDZUXoTWpP7VYm3mtsaQckQADN
+  - eoKpUABi59aT4rR9HGS3LcMecfut9x7zJyodWWP43YQ
   - 9QxCLckBiJc783jnMvXZubK4wH86Eqqvashtrwvcsgkv
 solana_metrics_url: 'https://metrics.solana.com:8086,db=tds,u=testnet_write,p=c4fa841aa918bf8274e3e2a44d77568d9861b3ea'
 expected_genesis_hash: '4uhcVJyU9pJkvQyS88uRDiswHXSCkY3zQawwpjk2NsNY'
 limit_ledger_size: 50000000
 snapshot_interval_slots: 500
 maximum_local_snapshot_age: 1000
-solana_version: 1.9.9
+solana_version: 1.10.3
 extra_params:
