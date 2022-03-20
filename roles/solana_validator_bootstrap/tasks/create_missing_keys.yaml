@@ -56,7 +56,7 @@
     validator.manage.keys.create.identity
   when: not validator_keypair_exists_locally.stat.exists
         and not validator_keypair_exists.stat.exists
-        and cluster_environment == 'testnet'
+        and (cluster_environment == 'testnet' or rpc_node)
 
 - name: "Create keys: Create vote account keypair"
   shell: "solana-keygen new --silent --no-bip39-passphrase --outfile {{ secrets_path }}/vote-account-keypair.json"
