@@ -91,7 +91,12 @@ install_validator () {
     TAGS="--tags {$tags}"
   fi
 
-  ansible-playbook --connection=local --inventory ./inventory/$inventory --limit localhost  playbooks/pb_install_validator.yaml --extra-vars "@/etc/sv_manager/sv_manager.conf" $SOLANA_VERSION $EXTRA_INSTALL_VARS $TAGS
+  if [ ! -z $skip_tags ]
+  then
+    SKIP_TAGS="--skip-tags {$skip_tags}"
+  fi
+
+  ansible-playbook --connection=local --inventory ./inventory/$inventory --limit localhost  playbooks/pb_install_validator.yaml --extra-vars "@/etc/sv_manager/sv_manager.conf" $SOLANA_VERSION $EXTRA_INSTALL_VARS $TAGS $SKIP_TAGS
 
   echo "### 'Uninstall ansible ###"
 
@@ -125,7 +130,7 @@ echo "installing sv manager version $sv_manager_version"
 echo "This script will bootstrap a Solana validator node. Proceed?"
 select yn in "Yes" "No"; do
     case $yn in
-        Yes ) install_validator "$sv_manager_version" "$extra_vars" "$solana_version" "$tags"; break;;
+        Yes ) install_validator "$sv_manager_version" "$extra_vars" "$solana_version" "$tags" "$skip_tags"; break;;
         No ) echo "Aborting install. No changes will be made."; exit;;
     esac
 done
