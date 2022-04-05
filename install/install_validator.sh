@@ -93,7 +93,7 @@ install_validator () {
 
   if [ ! -z $skip_tags ]
   then
-    SKIP_TAGS="--skip-tags [$skip_tags]"
+    SKIP_TAGS="--skip-tags $skip_tags"
   fi
 
   ansible-playbook --connection=local --inventory ./inventory/$inventory --limit localhost  playbooks/pb_install_validator.yaml --extra-vars "@/etc/sv_manager/sv_manager.conf" $SOLANA_VERSION $EXTRA_INSTALL_VARS $TAGS $SKIP_TAGS
