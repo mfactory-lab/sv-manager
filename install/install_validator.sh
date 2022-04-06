@@ -71,13 +71,6 @@ install_validator () {
   #echo "pwd: $(pwd)"
   #ls -lah ./
 
-  ansible-playbook --connection=local --inventory ./inventory/$inventory --limit localhost  playbooks/pb_config.yaml --extra-vars "{ \
-  'validator_name':'$VALIDATOR_NAME', \
-  'local_secrets_path': '$PATH_TO_VALIDATOR_KEYS', \
-  'swap_file_size_gb': $SWAP_SIZE, \
-  'ramdisk_size_gb': $RAM_DISK_SIZE, \
-  }"
-
   if [ ! -z $solana_version ]
   then
     SOLANA_VERSION="--extra-vars {\"solana_version\":\"$solana_version\"}"
@@ -95,6 +88,13 @@ install_validator () {
   then
     SKIP_TAGS="--skip-tags $skip_tags"
   fi
+
+  ansible-playbook --connection=local --inventory ./inventory/$inventory --limit localhost  playbooks/pb_config.yaml --extra-vars "{ \
+  'validator_name':'$VALIDATOR_NAME', \
+  'local_secrets_path': '$PATH_TO_VALIDATOR_KEYS', \
+  'swap_file_size_gb': $SWAP_SIZE, \
+  'ramdisk_size_gb': $RAM_DISK_SIZE, \
+  }" $SOLANA_VERSION $EXTRA_INSTALL_VARS $TAGS $SKIP_TAGS
 
   ansible-playbook --connection=local --inventory ./inventory/$inventory --limit localhost  playbooks/pb_install_validator.yaml --extra-vars "@/etc/sv_manager/sv_manager.conf" $SOLANA_VERSION $EXTRA_INSTALL_VARS $TAGS $SKIP_TAGS
 
