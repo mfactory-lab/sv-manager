@@ -84,7 +84,7 @@ install_validator () {
   fi
   if [ ! -z $extra_vars ]
   then
-    EXTRA_INSTALL_VARS="--extra-vars {$extra_vars}"
+    EXTRA_INSTALL_VARS="--extra-vars $extra_vars"
   fi
   if [ ! -z $tags ]
   then
