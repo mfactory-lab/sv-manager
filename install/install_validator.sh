@@ -28,7 +28,7 @@ install_validator () {
     exit
   fi
 
-  if [ ! -f "$PATH_TO_VALIDATOR_KEYS/vote-account-keypair.json" ] && [ "$inventory" = "mainnet.yaml" ]
+  if [ ! -f "$PATH_TO_VALIDATOR_KEYS/vote-account-keypair.json" ] ## && [ "$inventory" = "mainnet.yaml" ]
   then
     echo "OOPS! Key $PATH_TO_VALIDATOR_KEYS/vote-account-keypair.json not found. Please verify and run the script again. For security reasons we do not create any keys for mainnet."
     exit
