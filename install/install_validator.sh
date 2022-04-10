@@ -28,7 +28,7 @@ install_validator () {
     exit
   fi
 
-  if [ ! -f "$PATH_TO_VALIDATOR_KEYS/vote-account-keypair.json" ] && [ "$inventory" = "mainnet.yaml" ]
+  if [ ! -f "$PATH_TO_VALIDATOR_KEYS/vote-account-keypair.json" ] ## && [ "$inventory" = "mainnet.yaml" ]
   then
     echo "OOPS! Key $PATH_TO_VALIDATOR_KEYS/vote-account-keypair.json not found. Please verify and run the script again. For security reasons we do not create any keys for mainnet."
     exit
@@ -71,27 +71,32 @@ install_validator () {
   #echo "pwd: $(pwd)"
   #ls -lah ./
 
-  ansible-playbook --connection=local --inventory ./inventory/$inventory --limit localhost  playbooks/pb_config.yaml --extra-vars "{ \
-  'validator_name':'$VALIDATOR_NAME', \
-  'local_secrets_path': '$PATH_TO_VALIDATOR_KEYS', \
-  'swap_file_size_gb': $SWAP_SIZE, \
-  'ramdisk_size_gb': $RAM_DISK_SIZE, \
-  }"
-
   if [ ! -z $solana_version ]
   then
     SOLANA_VERSION="--extra-vars {\"solana_version\":\"$solana_version\"}"
   fi
   if [ ! -z $extra_vars ]
   then
-    EXTRA_INSTALL_VARS="--extra-vars {$extra_vars}"
+    EXTRA_INSTALL_VARS="--extra-vars $extra_vars"
   fi
   if [ ! -z $tags ]
   then
-    TAGS="--tags {$tags}"
+    TAGS="--tags [$tags]"
   fi
 
-  ansible-playbook --connection=local --inventory ./inventory/$inventory --limit localhost  playbooks/pb_install_validator.yaml --extra-vars "@/etc/sv_manager/sv_manager.conf" $SOLANA_VERSION $EXTRA_INSTALL_VARS $TAGS
+  if [ ! -z $skip_tags ]
+  then
+    SKIP_TAGS="--skip-tags $skip_tags"
+  fi
+
+  ansible-playbook --connection=local --inventory ./inventory/$inventory --limit localhost  playbooks/pb_config.yaml --extra-vars "{ \
+  'validator_name':'$VALIDATOR_NAME', \
+  'local_secrets_path': '$PATH_TO_VALIDATOR_KEYS', \
+  'swap_file_size_gb': $SWAP_SIZE, \
+  'ramdisk_size_gb': $RAM_DISK_SIZE, \
+  }" $SOLANA_VERSION $EXTRA_INSTALL_VARS $TAGS $SKIP_TAGS
+
+  ansible-playbook --connection=local --inventory ./inventory/$inventory --limit localhost  playbooks/pb_install_validator.yaml --extra-vars "@/etc/sv_manager/sv_manager.conf" $SOLANA_VERSION $EXTRA_INSTALL_VARS $TAGS $SKIP_TAGS
 
   echo "### 'Uninstall ansible ###"
 
@@ -112,7 +117,7 @@ while [ $# -gt 0 ]; do
    if [[ $1 == *"--"* ]]; then
         param="${1/--/}"
         declare ${param}="$2"
-        #echo $1 $2 // Optional to see the parameter:value result
+        echo $1 $2 // Optional to see the parameter:value result
    fi
 
   shift
@@ -125,7 +130,7 @@ echo "installing sv manager version $sv_manager_version"
 echo "This script will bootstrap a Solana validator node. Proceed?"
 select yn in "Yes" "No"; do
     case $yn in
-        Yes ) install_validator "$sv_manager_version" "$extra_vars" "$solana_version" "$tags"; break;;
+        Yes ) install_validator "$sv_manager_version" "$extra_vars" "$solana_version" "$tags" "$skip_tags"; break;;
         No ) echo "Aborting install. No changes will be made."; exit;;
     esac
 done
