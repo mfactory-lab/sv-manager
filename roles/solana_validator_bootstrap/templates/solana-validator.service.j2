@@ -18,6 +18,7 @@ ExecStart={{ env_path }}/solana-validator \
 --vote-account {{ secrets_path }}/vote-account-keypair.json \
 {% endif %}
 --rpc-port {{ solana_rpc_port }} \
+--full-rpc-api \
 --no-untrusted-rpc \
 --expected-genesis-hash {{ expected_genesis_hash }} \
 --incremental-snapshots \
@@ -35,7 +36,6 @@ ExecStart={{ env_path }}/solana-validator \
 {% endfor %}
 {%if 'mainnet_validators' in group_names and not rpc_node %}
 --private-rpc \
---full-rpc-api \
 --rpc-bind-address 127.0.0.1 \
 --wal-recovery-mode skip_any_corrupted_record \
 --snapshot-compression none \

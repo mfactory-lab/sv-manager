@@ -1,8 +1,8 @@
 ---
-
 - name: update solana validator
   hosts: all
   become: yes
   roles:
     - solana_cli
+    - solana_validator_bootstrap
     - solana_validator_restart
