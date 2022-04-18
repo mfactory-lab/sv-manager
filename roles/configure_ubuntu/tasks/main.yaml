@@ -34,6 +34,11 @@
   when:
     use_firewall | bool
 
+- name: Config file2ban
+  import_tasks: fail2ban.yaml
+  tags:
+    - config.fail2ban
+
 - name: Create ansible user
   import_tasks: ansible_user.yaml
   tags:
