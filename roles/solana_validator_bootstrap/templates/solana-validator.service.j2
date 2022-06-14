@@ -21,7 +21,6 @@ ExecStart={{ env_path }}/solana-validator \
 --full-rpc-api \
 --no-untrusted-rpc \
 --expected-genesis-hash {{ expected_genesis_hash }} \
---incremental-snapshots \
 --maximum-local-snapshot-age {{ maximum_local_snapshot_age }} \
 {% if not extra_params is none %}
 {% for extra_var in extra_params %}
