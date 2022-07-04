@@ -1,5 +1,5 @@
 ---
-- name: Install firwall package
+- name: Install firewall package
   package:
     name:
       - ufw
