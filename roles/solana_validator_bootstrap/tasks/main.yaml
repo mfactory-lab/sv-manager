@@ -38,10 +38,10 @@
   tags:
     - validator.service.solana
 
-- name: Set validator info
-  import_tasks: validator_info.yaml
-  tags:
-    - validator.manage.info
-  when: set_validator_info
+# - name: Set validator info
+#   import_tasks: validator_info.yaml
+#   tags:
+#     - validator.manage.info
+#   when: set_validator_info
 
 
