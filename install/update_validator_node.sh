@@ -1,5 +1,9 @@
 #!/bin/bash
 #set -x -e
+# required tags: 
+#   validator.service.solana
+#   cli.update
+
 
 wait_for_restart_window() {
   if [ -d /mnt/ledger ]
@@ -71,7 +75,7 @@ update_validator() {
     wait_for_restart_window
   fi
 
-  ansible-playbook --connection=local --inventory ./inventory --limit localhost  playbooks/pb_install_validator.yaml --tags "$2" --extra-vars "@/etc/sv_manager/sv_manager.conf" --extra-vars "version=$1"
+  ansible-playbook --connection=local --inventory ./inventory --limit localhost  playbooks/pb_update_validator.yaml --tags "$2" --extra-vars "@/etc/sv_manager/sv_manager.conf" --extra-vars "version=$1"
 
   catchup_info
 

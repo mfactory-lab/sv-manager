@@ -3,7 +3,7 @@ set_validator_info: False
 cluster_environment: 'mainnet-beta'
 cluster_rpc_address: 'https://api.mainnet-beta.solana.com'
 solana_validator_service: stopped
-swap_file_size_gb: 128
+swap_file_size_gb: 200
 entrypoints:
   - entrypoint.mainnet-beta.solana.com:8001
   - entrypoint2.mainnet-beta.solana.com:8001
@@ -20,6 +20,6 @@ expected_genesis_hash: '5eykt4UsFv8P8NJdTREpY1vzqKqZKvdpKuc147dw2N9d'
 limit_ledger_size: 50000000
 snapshot_interval_slots: 2000
 maximum_local_snapshot_age: 3000
-solana_version: 1.10.28
+solana_version: 1.10.29
 extra_params:
   - '--incremental-snapshot-interval-slots 200'
