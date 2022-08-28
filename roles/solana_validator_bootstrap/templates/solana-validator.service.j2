@@ -18,7 +18,7 @@ ExecStart={{ env_path }}/solana-validator \
 {% endif %}
 --rpc-port {{ solana_rpc_port }} \
 --full-rpc-api \
---no-untrusted-rpc \
+--only-known-rpc \
 --expected-genesis-hash {{ expected_genesis_hash }} \
 --maximum-local-snapshot-age {{ maximum_local_snapshot_age }} \
 {% if not extra_params is none %}
@@ -49,7 +49,6 @@ ExecStart={{ env_path }}/solana-validator \
 --log {{ validator_log_path }}/solana-validator.log \
 --ledger {{ ledger_path }} \
 --accounts {{ accounts_path }} \
---accounts-db-caching-enabled \
 --snapshots {{ snapshots_path }} \
 --tpu-use-quic \
 --dynamic-port-range {{ open_solana_ports_start }}-{{ open_solana_ports_end }}
