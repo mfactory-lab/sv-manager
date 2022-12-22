@@ -5,10 +5,17 @@
   tags:
     config.lvm
 
-- name: Install additional packages
-  import_tasks: packages.yaml
+- name: Install additional apt packages
+  import_tasks: apt_packages.yaml
   tags:
     - config.packages
+  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+
+- name: Install additional yum packages
+  import_tasks: yum_packages.yaml
+  tags:
+    - config.packages
+  when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
 
 - name: Create swap
   import_tasks: swap.yaml

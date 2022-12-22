@@ -3,7 +3,9 @@
   hosts: all
   become: yes
   roles:
-    - check_node
+    - name: check_node
+      tags:
+        - check_node
     - configure_ubuntu
     - solana_cli
     - solana_validator_bootstrap

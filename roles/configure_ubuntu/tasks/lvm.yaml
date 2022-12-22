@@ -57,31 +57,6 @@
         fstype: ext4
         state: mounted
 
-    - name: Add solana lvm log volume
-      lvol:
-        vg: "{{ lvm_vg }}"
-        lv: log
-        size: "{{ lvm_log_volume_size }}"
-        state: present
-
-    - name: Create a ext4 filesystem on log dir
-      filesystem:
-        fstype: ext4
-        dev: "/dev/{{ lvm_vg }}/log"
-
-    - name: Create log dir mount point
-      file:
-        path: "{{ mount_base_path }}/log"
-        state: directory
-        mode: '0755'
-
-    - name: Write log dir entry in fstab
-      ansible.posix.mount:
-        path: "{{ mount_base_path }}/log"
-        src: "/dev/{{ lvm_vg }}/log"
-        fstype: ext4
-        state: mounted
-
     - name: Add solana lvm swap volume
       lvol:
         vg: "{{ lvm_vg }}"
