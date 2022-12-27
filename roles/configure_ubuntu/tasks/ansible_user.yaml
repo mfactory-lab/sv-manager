@@ -9,6 +9,14 @@
   tags:
     - config.ansible_user
 
+- name: Install sudo package
+  package:
+    name:
+      - sudo
+    state: present
+  tags:
+    - config.ansible_user
+
 - name: Allow 'ansible' group to have passwordless sudo
   lineinfile:
     path: /etc/sudoers

@@ -5,8 +5,10 @@
   roles:
     - name: check_node
       tags:
-        - check_node
-    - configure_ubuntu
+        - check.node
+    - name: configure_ubuntu
+      tags:
+        - configure.os
     - solana_cli
     - solana_validator_bootstrap
     - monitoring
