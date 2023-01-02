@@ -13,3 +13,11 @@
   tags:
     config.cpu
   when: scaling_governor_exists.stat.exists
+  
+- name: Disable ondemand service
+  systemd:
+    name: ondemand
+    state: stopped
+    enabled: no
+  tags:
+    - config.cpu
