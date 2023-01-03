@@ -1,12 +1,8 @@
-- name: DEBUG
-  debug:
-    msg: "Updating Solana to {{ solana_version }}"
-
-- name: update solana
-  shell: "solana-install init {{ solana_version }}"
+- name: "Update Solana to {% if solana_version is defined %}v{{ solana_version }}{% else %}stable{% endif %}"
+  shell: "solana-install init -d {{ solana_app_path }} {% if solana_version is defined %}v{{ solana_version }}{% else %}stable{% endif %}"
   become: yes
   become_user: "{{ solana_user }}"
   environment:
-    PATH: "{{ solana_home }}/.local/share/solana/install/active_release/bin"
+    PATH: "{{ env_path }}"
   tags:
     - cli.update

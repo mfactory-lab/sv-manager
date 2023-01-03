@@ -9,6 +9,10 @@
     - name: configure_ubuntu
       tags:
         - configure.os
-    - solana_cli
+    - name: solana_cli
+      tags:
+        - cli
+        - cli.install
+        - cli.update
     - solana_validator_bootstrap
     - monitoring

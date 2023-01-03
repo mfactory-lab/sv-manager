@@ -12,12 +12,12 @@
   block:
     - name: download latest solana release installer
       get_url:
-        url: "https://release.solana.com/v{{ solana_version | default('stable') }}/install"
+        url: "https://release.solana.com/{% if solana_version is defined %}v{{ solana_version }}{% else %}stable{% endif %}/install"
         dest: /tmp/solana/
         mode: 0755
 
     - name: run solana installer
-      shell: /tmp/solana/install
+      shell: "/tmp/solana/install -d {{ solana_app_path }} {% if solana_version is defined %}v{{ solana_version }}{% else %}stable{% endif %}"
   become: yes
   become_user: "{{ solana_user }}"
   tags:
