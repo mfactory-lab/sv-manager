@@ -97,7 +97,7 @@ install_validator () {
   fi
   if [ ! -z $autogenerate_keypair ]
   then
-    AUTOGENERATE_KEYPAIR="--extra-vars {\"autogenerate_keypair\":\"true\"}"
+    AUTOGENERATE_KEYPAIR="--extra-vars {\"fail_if_no_validator_keypair\":\"false\"}"
   fi
   if [ ! -z $extra_vars ]
   then

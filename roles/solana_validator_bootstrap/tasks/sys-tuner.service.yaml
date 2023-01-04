@@ -9,22 +9,12 @@
   tags:
     validator.service.sys-tuner
 
-- name: Reload service configuration
+- name: solana-sys-tuner service enable and start
   systemd:
+    name: solana-sys-tuner
+    enabled: yes
+    state: restarted
     daemon_reload: yes
   tags:
     validator.service.sys-tuner
 
-- name: Enable solana-sys-tuner service
-  systemd:
-    name: solana-sys-tuner
-    enabled: yes
-  tags:
-    validator.service.sys-tuner
-
-- name: Restart solana-sys-tuner service
-  systemd:
-    name: solana-sys-tuner
-    state: restarted
-  tags:
-    validator.service.sys-tuner

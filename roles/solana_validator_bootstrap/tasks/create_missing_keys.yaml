@@ -14,19 +14,9 @@
   tags:
     - validator.manage.keys.create.vote
 
-- name: "Create keys: Build flat keys path"
+- name: "Create keys: Build keys path"
   set_fact:
-    secrets_local_path: "{{ local_secrets_path }}"
-  when: flat_path|bool
-  tags:
-    - validator.manage.keys.create
-
-- name: "Create keys: Build non flat keys path"
-  set_fact:
-    secrets_local_path: "{{ local_secrets_path }}/{{ validator_name }}/solana/"
-  when: not flat_path|bool
-  tags:
-    - validator.manage.keys.create
+    secrets_local_path: "{% if flat_path|bool %}{{ local_secrets_path }}{% else %}{{ local_secrets_path }}/{{ validator_name }}/solana{% endif %}"
 
 - name: "Create keys: Check identity keypair exists locally"
   connection: local
@@ -103,7 +93,7 @@
 
 - name: "Create keys: fetch vote-account-keypair"
   fetch:
-    src: "/home/{{ solana_user }}/.secrets/vote-account-keypair.json"
+    src: "{{ secrets_path }}/vote-account-keypair.json"
     dest: "{{ secrets_local_path }}"
     flat: true
   tags:
