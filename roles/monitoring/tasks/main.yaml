@@ -9,12 +9,12 @@
   tags:
     - monitoring
 
-- name: Configure telegraf
-  import_tasks: configure_telegraf.yaml
+- name: Install monitoring script
+  import_tasks: install_monitoring_script.yaml
   tags:
     - monitoring
 
-- name: Install monitoring script
-  import_tasks: install_monitoring_script.yaml
+- name: Configure telegraf
+  import_tasks: configure_telegraf.yaml
   tags:
     - monitoring

@@ -34,10 +34,14 @@ snapshots_path: "{{ mount_base_path }}/snapshots"
 solana_home: "/home/{{ solana_user }}"
 solana_app_path: "{{ solana_home }}/app"
 solana_rpc_port: 8899
+solana_gossip_port: 8001
 swap_file_size_gb: 64
 upload_validator_keys: True
 validator_name: "{{ inventory_hostname }}"
 validator_log_path: "{{ mount_base_path }}/log"
+index_excluded_keys:
+  - kinXdEcpDQeHPEuQnqmUgtYykqKGVFq6CeVX5iAHJq6
+  - TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA
 
 #validator info
 validator_description: "Bootstrapped with https://sv-manager.thevalidators.io"

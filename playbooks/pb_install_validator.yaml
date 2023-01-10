@@ -14,5 +14,7 @@
         - cli
         - cli.install
         - cli.update
-    - solana_validator_bootstrap
+    - name: solana_validator_bootstrap
+      tags:
+        - validator_bootstrap
     - monitoring

@@ -18,7 +18,7 @@
   tags:
     - validator.manage.keys
 
-- name: Confugure validator
+- name: Configure validator
   import_tasks: configure_validator.yaml
   tags:
     - validator.manage.config

@@ -29,5 +29,8 @@
   package:
     name: telegraf
     state: present
+  environment:
+    # do not start at the end of install
+    RUNLEVEL: 1
   tags:
     - telegraf.install

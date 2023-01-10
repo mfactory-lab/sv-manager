@@ -21,22 +21,11 @@
   tags:
     - telegraf.configure
 
-- name: Reload systemd
+- name: Enable and start telegraf service
   systemd:
+    name: telegraf
     daemon_reload: yes
-  tags:
-    - telegraf.start
-
-- name: Enable telegraf service
-  systemd:
-    name: telegraf
     enabled: yes
-  tags:
-    - telegraf.start
-
-- name: Start telegraf service
-  systemd:
-    name: telegraf
     state: restarted
   tags:
     - telegraf.start

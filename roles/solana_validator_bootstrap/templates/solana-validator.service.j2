@@ -8,15 +8,19 @@ Type=simple
 Restart=always
 RestartSec=1
 User={{ solana_user }}
-LimitNOFILE=1024000
+TimeoutStopSec=180
+LimitNOFILE=infinity
 Environment="PATH=/bin:/usr/bin:{{ env_path }}"
+Environment="RUST_LOG=WARN"
 Environment="SOLANA_METRICS_CONFIG=host={{ solana_metrics_url }}"
 ExecStart={{ env_path }}/solana-validator \
 --identity {{ secrets_path }}/validator-keypair.json \
+--no-untrusted-rpc \
 {% if not rpc_node %}
 --vote-account {{ secrets_path }}/vote-account-keypair.json \
 {% endif %}
 --rpc-port {{ solana_rpc_port }} \
+--gossip-port {{ solana_gossip_port }} \
 --full-rpc-api \
 --only-known-rpc \
 --expected-genesis-hash {{ expected_genesis_hash }} \
@@ -32,7 +36,7 @@ ExecStart={{ env_path }}/solana-validator \
 {% for known_validator in known_validators %}
 --known-validator {{ known_validator }} \
 {% endfor %}
-{%if 'mainnet_validators' in group_names and not rpc_node %}
+{% if 'mainnet_validators' in group_names and not rpc_node %}
 --private-rpc \
 --rpc-bind-address 127.0.0.1 \
 --wal-recovery-mode skip_any_corrupted_record \
@@ -41,8 +45,12 @@ ExecStart={{ env_path }}/solana-validator \
 {% if rpc_node %}
 --no-voting \
 --account-index program-id \
---account-index spl-token-mint \
---account-index spl-token-owner \
+{% if index_excluded_keys is defined %}
+{% for key in index_excluded_keys %}
+--account-index-exclude-key {{ key }} \
+{% endfor %}
+{% endif %}
+--accounts-index-memory-limit-mb 350 \
 {% endif %}
 --no-port-check \
 --limit-ledger-size {{ limit_ledger_size }} \
@@ -51,8 +59,13 @@ ExecStart={{ env_path }}/solana-validator \
 --accounts {{ accounts_path }} \
 --snapshots {{ snapshots_path }} \
 --tpu-use-quic \
+--enable-cpi-and-log-storage \
+--enable-rpc-transaction-history \
+--no-duplicate-instance-check \
+--rpc-send-default-max-retries 3 \
+--rpc-send-service-max-retries 3 \
+--rpc-send-retry-ms 2000 \
 --dynamic-port-range {{ open_solana_ports_start }}-{{ open_solana_ports_end }}
-
 
 [Install]
 WantedBy=multi-user.target
