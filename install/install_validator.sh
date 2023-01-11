@@ -97,7 +97,7 @@ install_validator () {
   fi
   if [ ! -z $autogenerate_keypair ]
   then
-    AUTOGENERATE_KEYPAIR="--extra-vars {\"fail_if_no_validator_keypair\":\"false\"}"
+    AUTOGENERATE_KEYPAIR="--extra-vars {\"fail_if_no_validator_keypair\":\"false\", \"upload_validator_keys\":\"False\"}"
     if [ ! -z $skip_tags ]
     then
       skip_tags="${skip_tags},check.node"
