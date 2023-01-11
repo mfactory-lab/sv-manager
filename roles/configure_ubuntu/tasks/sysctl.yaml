@@ -1,0 +1,8 @@
+- name: Configure sysctl
+  sysctl:
+    name: "{{ item.key }}"
+    value: "{{ item.value }}"
+    state: present
+  with_dict: "{{ sysctl_params }}"
+  tags:
+    - config.sysctl

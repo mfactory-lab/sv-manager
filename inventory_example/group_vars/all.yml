@@ -43,6 +43,37 @@ index_excluded_keys:
   - kinXdEcpDQeHPEuQnqmUgtYykqKGVFq6CeVX5iAHJq6
   - TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA
 
+#sysctl params
+sysctl_params:
+  net.ipv4.tcp_rmem: "10240 87380 12582912"
+  net.ipv4.tcp_wmem: "10240 87380 12582912"
+  net.ipv4.tcp_congestion_control: westwood
+  net.ipv4.tcp_fastopen: 3
+  net.ipv4.tcp_timestamps: 0
+  net.ipv4.tcp_sack: 1
+  net.ipv4.tcp_low_latency: 1
+  # Enable fast recycling TIME-WAIT sockets
+  # net.ipv4.tcp_tw_recycle: 1
+  net.ipv4.tcp_tw_reuse: 1
+  # don't cache ssthresh from previous connection
+  net.ipv4.tcp_no_metrics_save: 1
+  net.ipv4.tcp_moderate_rcvbuf: 1
+  # kernel Tunes
+  kernel.timer_migration: 0
+  kernel.hung_task_timeout_secs: 30
+  # A suggested value for pid_max is 1024 * <# of cpu cores/threads in system>
+  kernel.pid_max: 49152
+  # vm.tuning
+  vm.swappiness: 30
+  vm.max_map_count: 1000000
+  vm.stat_interval: 10
+  vm.dirty_ratio: 40
+  vm.dirty_background_ratio: 10
+  vm.min_free_kbytes: 3000000
+  vm.dirty_expire_centisecs: 36000
+  vm.dirty_writeback_centisecs: 3000
+  vm.dirtytime_expire_seconds: 43200
+
 #validator info
 validator_description: "Bootstrapped with https://sv-manager.thevalidators.io"
 validator_homepage: ""
