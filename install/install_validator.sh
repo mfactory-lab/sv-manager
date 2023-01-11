@@ -98,6 +98,12 @@ install_validator () {
   if [ ! -z $autogenerate_keypair ]
   then
     AUTOGENERATE_KEYPAIR="--extra-vars {\"fail_if_no_validator_keypair\":\"false\"}"
+    if [ ! -z $skip_tags ]
+    then
+      skip_tags="${skip_tags},check.node"
+    else
+      skip_tags="check.node"
+    fi
   fi
   if [ ! -z $extra_vars ]
   then
