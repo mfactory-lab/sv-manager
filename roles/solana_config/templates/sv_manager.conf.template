@@ -16,7 +16,7 @@
 "solana_validator_service": "{{ hostvars[inventory_hostname]["solana_validator_service"] }}",
 "solana_version": "{{ hostvars[inventory_hostname]["solana_version"] }}",
 "swap_file_size_gb": "{{ hostvars[inventory_hostname]["swap_file_size_gb"] }}",
-"upload_validator_keys": "{{ hostvars[inventory_hostname]["upload_validator_keys"] }}",
+"upload_validator_keys": "{% if upload_validator_keys is defined %}{{ upload_validator_keys }}{% else %}{{ hostvars[inventory_hostname]["upload_validator_keys"] }}{% endif %}",
 "validator_homepage": "{{ hostvars[inventory_hostname]["validator_homepage"] }}",
 "validator_name": "{{ hostvars[inventory_hostname]["validator_name"] }}"
 }
