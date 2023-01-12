@@ -8,7 +8,7 @@
   import_tasks: upload_keys.yaml
   tags:
     - validator.manage.keys
-  when: upload_validator_keys
+  when: upload_validator_keys|bool
         and not rpc_node
 
 - name: Create missing keys

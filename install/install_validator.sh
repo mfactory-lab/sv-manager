@@ -41,12 +41,6 @@ install_validator () {
             ;;
         No )
             autogenerate_keypair="true"
-            if [ ! -z $skip_tags ]
-            then
-              skip_tags="$skip_tags,check_node"
-            else
-              skip_tags="check_node"
-            fi
             read -e -p "Please enter the full path where the validator key pair file will be generated: " -i ~ PATH_TO_VALIDATOR_KEYS
             echo "Validator keypair will be generated in $PATH_TO_VALIDATOR_KEYS directory."
             break
@@ -97,7 +91,7 @@ install_validator () {
   fi
   if [ ! -z $autogenerate_keypair ]
   then
-    AUTOGENERATE_KEYPAIR="--extra-vars '{\"fail_if_no_validator_keypair\":\"false\",\"upload_validator_keys\":\"False\"}'"
+    AUTOGENERATE_KEYPAIR="--extra-vars {'upload_validator_keys':False}"
     if [ ! -z $skip_tags ]
     then
       skip_tags="${skip_tags},check.node"
@@ -126,7 +120,7 @@ install_validator () {
   'ramdisk_size_gb': $RAM_DISK_SIZE, \
   }" $SOLANA_VERSION $AUTOGENERATE_KEYPAIR $EXTRA_INSTALL_VARS $TAGS $SKIP_TAGS
 
-  ansible-playbook --connection=local --inventory ./inventory/$inventory --limit localhost  playbooks/pb_install_validator.yaml --extra-vars "@/etc/sv_manager/sv_manager.conf" $SOLANA_VERSION $AUTOGENERATE_KEYPAIR $EXTRA_INSTALL_VARS $TAGS $SKIP_TAGS
+  ansible-playbook --connection=local --inventory ./inventory/$inventory --limit localhost  playbooks/pb_install_validator.yaml --extra-vars "@/etc/sv_manager/sv_manager.conf" $EXTRA_INSTALL_VARS $TAGS $SKIP_TAGS
 
   echo "### 'Uninstall ansible ###"
 
