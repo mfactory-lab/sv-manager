@@ -9,6 +9,16 @@
   tags:
     - validator.service.solana
 
+- name: Add default environments file
+  template:
+    src: solana-validator.j2
+    dest: /etc/default/solana-validator
+    mode: 0644
+    owner: root
+    group: root
+  tags:
+    - validator.service.solana
+
 - name: Reload systemd
   systemd:
     daemon_reload: yes
