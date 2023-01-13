@@ -11,7 +11,6 @@ SOLANA_VALIDATOR_EXTRA_ARGS="--identity {{ secrets_path }}/validator-keypair.jso
 --rpc-port {{ solana_rpc_port }} \
 --gossip-port {{ solana_gossip_port }} \
 --full-rpc-api \
---only-known-rpc \
 --expected-genesis-hash {{ expected_genesis_hash }} \
 --maximum-local-snapshot-age {{ maximum_local_snapshot_age }} \
 {% if not extra_params is none %}
