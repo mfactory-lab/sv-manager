@@ -113,3 +113,15 @@
         and not vote_account_keypair_exists_locally.stat.exists
         and "'local' not in group_names"
         and not rpc_node
+
+- name: "Create keys: fetch authorized-withdrawer-keypair"
+  fetch:
+    src: "{{ secrets_path }}/authorized-withdrawer-keypair.json"
+    dest: "{{ secrets_local_path }}"
+    flat: true
+  tags:
+    validator.manage.keys.create.fetch
+  when: not vote_account_keypair_exists.stat.exists
+        and not vote_account_keypair_exists_locally.stat.exists
+        and "'local' not in group_names"
+        and not rpc_node
