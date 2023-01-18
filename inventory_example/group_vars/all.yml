@@ -48,10 +48,12 @@ sysctl_params:
   net.ipv4.tcp_rmem: "10240 87380 12582912"
   net.ipv4.tcp_wmem: "10240 87380 12582912"
   net.ipv4.tcp_congestion_control: westwood
+  net.core.default_qdisc: fq
   net.ipv4.tcp_fastopen: 3
   net.ipv4.tcp_timestamps: 0
   net.ipv4.tcp_sack: 1
-  net.ipv4.tcp_low_latency: 1
+  # This is a legacy option, it has no effect anymore.
+  # net.ipv4.tcp_low_latency: 1
   # Enable fast recycling TIME-WAIT sockets
   # net.ipv4.tcp_tw_recycle: 1
   net.ipv4.tcp_tw_reuse: 1

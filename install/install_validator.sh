@@ -41,7 +41,7 @@ install_validator () {
             ;;
         No )
             autogenerate_keypair="true"
-            read -e -p "Please enter the full path where the validator key pair file will be generated: " -i ~ PATH_TO_VALIDATOR_KEYS
+            read -e -p "Please enter the full path where the validator key pair file will be generated: " -i /home/solana/.secrets PATH_TO_VALIDATOR_KEYS
             echo "Validator keypair will be generated in $PATH_TO_VALIDATOR_KEYS directory."
             break
             ;;
