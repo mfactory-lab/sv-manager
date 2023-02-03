@@ -14,16 +14,16 @@
     - config.cpu
   when: scaling_governor_exists.stat.exists
 
-- name: Populate service facts
-  ansible.builtin.service_facts:
-  tags:
-    - config.cpu
+# - name: Populate service facts
+#   ansible.builtin.service_facts:
+#   tags:
+#     - config.cpu
   
-- name: Disable ondemand service
-  systemd:
-    name: ondemand
-    state: stopped
-    enabled: no
-  tags:
-    - config.cpu
-  when: "'ondemand' in services"
+# - name: Disable ondemand service
+#   systemd:
+#     name: ondemand
+#     state: stopped
+#     enabled: no
+#   tags:
+#     - config.cpu
+#   when: "'ondemand' in services"
