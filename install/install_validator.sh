@@ -37,6 +37,13 @@ install_validator () {
               echo "OOPS! Key $PATH_TO_VALIDATOR_KEYS/vote-account-keypair.json not found. Please verify and run the script again. For security reasons we do not create any keys for mainnet."
               exit
             fi
+
+            if [ ! -f "$PATH_TO_VALIDATOR_KEYS/authorized-withdrawer-keypair.json" ] ## && [ "$inventory" = "mainnet.yaml" ]
+            then
+              echo "OOPS! Key $PATH_TO_VALIDATOR_KEYS/authorized-withdrawer-keypair.json not found. Please verify and run the script again. For security reasons we do not create any keys for mainnet."
+              exit
+            fi
+            autogenerate_keypair="false"
             break
             ;;
         No )
@@ -89,7 +96,7 @@ install_validator () {
   then
     SOLANA_VERSION="--extra-vars {\"solana_version\":\"$solana_version\"}"
   fi
-  if [ ! -z $autogenerate_keypair ]
+  if [ "${autogenerate_keypair}" = "true" ]
   then
     AUTOGENERATE_KEYPAIR="--extra-vars {'upload_validator_keys':False}"
     if [ ! -z $skip_tags ]

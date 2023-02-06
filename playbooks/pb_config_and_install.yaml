@@ -1,0 +1,21 @@
+---
+- name: Configure and install solana validator
+  hosts: all
+  become: yes
+  roles:
+    - solana_config
+    - name: check_node
+      tags:
+        - check.node
+    - name: configure_ubuntu
+      tags:
+        - configure.os
+    - name: solana_cli
+      tags:
+        - cli
+        - cli.install
+        - cli.update
+    - name: solana_validator_bootstrap
+      tags:
+        - validator_bootstrap
+    - monitoring
