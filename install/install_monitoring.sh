@@ -61,7 +61,7 @@ install_monitoring () {
   cp -r ./inventory_example ./inventory
 
   #echo $(pwd)
-  ansible-playbook --connection=local --inventory ./inventory/$inventory --limit localhost  playbooks/pb_config.yaml -vvv --extra-vars "{ \
+  ansible-playbook --connection=local --inventory ./inventory/$inventory --limit localhost  playbooks/pb_config.yaml --extra-vars "{ \
   'solana_user': '$SOLANA_USER', \
   'validator_name':'$VALIDATOR_NAME', \
   'local_secrets_path': '$PATH_TO_VALIDATOR_KEYS' \
