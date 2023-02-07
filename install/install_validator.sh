@@ -20,40 +20,25 @@ install_validator () {
 
   echo "Please enter a name for your validator node: "
   read VALIDATOR_NAME
-  echo "Do you have validator key pair file?"
-  select yn in "Yes" "No"; do
-    case $yn in
-        Yes )
-            read -e -p "Please enter the full path to your validator key pair file: " -i ~ PATH_TO_VALIDATOR_KEYS
+  read -e -p "Please enter the full path to your validator key pair file: " -i "/root/" PATH_TO_VALIDATOR_KEYS
 
-            if [ ! -f "$PATH_TO_VALIDATOR_KEYS/validator-keypair.json" ]
-            then
-              echo "OOPS! Key $PATH_TO_VALIDATOR_KEYS/validator-keypair.json not found. Please verify and run the script again"
-              exit
-            fi
+  if [ ! -f "$PATH_TO_VALIDATOR_KEYS/validator-keypair.json" ]
+  then
+    echo "OOPS! Key $PATH_TO_VALIDATOR_KEYS/validator-keypair.json not found. Please verify and run the script again"
+    exit
+  fi
 
-            if [ ! -f "$PATH_TO_VALIDATOR_KEYS/vote-account-keypair.json" ] ## && [ "$inventory" = "mainnet.yaml" ]
-            then
-              echo "OOPS! Key $PATH_TO_VALIDATOR_KEYS/vote-account-keypair.json not found. Please verify and run the script again. For security reasons we do not create any keys for mainnet."
-              exit
-            fi
+  if [ ! -f "$PATH_TO_VALIDATOR_KEYS/vote-account-keypair.json" ] ## && [ "$inventory" = "mainnet.yaml" ]
+  then
+    echo "OOPS! Key $PATH_TO_VALIDATOR_KEYS/vote-account-keypair.json not found. Please verify and run the script again. For security reasons we do not create any keys for mainnet."
+    exit
+  fi
 
-            if [ ! -f "$PATH_TO_VALIDATOR_KEYS/authorized-withdrawer-keypair.json" ] ## && [ "$inventory" = "mainnet.yaml" ]
-            then
-              echo "OOPS! Key $PATH_TO_VALIDATOR_KEYS/authorized-withdrawer-keypair.json not found. Please verify and run the script again. For security reasons we do not create any keys for mainnet."
-              exit
-            fi
-            autogenerate_keypair="false"
-            break
-            ;;
-        No )
-            autogenerate_keypair="true"
-            read -e -p "Please enter the full path where the validator key pair file will be generated: " -i ~ PATH_TO_VALIDATOR_KEYS
-            echo "Validator keypair will be generated in $PATH_TO_VALIDATOR_KEYS directory."
-            break
-            ;;
-    esac
-  done
+  if [ ! -f "$PATH_TO_VALIDATOR_KEYS/authorized-withdrawer-keypair.json" ] ## && [ "$inventory" = "mainnet.yaml" ]
+  then
+    echo "OOPS! Key $PATH_TO_VALIDATOR_KEYS/authorized-withdrawer-keypair.json not found. Please verify and run the script again. For security reasons we do not create any keys for mainnet."
+    exit
+  fi
 
   read -e -p "Enter new RAM drive size, GB (recommended size: 200GB):" -i "200" RAM_DISK_SIZE
   read -e -p "Enter new server swap size, GB (recommended size: equal to server RAM): " -i "64" SWAP_SIZE
@@ -96,16 +81,6 @@ install_validator () {
   then
     SOLANA_VERSION="--extra-vars {\"solana_version\":\"$solana_version\"}"
   fi
-  if [ "${autogenerate_keypair}" = "true" ]
-  then
-    AUTOGENERATE_KEYPAIR="--extra-vars {'upload_validator_keys':False}"
-    if [ ! -z $skip_tags ]
-    then
-      skip_tags="${skip_tags},check.node"
-    else
-      skip_tags="check.node"
-    fi
-  fi
   if [ ! -z $extra_vars ]
   then
     EXTRA_INSTALL_VARS="--extra-vars $extra_vars"
@@ -125,7 +100,7 @@ install_validator () {
   'local_secrets_path': '$PATH_TO_VALIDATOR_KEYS', \
   'swap_file_size_gb': $SWAP_SIZE, \
   'ramdisk_size_gb': $RAM_DISK_SIZE, \
-  }" $SOLANA_VERSION $AUTOGENERATE_KEYPAIR $EXTRA_INSTALL_VARS $TAGS $SKIP_TAGS
+  }" $SOLANA_VERSION $EXTRA_INSTALL_VARS $TAGS $SKIP_TAGS
 
   ansible-playbook --connection=local --inventory ./inventory/$inventory --limit localhost  playbooks/pb_install_validator.yaml --extra-vars "@/etc/sv_manager/sv_manager.conf" $EXTRA_INSTALL_VARS $TAGS $SKIP_TAGS
 
@@ -141,7 +116,6 @@ install_validator () {
   echo "### Check your dashboard: https://solana.thevalidators.io/d/e-8yEOXMwerfwe/solana-monitoring?&var-server=$VALIDATOR_NAME"
 
 }
-
 
 while [ $# -gt 0 ]; do
    case $1 in
@@ -159,7 +133,6 @@ while [ $# -gt 0 ]; do
 
   shift
 done
-
 
 sv_manager_version=${sv_manager_version:-latest}
 
