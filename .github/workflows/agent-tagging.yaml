@@ -14,7 +14,6 @@ jobs:
           fetch-depth: 0
       - name: Git status
         run: git status
-      - run: echo "${{ github.event.commits[0].author.name }}:${{ github.event.commits[0].author.email }}"
       - name: "Get latest tag"
         id: latest_tag
         run: echo "latest_tag=$(git tag --sort=-creatordate | head -1)" >> $GITHUB_ENV
@@ -22,5 +21,7 @@ jobs:
           echo "new_tag=$(echo "${{ env.latest_tag }}" | awk -F. -v OFS=. 'NF==1{print ++$NF}; NF>1{if(length($NF+1)>length($NF))$(NF-1)++; $NF=sprintf("%0*d", length($NF), ($NF+1)%(10^length($NF))); print}')" >> $GITHUB_ENV
       - run: echo "${{ env.new_tag }}"
       - run: | 
+          git config --global user.email "${{ github.event.commits[0].author.email }}"
+          git config --global user.name "${{ github.event.commits[0].author.name }}"
           git tag -a "${{ env.new_tag }}" "$GITHUB_SHA"
           git push origin "${{ env.new_tag }}"
