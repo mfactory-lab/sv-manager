@@ -1,0 +1,11 @@
+name: Add tags for agent
+on:
+  push:
+    branches:
+      - refactoring
+jobs:
+  git-status:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Git status
+        run: git status
