@@ -25,5 +25,8 @@ jobs:
       - run: | 
           git config --global user.email "${{ github.event.commits[0].author.email }}"
           git config --global user.name "${{ github.event.commits[0].author.name }}"
+          git push --delete origin agent-latest
+          git tag agent-latest ${{ env.commit_part }}
           git tag ${{ env.new_tag }} ${{ env.commit_part }}
+          git push origin agent-latest
           git push origin ${{ env.new_tag }}
