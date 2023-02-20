@@ -23,8 +23,7 @@ jobs:
           echo "${{ env.new_tag }}"
           echo "commit_part=${GITHUB_SHA:0:7}" >> $GITHUB_ENV
       - run: | 
-          git config --global push.followTags true
           git config --global user.email "${{ github.event.commits[0].author.email }}"
           git config --global user.name "${{ github.event.commits[0].author.name }}"
-          git tag -a ${{ env.new_tag }} ${{ env.commit_part }}
+          git tag ${{ env.new_tag }} ${{ env.commit_part }}
           git push origin ${{ env.new_tag }}
