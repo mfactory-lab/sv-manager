@@ -10,9 +10,10 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
       - name: Git status
         run: git status
-      - uses: Klemensas/action-autotag@stable
-        with:
-          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
-          tag_prefix: "agent-v"
+      - name: "Get latest tag"
+        id: latest_tag
+        run: echo "::set-output name=name::$(git tag --sort=-creatordate | head -1)"
