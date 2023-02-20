@@ -16,4 +16,4 @@ jobs:
         run: git status
       - name: "Get latest tag"
         id: latest_tag
-        run: echo "::set-output name=name::$(git tag --sort=-creatordate | head -1)"
+        run: echo "tag=$(git tag --sort=-creatordate | head -1)" >> $GITHUB_OUTPUT
