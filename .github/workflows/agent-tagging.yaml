@@ -2,7 +2,7 @@ name: Add tags for agent
 on:
   push:
     branches:
-      - refactoring
+      - refactor
 jobs:
   git-status:
     runs-on: ubuntu-latest
