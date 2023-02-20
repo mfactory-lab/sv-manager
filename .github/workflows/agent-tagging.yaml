@@ -3,7 +3,7 @@ run-name: Add tag for agent
 on:
   push:
     branches:
-      - refactor
+      - agent
 jobs:
   git-status:
     runs-on: ubuntu-latest
