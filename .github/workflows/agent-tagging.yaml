@@ -12,7 +12,7 @@ jobs:
         uses: actions/checkout@v3
       - name: Git status
         run: git status
-      - uses: christophebedard/tag-version-commit@v1
+      - uses: Klemensas/action-autotag@stable
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          version_tag_prefix: 'agent-v'
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+          tag_prefix: "agent-v"
