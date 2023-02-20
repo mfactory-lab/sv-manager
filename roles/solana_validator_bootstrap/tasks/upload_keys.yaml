@@ -42,6 +42,7 @@
 - name: "Upload keys: upload vote-account-keypair"
   copy:
     src: "{{ secrets_local_path }}/vote-account-keypair.json"
+    remote_src: true
     dest: "{{ secrets_path }}"
     mode: 0400
     owner: "{{ solana_user }}"
@@ -53,3 +54,28 @@
     fail_if_no_validator_keypair
     or vote_account_keypair_exists.stat.exists
 
+- name: "Upload keys: Check authorized withdrawer keypair exists locally"
+  stat:
+    path: "{{ secrets_local_path }}/authorized-withdrawer-keypair.json"
+  connection: local
+  become: no
+  delegate_to: localhost
+  register: authorized_withdrawer_keypair_exists
+  tags:
+    - validator.manage.keys.create.withdrawer
+  when: not fail_if_no_validator_keypair
+
+- name: "Upload keys: upload authorized-withdrawer-keypair"
+  copy:
+    src: "{{ secrets_local_path }}/authorized-withdrawer-keypair.json"
+    remote_src: true
+    dest: "{{ secrets_path }}"
+    mode: 0400
+    owner: "{{ solana_user }}"
+    group: "{{ solana_user }}"
+    force: false
+  tags:
+    - validator.manage.keys.upload
+  when:
+    fail_if_no_validator_keypair
+    or authorized_withdrawer_keypair_exists.stat.exists
