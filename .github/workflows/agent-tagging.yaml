@@ -16,4 +16,5 @@ jobs:
         run: git status
       - name: "Get latest tag"
         id: latest_tag
-        run: echo "tag=$(git tag --sort=-creatordate | head -1)"
+        run: echo "latest_tag=$(git tag --sort=-creatordate | head -1)" >> $GITHUB_ENV
+      - run: echo "${{ env.latest_tag }}"
