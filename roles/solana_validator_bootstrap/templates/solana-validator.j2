@@ -33,6 +33,7 @@ SOLANA_VALIDATOR_EXTRA_ARGS="--identity {{ secrets_path }}/validator-keypair.jso
 {% if rpc_node %}
 --no-voting \
 --account-index program-id \
+--no-duplicate-instance-check \
 {% if index_excluded_keys is defined %}
 {% for key in index_excluded_keys %}
 --account-index-exclude-key {{ key }} \
@@ -49,7 +50,6 @@ SOLANA_VALIDATOR_EXTRA_ARGS="--identity {{ secrets_path }}/validator-keypair.jso
 --tpu-use-quic \
 --enable-extended-tx-metadata-storage \
 --enable-rpc-transaction-history \
---no-duplicate-instance-check \
 --rpc-send-default-max-retries 3 \
 --rpc-send-service-max-retries 3 \
 --rpc-send-retry-ms 2000 \
