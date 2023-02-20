@@ -17,6 +17,7 @@
 - name: "Upload keys: upload validator-keypair"
   copy:
     src: "{{ secrets_local_path }}/validator-keypair.json"
+    remote_src: true
     dest: "{{ secrets_path }}"
     mode: 0400
     owner: "{{ solana_user }}"
