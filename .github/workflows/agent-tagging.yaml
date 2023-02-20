@@ -16,7 +16,7 @@ jobs:
         run: git status
       - name: "Get latest tag"
         id: latest_tag
-        run: echo "latest_tag=$(git tag --sort=-creatordate | head -1)" >> $GITHUB_ENV
+        run: echo "latest_tag=$(git tag --merged agent --sort=-v:refname agent-v* | head -1)" >> $GITHUB_ENV
       - run: | 
           echo "new_tag=$(echo "${{ env.latest_tag }}" | awk -F. -v OFS=. 'NF==1{print ++$NF}; NF>1{if(length($NF+1)>length($NF))$(NF-1)++; $NF=sprintf("%0*d", length($NF), ($NF+1)%(10^length($NF))); print}')" >> $GITHUB_ENV
       - run: | 
@@ -25,6 +25,7 @@ jobs:
       - run: | 
           git config --global user.email "${{ github.event.commits[0].author.email }}"
           git config --global user.name "${{ github.event.commits[0].author.name }}"
+          git tag -d agent-latest
           git push --delete origin agent-latest
           git tag agent-latest ${{ env.commit_part }}
           git tag ${{ env.new_tag }} ${{ env.commit_part }}
