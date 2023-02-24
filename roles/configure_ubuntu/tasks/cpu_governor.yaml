@@ -3,6 +3,7 @@
   systemd:
     name: ondemand
     enabled: no
+  ignore_errors: yes
   tags:
     - config.cpu
 
