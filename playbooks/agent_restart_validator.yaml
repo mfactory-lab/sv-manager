@@ -1,0 +1,10 @@
+---
+
+- name: restart solana validator
+  hosts: all
+  become: yes
+  tags:
+    - validator.cluster.restart
+  roles:
+    - solana_config
+    - solana_validator_restart
