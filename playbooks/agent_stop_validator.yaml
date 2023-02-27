@@ -1,0 +1,9 @@
+---
+
+- name: stop solana validator
+  hosts: all
+  become: yes
+  tags:
+    - validator.cluster.restart
+  roles:
+    - solana_validator_restart

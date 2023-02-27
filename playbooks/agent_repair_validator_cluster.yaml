@@ -1,0 +1,7 @@
+---
+
+- name: restart cluster
+  hosts: all
+  become: yes
+  roles:
+    - restart_cluster
