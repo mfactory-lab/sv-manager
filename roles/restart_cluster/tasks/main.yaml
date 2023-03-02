@@ -18,23 +18,10 @@
     - validator.cluster.restart
     - validator.cluster.restart.cli.install
 
-- name: "Get ledger slot"
-  become: yes
-  become_user: "{{ solana_user }}"
-  shell: "solana-ledger-tool -l {{ ledger_path }} latest-optimistic-slots | awk 'FNR==2{print $1}"
-  register: __solana_ledger_slot
-  environment:
-    #PATH: "{{ node.solana_home }}/.local/share/solana/install/active_release/bin"
-    PATH: "{{ env_path }}:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin"
-    HOME: "{{ solana_home }}"
-  tags:
-    - validator.cluster.restart
-    - validator.cluster.restart.ledger.slot
-
 - name: create snapshot from ledger
   become: yes
   become_user: "{{ solana_user }}"
-  shell: "solana-ledger-tool --ledger {{ ledger_path }} create-snapshot {{ __solana_ledger_slot.stdout }} {{ snapshots_path }}  --snapshot-archive-path {{ snapshots_path }} --hard-fork {{ __solana_ledger_slot.stdout }} --wal-recovery-mode skip_any_corrupted_record"
+  shell: "solana-ledger-tool --ledger {{ ledger_path }} create-snapshot {{ repair_solana_cluster.solana_ledger_slot }} {{ snapshots_path }} --snapshot-archive-path {{ snapshots_path }} --hard-fork {{ repair_solana_cluster.solana_ledger_slot }} --wal-recovery-mode skip_any_corrupted_record"
   environment:
     #PATH: "{{ node.solana_home }}/.local/share/solana/install/active_release/bin"
     PATH: "{{ env_path }}:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin"
@@ -46,8 +33,13 @@
 - name: Add --wait-for-supermajority for service
   lineinfile:
     path: /etc/default/solana-validator
-    insertafter: '--no-untrusted-rpc \'
-    line: "--wait-for-supermajority {{ __solana_ledger_slot.stdout }} \\"
+    regexp: '--wait-for-supermajority'
+    state: present
+    insertafter: '--no-untrusted-rpc \\'
+    line: "--wait-for-supermajority {{ repair_solana_cluster.solana_ledger_slot }} \\"
+  tags:
+    - validator.cluster.restart
+    - validator.cluster.restart.params
 
 #- name: Create solana validator service
 #  template:
@@ -73,5 +65,8 @@
 - name: Remove --wait-for-supermajority for service
   lineinfile:
     path: /etc/default/solana-validator
-    search_string: '--wait-for-supermajority'
-    line: ''
+    regexp: '--wait-for-supermajority'
+    state: absent
+  tags:
+    - validator.cluster.restart
+    - validator.cluster.restart.params

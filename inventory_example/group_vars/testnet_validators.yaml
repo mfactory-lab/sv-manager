@@ -21,3 +21,8 @@ maximum_local_snapshot_age: 1000
 solana_version: 1.14.11
 extra_params:
   - '--incremental-snapshot-interval-slots 200'
+
+repair_solana_cluster:
+  solana_ledger_slot: 179526403
+  solana_shred_version: 56177
+  solana_bank_hash: 69p75jzzT1P2vJwVn3wbTVutxHDcWKAgcbjqXvwCVUDE

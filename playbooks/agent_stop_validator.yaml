@@ -4,6 +4,7 @@
   hosts: all
   become: yes
   tags:
-    - validator.cluster.restart
+    - validator.cluster.stop
   roles:
-    - solana_validator_restart
+    - solana_config_load
+    - solana_validator_stop
