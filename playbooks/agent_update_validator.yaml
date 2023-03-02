@@ -4,7 +4,7 @@
   serial: 1
   become: yes
   roles:
-    - solana_config
+    - solana_config_load
     - solana_cli
     - solana_validator_bootstrap
     - solana_validator_restart

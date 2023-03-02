@@ -4,4 +4,5 @@
   hosts: all
   become: yes
   roles:
+    - solana_config_load
     - restart_cluster
