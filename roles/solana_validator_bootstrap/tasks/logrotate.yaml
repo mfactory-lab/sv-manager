@@ -3,7 +3,7 @@
   file:
     path: "{{ validator_log_path }}"
     state: directory
-    owner: solana
+    owner: "{{ solana_user }}"
     group: users
     mode: '0755'
 
