@@ -5,4 +5,4 @@
   become: yes
   roles:
     - solana_config_load
-    - restart_cluster
+    - repair_cluster

@@ -5,8 +5,9 @@
     name: solana-validator
     state: stopped
   tags:
-    - validator.cluster.re
-    - validator.cluster.restart.stop
+    - validator.cluster.repair
+    - validator.cluster.repair.service
+    - validator.cluster.repair.service.stop
 
 - name: "install solana {{ solana_version }}"
   shell: solana-install init {{ solana_version }}
@@ -15,8 +16,8 @@
   become: yes
   become_user: "{{ solana_user }}"
   tags:
-    - validator.cluster.restart
-    - validator.cluster.restart.cli.install
+    - validator.cluster.repair
+    - validator.cluster.repair.cli.install
 
 - name: create snapshot from ledger
   become: yes
@@ -27,8 +28,8 @@
     PATH: "{{ env_path }}:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin"
     HOME: "{{ solana_home }}"
   tags:
-    - validator.cluster.restart
-    - validator.cluster.restart.ledger.snapshot
+    - validator.cluster.repair
+    - validator.cluster.repair.ledger.snapshot
 
 - name: Add cluster repair args to service
   blockinfile:
@@ -38,32 +39,22 @@
     block: |
         SOLANA_REPAIR_CLUSTER_ARGS="--wait-for-supermajority {{ repair_solana_cluster.solana_ledger_slot }} \
         --expected-shred-version {{ repair_solana_cluster.solana_shred_version }} \
-        --expected-bank-hash {{ repair_solana_cluster.solana_bank_hash }}"
+        --expected-bank-hash {{ repair_solana_cluster.solana_bank_hash }} \
+        --no-snapshot-fetch"
   tags:
-    - validator.cluster.restart
-    - validator.cluster.restart.args
-    - validator.cluster.restart.args.add
-
-#- name: Create solana validator service
-#  template:
-#    src: solana-validator.{{ cluster_environment }}.restart.service.j2
-#    dest: /etc/systemd/system/solana-validator.service
-#    backup: true
-#    mode: 0644
-#    owner: root
-#    group: root
-#  tags:
-#    - validator.cluster.restart
-#    - validator.cluster.restart.service
+    - validator.cluster.repair
+    - validator.cluster.repair.args
+    - validator.cluster.repair.args.add
 
 - name: start solana validator service
   systemd:
     name: solana-validator
-    state: restart
+    state: repair
     daemon_reload: yes
   tags:
-    - validator.cluster.restart
-    - validator.cluster.restart.start
+    - validator.cluster.repair
+    - validator.cluster.repair.service
+    - validator.cluster.repair.service.start
 
 - name: Remove cluster repair args from service
   blockinfile:
@@ -71,6 +62,6 @@
     marker: "# {mark} ANSIBLE MANAGED BLOCK"
     block: ""
   tags:
-    - validator.cluster.restart
-    - validator.cluster.restart.args
-    - validator.cluster.restart.args.remove
+    - validator.cluster.repair
+    - validator.cluster.repair.args
+    - validator.cluster.repair.args.remove
