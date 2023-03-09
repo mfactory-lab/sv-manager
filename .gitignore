@@ -15,4 +15,6 @@ inventory/group_vars/testnet_validators.yaml
 inventory-test/hosts.yml
 inventory-test/group_vars/all.yml
 roles/monitoring/files/test.py
+roles/test-role/
+playbooks/test.yaml
 inventory/group_vars/rpc.yaml

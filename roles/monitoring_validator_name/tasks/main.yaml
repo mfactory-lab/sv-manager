@@ -1,0 +1,11 @@
+---
+
+- name: Update sv_manager.conf
+  import_tasks: update_sv_config.yaml
+  tags:
+    - config
+
+- name: Reconfigure telegraf
+  import_tasks: configure_telegraf.yaml
+  tags:
+    - telegraf

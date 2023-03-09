@@ -1,4 +1,8 @@
 ---
+- name: Load config
+  include_vars:
+    file: "/etc/sv_manager/sv_manager.conf"
+
 - name: Set cluster environment
   import_tasks: cluster_environment.yaml
   tags:

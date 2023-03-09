@@ -1,4 +1,8 @@
 ---
+- name: Load config
+  include_vars:
+    file: "/etc/sv_manager/sv_manager.conf"
+
 - name: install additional packages
   import_tasks: packages.yaml
   tags:

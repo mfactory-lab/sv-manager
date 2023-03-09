@@ -1,0 +1,27 @@
+---
+- name: Load config
+  include_vars:
+    file: "/etc/sv_manager/sv_manager.conf"
+  tags:
+    - telegraf
+
+- name: Create telegraf config
+  template:
+    src: telegraf.conf.j2
+    dest: /etc/telegraf/telegraf.conf
+    mode: 0644
+    owner: root
+    group: root
+    backup: yes
+  tags:
+    - telegraf
+
+- name: Enable and start telegraf service
+  systemd:
+    name: telegraf
+    daemon_reload: yes
+    enabled: yes
+    state: restarted
+  tags:
+    - telegraf
+  become: yes

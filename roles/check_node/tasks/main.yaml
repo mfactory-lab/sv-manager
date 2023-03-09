@@ -1,4 +1,7 @@
 ---
+- name: Load config
+  include_vars:
+    file: "/etc/sv_manager/sv_manager.conf"
 
 - name: Build keys path
   set_fact:

@@ -1,4 +1,8 @@
 ---
+- name: Load config
+  include_vars:
+    file: "/etc/sv_manager/sv_manager.conf"
+
 - name: Configure lvm
   import_tasks: lvm.yaml
   when: lvm_enabled|bool

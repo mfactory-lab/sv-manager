@@ -1,0 +1,6 @@
+---
+- name: Update monitoring
+  hosts: all
+  become: yes
+  roles:
+    - monitoring
