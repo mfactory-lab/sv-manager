@@ -3,7 +3,7 @@
   hosts: all
   become: yes
   roles:
-#    - solana_config
+    - solana_config
     - name: configure_ubuntu
       tags:
         - configure.os
