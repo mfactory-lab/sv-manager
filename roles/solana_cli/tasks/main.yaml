@@ -1,4 +1,9 @@
 ---
+- name: Load config
+  include_vars:
+    file: "/etc/sv_manager/sv_manager.conf"
+  become: true
+
 - name: set force install fact
   set_fact:
     force: "{{ force | default('false')  }}"

@@ -3,6 +3,7 @@
 - name: Load config
   include_vars:
     file: "/etc/sv_manager/sv_manager.conf"
+  become: true
 
 - name: stop solana validator service
   systemd:
