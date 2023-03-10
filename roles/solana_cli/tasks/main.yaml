@@ -1,8 +1,4 @@
 ---
-#- name: Load config
-#  include_vars:
-#    file: "/etc/sv_manager/sv_manager.conf"
-#  become: true
 
 - name: set force install fact
   set_fact:
@@ -12,9 +8,9 @@
     - cli.install
     - cli.update
 
-- name: Load config
-  include_vars:
-    file: "/etc/sv_manager/sv_manager.conf"
+#- name: Load config
+#  include_vars:
+#    file: "/etc/sv_manager/sv_manager.conf"
 
 - name: check solana cli installed
   stat:
