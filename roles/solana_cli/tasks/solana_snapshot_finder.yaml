@@ -1,8 +1,8 @@
 ---
 
 - name: cli | get solana snapshot finder
-  get_url:
-    usr: https://raw.githubusercontent.com/c29r3/solana-snapshot-finder/0.3.3/snapshot-finder.py
+  copy:
+    src: files/solana-snapshot-finder
     dest: "{{ env_path }}/solana-snapshot-finder"
     owner: "{{ solana_user }}"
     group: "{{ solana_user }}"
@@ -11,14 +11,14 @@
     - cli
     - cli.snapshot-finder
 
-- name: cli | add python env in solana-snapshot-finder file
-  lineinfile:
-    path: "{{ env_path }}/solana-snapshot-finder"
-    insertbefore: BOF
-    line: "#!/usr/bin/env python3"
-  tags:
-    - cli
-    - cli.snapshot-finder
+#- name: cli | add python env in solana-snapshot-finder file
+#  lineinfile:
+#    path: "{{ env_path }}/solana-snapshot-finder"
+#    insertbefore: BOF
+#    line: "#!/usr/bin/env python3"
+#  tags:
+#    - cli
+#    - cli.snapshot-finder
 
 - name: cli | install requirements
   pip:

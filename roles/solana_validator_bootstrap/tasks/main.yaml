@@ -38,6 +38,11 @@
   tags:
     - validator.logrotate
 
+- name: Download fresh snapshot
+  import_tasks: with_snapshot_finder.yaml
+  tags:
+    - validator.snapshot.load
+
 - name: Create solana validator service
   import_tasks: solana-validator.service.yaml
   tags:

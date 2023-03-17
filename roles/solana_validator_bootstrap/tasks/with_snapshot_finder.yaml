@@ -8,7 +8,6 @@
     - absent
     - directory
   ignore_errors: True
-  when: with_snapshot_finder
   tags:
     - validator.manage.restart.snapshot.finder
 
@@ -19,6 +18,5 @@
   environment:
     PATH: "{{ env_path }}"
   ignore_errors: True
-  when: with_snapshot_finder
   tags:
     - validator.manage.restart.snapshot.finder
