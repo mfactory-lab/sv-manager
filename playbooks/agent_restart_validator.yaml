@@ -6,5 +6,4 @@
   tags:
     - validator.cluster.restart
   roles:
-    - solana_config_load
     - solana_validator_restart

@@ -1,8 +1,7 @@
 ---
 
-- name: restart cluster
+- name: repair cluster
   hosts: all
   become: yes
   roles:
-    - solana_config_load
     - repair_cluster

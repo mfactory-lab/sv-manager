@@ -13,12 +13,23 @@
     - validator.manage.restart.service
     - validator.manage.restart
 
-- name: restart solana validator service
+- name: stop solana validator service
   systemd:
     name: solana-validator
-    state: restarted
+    state: stopped
   tags:
     - validator.manage.restart.service
     - validator.manage.restart
 
+- name: run snapshot finder
+  import_tasks: with_snapshot_finder.yaml
+  tags:
+    - validator.manage.restart
 
+- name: start solana validator service
+  systemd:
+    name: solana-validator
+    state: started
+  tags:
+    - validator.manage.restart.service
+    - validator.manage.restart
