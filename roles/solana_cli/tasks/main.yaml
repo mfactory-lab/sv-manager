@@ -35,8 +35,8 @@
     - cli.update
   when: force != 'true' and solana_exists.stat.exists
 
-- name: install solana-snapshot-finder
-  import_tasks: solana_snapshot_finder.yaml
-  tags:
-    - cli
-    - cli.snapshot-finder
+#- name: install solana-snapshot-finder
+#  import_tasks: solana_snapshot_finder.yaml
+#  tags:
+#    - cli
+#    - cli.snapshot-finder
