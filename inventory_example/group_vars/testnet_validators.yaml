@@ -19,8 +19,7 @@ limit_ledger_size: 50000000
 snapshot_interval_slots: 500
 maximum_local_snapshot_age: 1000
 solana_version: 1.14.11
-extra_params:
-  - '--incremental-snapshot-interval-slots 200'
+extra_params: []
 
 repair_solana_cluster:
   solana_ledger_slot: 179526403
