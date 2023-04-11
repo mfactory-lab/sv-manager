@@ -54,7 +54,7 @@
 - name: start solana validator service
   systemd:
     name: solana-validator
-    state: repair
+    state: started
     daemon_reload: yes
   tags:
     - validator.cluster.repair
