@@ -2,7 +2,7 @@
 set_validator_info: False
 cluster_environment: 'mainnet-beta'
 cluster_rpc_address: 'https://api.mainnet-beta.solana.com'
-solana_validator_service: stopped
+solana_validator_service: started
 swap_file_size_gb: 200
 entrypoints:
   - entrypoint.mainnet-beta.solana.com:8001
