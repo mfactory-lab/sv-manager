@@ -11,7 +11,7 @@ User={{ solana_user }}
 TimeoutStopSec=180
 LimitNOFILE=infinity
 Environment="PATH=/bin:/usr/bin:{{ env_path }}"
-Environment="RUST_LOG=WARN"
+Environment="RUST_LOG={{ log_level }}"
 Environment="SOLANA_METRICS_CONFIG=host={{ solana_metrics_url }}"
 EnvironmentFile=-/etc/default/solana-validator
 ExecStart={{ env_path }}/solana-validator $SOLANA_VALIDATOR_EXTRA_ARGS $SOLANA_REPAIR_CLUSTER_ARGS

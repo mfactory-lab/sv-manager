@@ -16,7 +16,7 @@ fail_if_no_validator_keypair: True
 flat_path: True
 ledger_path: "{{ mount_base_path }}/ledger"
 local_secrets_path: '../.secrets'
-log_level: "WARN"
+log_level: "INFO"
 lvm_enabled: False
 lvm_log_volume_size: '25G'
 lvm_vg: 'vg00'
