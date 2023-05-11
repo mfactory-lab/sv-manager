@@ -21,10 +21,10 @@
     - validator.manage.restart.service
     - validator.manage.restart
 
-- name: run snapshot finder
-  import_tasks: with_snapshot_finder.yaml
-  tags:
-    - validator.manage.restart
+#- name: run snapshot finder
+#  import_tasks: with_snapshot_finder.yaml
+#  tags:
+#    - validator.manage.restart
 
 - name: start solana validator service
   systemd:
