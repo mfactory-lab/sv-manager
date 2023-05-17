@@ -4,11 +4,9 @@
 #    path: /etc/sv_manager/sv_manager.conf
 #  register: config_exists
 #
-#- name: Load config
-#  include_vars:
-#    file: "/etc/sv_manager/sv_manager.conf"
-#  remote_src: true
-#  when: config_exists.stat.exists
+- name: Load config
+  include_vars:
+    file: "/etc/sv_manager/sv_manager.conf"
 
 - name: Configure lvm
   import_tasks: lvm.yaml

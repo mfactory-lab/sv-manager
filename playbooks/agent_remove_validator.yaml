@@ -1,0 +1,7 @@
+---
+
+- name: Remove validator
+  hosts: all
+  become: yes
+  roles:
+    - remove_validator

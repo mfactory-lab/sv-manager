@@ -1,0 +1,57 @@
+---
+
+- name: Load config
+  include_vars:
+    file: "/etc/sv_manager/sv_manager.conf"
+
+- name: stop solana validator service
+  systemd:
+    name: solana-validator
+    state: stopped
+    enabled: false
+  tags:
+    - validator.remove
+    - validator.remove.service
+    - validator.remove.service.stop
+
+- name: Umount mounted fs
+  ansible.posix.mount:
+    path: "{{ item }}"
+    state: unmounted
+  with_items:
+    - "{{ ramdisk_path }}"
+  tags:
+    - validator.remove
+
+- name: Get path to swapfile
+  shell: swapon -s | awk 'NR==2{print $1}'
+  register: swap_file
+  tags:
+    - validator.remove
+
+- name: Stop swap
+  command: swapoff {{ swap_file.stdout }}
+  tags:
+    - validator.remove
+
+- name: Disable swap in fstab
+  replace:
+    path: /etc/fstab
+    regexp: '^(\s*)([^#\n]+\s+)(\w+\s+)swap(\s+.*)$'
+    replace: '#\1\2\3swap\4'
+    backup: yes
+  tags:
+    - validator.remove
+
+- name: Remove directories and files
+  file:
+    path: "{{ item }}"
+    state: absent
+  with_items:
+    - "{{ mount_base_path }}"
+    - "{{ solana_home }}"
+    - "{{ swap_file.stdout }}"
+    - "/etc/systemd/system/solana-validator.service"
+    - "/etc/default/solana-validator"
+  tags:
+    - validator.remove
