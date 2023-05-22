@@ -53,5 +53,6 @@
     - "{{ swap_file.stdout }}"
     - "/etc/systemd/system/solana-validator.service"
     - "/etc/default/solana-validator"
+    - "/etc/sv_manager"
   tags:
     - validator.remove
