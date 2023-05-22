@@ -42,6 +42,7 @@ validator_log_path: "{{ mount_base_path }}/log"
 index_excluded_keys:
   - kinXdEcpDQeHPEuQnqmUgtYykqKGVFq6CeVX5iAHJq6
   - TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA
+with_snapshot_finder: False
 
 #sysctl params
 sysctl_params:
