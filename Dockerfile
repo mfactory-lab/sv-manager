@@ -1,10 +1,14 @@
 FROM willhallonline/ansible:2.13.7-alpine-3.15
 
+
+COPY docker-entrypoint.sh /docker-entrypoint.sh
 COPY . /ansible
 
 WORKDIR /ansible
 
 RUN mv inventory_example inventory
+
+ENTRYPOINT ["/docker-entrypoint.sh"]
 
 CMD [ "ansible-playbook", "--version" ]
 
