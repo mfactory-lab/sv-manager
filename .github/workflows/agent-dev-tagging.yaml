@@ -1,0 +1,25 @@
+name: Add tag for agent-develop branch
+run-name: Add tag for agent-develop branch
+on:
+  push:
+    branches:
+      - agent-develop
+jobs:
+  git-status:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Git status
+        run: git status
+      - run: |
+          echo "commit_part=${GITHUB_SHA:0:7}" >> $GITHUB_ENV
+      - run: | 
+          git config --global user.email "${{ github.event.commits[0].author.email }}"
+          git config --global user.name "${{ github.event.commits[0].author.name }}"
+          git tag -d agent-dev
+          git push --delete origin agent-dev
+          git tag agent-dev ${{ env.commit_part }}
+          git push origin agent-dev
