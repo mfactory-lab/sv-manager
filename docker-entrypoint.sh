@@ -1,5 +1,5 @@
 #!/bin/sh
 
-cp -R /ansible-custom/* /ansible
+cp -arf /ansible-custom/* /ansible
 
 exec $@
