@@ -1,6 +1,6 @@
 FROM willhallonline/ansible:2.13.7-alpine-3.15
 
-RUN mkdir /app/ansible
+RUN mkdir -p /app/ansible
 
 COPY docker-entrypoint.sh /
 COPY . /ansible
