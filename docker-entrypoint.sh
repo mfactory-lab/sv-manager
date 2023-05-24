@@ -1,5 +1,5 @@
 #!/bin/sh
 
-[ "$(ls -A /ansible-custom)" ] && cp -arf /ansible-custom/* /ansible || echo "Ansible-custom Empty"
+[ "$(ls -A /app/ansible/)" ] && cp -arf /app/ansible/* /ansible || echo "App ansible is empty"
 
 exec $@
