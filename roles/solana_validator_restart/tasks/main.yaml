@@ -23,6 +23,7 @@
 
 #- name: run snapshot finder
 #  import_tasks: with_snapshot_finder.yaml
+#  when: with_snapshot_finder
 #  tags:
 #    - validator.manage.restart
 
