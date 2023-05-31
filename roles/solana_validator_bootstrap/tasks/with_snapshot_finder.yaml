@@ -1,5 +1,7 @@
 ---
 - name: clear ledger directory
+  become: yes
+  become_user: "{{ solana_user }}"
   file:
     path: "{{ ledger_path }}"
     state: "{{ item }}"
