@@ -23,17 +23,31 @@
     - validator.cluster.repair
     - validator.cluster.repair.cli.install
 
-- name: create snapshot from ledger
+- name: clear ledger directory
   become: yes
   become_user: "{{ solana_user }}"
-  shell: "solana-ledger-tool --ledger {{ ledger_path }} create-snapshot {{ repair_solana_cluster.solana_ledger_slot }} {{ snapshots_path }} --snapshot-archive-path {{ snapshots_path }} --hard-fork {{ repair_solana_cluster.solana_ledger_slot }} --wal-recovery-mode skip_any_corrupted_record"
-  environment:
-    #PATH: "{{ node.solana_home }}/.local/share/solana/install/active_release/bin"
-    PATH: "{{ env_path }}:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin"
-    HOME: "{{ solana_home }}"
+  file:
+    path: "{{ ledger_path }}"
+    state: "{{ item }}"
+    mode: '0755'
+  with_items:
+    - absent
+    - directory
   tags:
     - validator.cluster.repair
-    - validator.cluster.repair.ledger.snapshot
+    - validator.cluster.repair.clear.ledger
+
+#- name: create snapshot from ledger
+#  become: yes
+#  become_user: "{{ solana_user }}"
+#  shell: "solana-ledger-tool --ledger {{ ledger_path }} create-snapshot {{ repair_solana_cluster.solana_ledger_slot }} {{ snapshots_path }} --snapshot-archive-path {{ snapshots_path }} --hard-fork {{ repair_solana_cluster.solana_ledger_slot }} --wal-recovery-mode skip_any_corrupted_record"
+#  environment:
+#    #PATH: "{{ node.solana_home }}/.local/share/solana/install/active_release/bin"
+#    PATH: "{{ env_path }}:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin"
+#    HOME: "{{ solana_home }}"
+#  tags:
+#    - validator.cluster.repair
+#    - validator.cluster.repair.ledger.snapshot
 
 - name: Add cluster repair args to service
   blockinfile:
