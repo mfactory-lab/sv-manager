@@ -23,23 +23,16 @@
     - validator.cluster.repair
     - validator.cluster.repair.cli.install
 
-- name: remove ledger directory
+- name: clear ledger directory
   file:
     path: "{{ ledger_path }}"
-    state: absent
+    state: "{{ item }}"
     mode: '0755'
-  ignore_errors: yes
-  tags:
-    - validator.cluster.repair
-    - validator.cluster.repair.clear.ledger
-
-- name: create ledger directory
-  become: yes
-  become_user: "{{ solana_user }}"
-  file:
-    path: "{{ ledger_path }}"
-    state: directory
-    mode: '0755'
+    owner: "{{ solana_user }}"
+    group: "{{ solana_user }}"
+  with_items:
+    - absent
+    - directory
   tags:
     - validator.cluster.repair
     - validator.cluster.repair.clear.ledger
