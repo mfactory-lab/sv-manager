@@ -26,7 +26,7 @@
 - name: create snapshot from ledger
   become: yes
   become_user: "{{ solana_user }}"
-  shell: "solana-ledger-tool --ledger {{ ledger_path }} create-snapshot {{ repair_solana_cluster.solana_ledger_slot }} {{ snapshots_path }} --snapshot-archive-path {{ snapshots_path }} --hard-fork {{ repair_solana_cluster.solana_ledger_slot }} --wal-recovery-mode skip_any_corrupted_record"
+  shell: "solana-ledger-tool --ledger {{ ledger_path }} create-snapshot {{ solana_ledger_slot }} {{ snapshots_path }} --snapshot-archive-path {{ snapshots_path }} --hard-fork {{ solana_ledger_slot }} --wal-recovery-mode skip_any_corrupted_record"
   environment:
     #PATH: "{{ node.solana_home }}/.local/share/solana/install/active_release/bin"
     PATH: "{{ env_path }}:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin"
@@ -41,9 +41,9 @@
     marker: "# {mark} ANSIBLE MANAGED BLOCK"
     insertbefore: "SOLANA_VALIDATOR_EXTRA_ARGS"
     block: |
-        SOLANA_REPAIR_CLUSTER_ARGS="--wait-for-supermajority {{ repair_solana_cluster.solana_ledger_slot }} \
-        --expected-shred-version {{ repair_solana_cluster.solana_shred_version }} \
-        --expected-bank-hash {{ repair_solana_cluster.solana_bank_hash }}"
+        SOLANA_REPAIR_CLUSTER_ARGS="--wait-for-supermajority {{ solana_ledger_slot }} \
+        --expected-shred-version {{ solana_shred_version }} \
+        --expected-bank-hash {{ solana_bank_hash }}"
   tags:
     - validator.cluster.restart
     - validator.cluster.restart.args
