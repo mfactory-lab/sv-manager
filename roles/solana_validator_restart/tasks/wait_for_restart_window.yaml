@@ -3,7 +3,7 @@
 - name: wait for restarting window
   become: yes
   become_user: "{{ solana_user }}"
-  shell: solana-validator --ledger {{ ledger_path }} wait-for-restart-window --max-delinquent-stake {{ max_delinquent_stake }}
+  shell: solana-validator --ledger {{ ledger_path }} wait-for-restart-window --max-delinquent-stake {{ max_delinquent_stake }} min-idle-time 2
   environment:
     PATH: "{{ env_path }}"
   ignore_errors: True
