@@ -4,6 +4,11 @@ on:
   push:
     branches:
       - agent
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+
 jobs:
   git-tag:
     runs-on: ubuntu-latest

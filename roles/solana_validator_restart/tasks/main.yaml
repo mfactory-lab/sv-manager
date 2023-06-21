@@ -5,13 +5,13 @@
   tags:
     - validator.manage.restart
 
-- name: restart sys_tuner-service
-  systemd:
-    name: solana-sys-tuner
-    state: restarted
-  tags:
-    - validator.manage.restart.service
-    - validator.manage.restart
+#- name: restart sys_tuner-service
+#  systemd:
+#    name: solana-sys-tuner
+#    state: restarted
+#  tags:
+#    - validator.manage.restart.service
+#    - validator.manage.restart
 
 - name: stop solana validator service
   systemd:

@@ -5,13 +5,13 @@
   tags:
     - validator.manage.stop
 
-- name: stop sys_tuner-service
-  systemd:
-    name: solana-sys-tuner
-    state: stopped
-  tags:
-    - validator.manage.stop.service
-    - validator.manage.stop
+#- name: stop sys_tuner-service
+#  systemd:
+#    name: solana-sys-tuner
+#    state: stopped
+#  tags:
+#    - validator.manage.stop.service
+#    - validator.manage.stop
 
 - name: stop solana validator service
   systemd:
