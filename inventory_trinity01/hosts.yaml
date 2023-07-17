@@ -1,0 +1,32 @@
+all:
+  children:
+    local:
+      vars:
+        become: false
+        ansible_connection: local
+        ansible_python_interpreter: "{{ ansible_playbook_python }}"
+      hosts:
+        localhost
+    remote:
+      vars:
+        ansible_user: root
+      children:
+        validator:
+          vars:
+            validator_name: trinity01
+#            keybase_username: ""
+#            validator_homepage: ""
+            upload_validator_keys: True
+#            secrets_path: /home/solana/.secrets
+#            set_validator_info: True
+#            service_user: solana
+#            ledger_path: /home/solana/ledger
+#            lvm_enabled: False
+#            lvm_vg: vg00
+#            solana_validator_service: restarted <- Set it to stopped if you want to check your setup
+#            swap_file_size_gb: 64
+#            ramdisk_size_gb: 64
+#            cluster_environment: testnet
+#            cluster_rpc_address: https://api.testnet.solana.com
+          hosts:
+            69.197.44.45
