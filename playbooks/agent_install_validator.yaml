@@ -2,6 +2,8 @@
 - name: Configure and install solana validator
   hosts: all
   become: yes
+  vars:
+    jito_validator: false
   roles:
     - solana_config
     - name: configure_ubuntu
@@ -12,6 +14,13 @@
         - cli
         - cli.install
         - cli.update
+      when: not jito_validator
+    - name: solana_cli_jito
+      tags:
+        - cli
+        - cli.install
+        - cli.update
+      when: jito_validator
     - name: solana_validator_bootstrap
       tags:
         - validator_bootstrap

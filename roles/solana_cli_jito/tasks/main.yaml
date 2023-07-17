@@ -1,0 +1,47 @@
+---
+
+- name: set force install fact
+  set_fact:
+    force: "{{ force | default('false')  }}"
+    jito_bin_path: "{{ solana_app_path }}/jito/{{ solana_version }}"
+  tags:
+    - cli
+    - cli.install
+    - cli.update
+    - cli.make
+
+- name: Load config
+  include_vars:
+    file: "/etc/sv_manager/sv_manager.conf"
+  become: yes
+
+- name: check solana cli jito installed
+  stat:
+    path: "{{ jito_bin_path }}/bin/solana-install"
+  register: solana_binary
+  tags:
+    - cli
+    - cli.install
+    - cli.update
+    - cli.make
+
+- name: install solana cli jito
+  import_tasks: install.yaml
+  tags:
+    - cli
+    - cli.install
+  when: force or not solana_binary.stat.exists
+
+- name: update solana cli jito
+  import_tasks: update.yaml
+  tags:
+    - cli
+    - cli.update
+  when: not force and solana_binary.stat.exists
+
+- name: install solana-snapshot-finder
+  import_tasks: solana_snapshot_finder.yaml
+  tags:
+    - cli
+    - cli.snapshot-finder
+  when: with_snapshot_finder
