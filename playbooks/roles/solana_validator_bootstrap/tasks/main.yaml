@@ -7,8 +7,7 @@
 - name: Upload keys
   import_tasks: upload_keys.yaml
   tags:
-    - validator.manage.keys.create.vote
-    - validator.manage.keys.upload
+    - validator.manage.keys
   when: upload_validator_keys
         and not rpc_node
 
