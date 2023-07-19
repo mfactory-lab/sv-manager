@@ -21,7 +21,6 @@
       - python3-pip
       - ufw
       - rsyslog
-      - mc
       - acl
   tags:
     - config.packages
