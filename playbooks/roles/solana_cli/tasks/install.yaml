@@ -30,5 +30,11 @@
   tags:
     - cli.install
 
-
-
+- name: Add cli to path
+  ansible.builtin.lineinfile:
+    path: "{{ solana_home }}/.bashrc"
+    line: "export PATH=\"{{ solana_home }}/.local/share/solana/install/active_release/bin:$PATH\""
+  become: true
+  become_user: "{{ solana_user }}"
+  tags:
+    - cli.install

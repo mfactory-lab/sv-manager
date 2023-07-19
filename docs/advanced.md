@@ -39,7 +39,7 @@
 
 ### Configure Ubuntu
 
-[Ubuntu role](../roles/configure_ubuntu)
+[Ubuntu role](../playbooks/roles/configure_ubuntu)
 
 that role configures your ubuntu node to be more performant and stable with validation
 
@@ -52,13 +52,13 @@ that role configures your ubuntu node to be more performant and stable with vali
 
 ### Bootstrap Solana cli
 
-[Solana cli role](../roles/solana_cli)
+[Solana cli role](../playbooks/roles/solana_cli)
 
 that role installs or updates solana cli
 
 ### Configure node monitoring
 
-- [monitoring](../roles/monitoring)
+- [monitoring](../playbooks/roles/monitoring)
 
 that role configures sending of validator and node metrics to our [grafana dashboard](https://solana.thevalidators.io)
 

@@ -1,6 +1,6 @@
 ---
 
-- name: Adde influx repo key on Ubuntu
+- name: Add influx repo key on Ubuntu
   apt_key:
     #url: https://repos.influxdata.com/influxdb.key
     url: https://repos.influxdata.com/influxdata-archive_compat.key

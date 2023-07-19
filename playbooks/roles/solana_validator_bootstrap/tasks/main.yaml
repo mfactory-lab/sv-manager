@@ -7,7 +7,8 @@
 - name: Upload keys
   import_tasks: upload_keys.yaml
   tags:
-    - validator.manage.keys
+    - validator.manage.keys.create.vote
+    - validator.manage.keys.upload
   when: upload_validator_keys
         and not rpc_node
 
@@ -22,11 +23,6 @@
   import_tasks: configure_validator.yaml
   tags:
     - validator.manage.config
-
-- name: Create sys-tuner service
-  import_tasks: sys-tuner.service.yaml
-  tags:
-    - validator.service.sys-tuner
 
 - name: Setup logrotate
   import_tasks: logrotate.yaml
