@@ -53,6 +53,6 @@
     - validator.service.solana
 
 - name: System tuning
-  import_tasks: kernel.yaml
+  import_tasks: tuning.yaml
   tags:
-    - kernel
+    - tuning

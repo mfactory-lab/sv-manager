@@ -8,7 +8,7 @@ Type=simple
 Restart=always
 RestartSec=1
 User={{ solana_user }}
-LimitNOFILE=1024000
+LimitNOFILE=1000000
 Environment="PATH=/bin:/usr/bin:{{ env_path }}"
 Environment="SOLANA_METRICS_CONFIG=host={{ solana_metrics_url }}"
 ExecStart={{ env_path }}/solana-validator \

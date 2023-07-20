@@ -6,7 +6,7 @@ StartLimitIntervalSec=0
 Type=simple
 Restart=always
 RestartSec=1
-LimitNOFILE=1024000
+LimitNOFILE=1000000
 Environment="SOLANA_METRICS_CONFIG=host=https://metrics.solana.com:8086,db=mainnet-beta,u=mainnet-beta_write,p=password"
 Environment="RUST_LOG=debug,hyper::proto=info,reqwest=info,hyper::client=info,solana_metrics=warn,solana_runtime=info,solana_vote_program=info,solana_core=info,solana_ledger=info,solana_rbpf=info,solana_program=info,solana_perf=info,tokio_reactor=info,jsonrpc_core=info,jsonrpc_core::io=info"
 ExecStart=/home/solana/.local/share/solana/install/active_release/bin/solana-validator \
