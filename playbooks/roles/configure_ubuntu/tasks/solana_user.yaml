@@ -15,6 +15,7 @@
     groups:
       - "{{ solana_user }}"
       - syslog
+    home: "{{ solana_home }}"
   tags:
     - config.solana_user
     - validator.service.solana

@@ -1,0 +1,45 @@
+- ansible.posix.sysctl:
+    name: net.core.rmem_default
+    value: '134217728'
+  tags:
+    - tuning.sysctl
+
+- ansible.posix.sysctl:
+    name: net.core.rmem_max
+    value: '134217728'
+  tags:
+    - tuning.sysctl
+
+- ansible.posix.sysctl:
+    name: net.core.wmem_default
+    value: '134217728'
+  tags:
+    - tuning.sysctl
+
+- ansible.posix.sysctl:
+    name: net.core.wmem_max
+    value: '134217728'
+  tags:
+    - tuning.sysctl
+
+- ansible.posix.sysctl:
+    name: vm.max_map_count
+    value: '1000000'
+  tags:
+    - tuning.sysctl
+
+- ansible.posix.sysctl:
+    name: fs.nr_open
+    value: '1000000'
+  tags:
+    - tuning.sysctl
+
+- name: Add or modify nofile limits for wildcard domain
+  community.general.pam_limits:
+    domain: '*'
+    limit_type: '-'
+    limit_item: nofile
+    value: 1000000
+  tags:
+    - tuning.limits
+
