@@ -88,6 +88,9 @@ sysctl_params:
   vm.dirty_writeback_centisecs: 3000
   vm.dirtytime_expire_seconds: 43200
 
+jito_validator: false
+jito_url_site: "newyork"
+
 #validator info
 validator_description: "Bootstrapped with https://sv-manager.thevalidators.io"
 validator_homepage: ""
@@ -98,3 +101,4 @@ telegraf_database: v_metrics
 telegraf_urls: http://influx.thevalidators.io:8086
 telegraf_username: v_user
 telegraf_password: thepassword
+

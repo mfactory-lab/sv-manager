@@ -3,6 +3,7 @@
 - name: set force install fact
   set_fact:
     force: "{{ force | default('false')  }}"
+    solana_bin_path: "{{ solana_app_path }}/solana/{% if solana_version is defined %}{{ solana_version }}{% else %}stable{% endif %}"
   tags:
     - cli
     - cli.install
@@ -15,7 +16,7 @@
 
 - name: check solana cli installed
   stat:
-    path: "{{ env_path }}/solana-install"
+    path: "{{ solana_bin_path }}/bin/solana-install"
   register: solana_exists
   tags:
     - cli
@@ -42,3 +43,13 @@
     - cli
     - cli.snapshot-finder
   when: with_snapshot_finder
+
+- name: update symbolic link
+  file:
+    src: "{{ solana_bin_path }}/bin/"
+    dest: "{{ env_path }}"
+    owner: "{{ solana_user }}"
+    state: link
+  tags:
+    - cli
+    - cli.install

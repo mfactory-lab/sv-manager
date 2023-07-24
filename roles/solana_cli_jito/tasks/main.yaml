@@ -32,12 +32,12 @@
     - cli.install
   when: force or not solana_binary.stat.exists
 
-- name: update solana cli jito
-  import_tasks: update.yaml
-  tags:
-    - cli
-    - cli.update
-  when: not force and solana_binary.stat.exists
+#- name: update solana cli jito
+#  import_tasks: update.yaml
+#  tags:
+#    - cli
+#    - cli.update
+#  when: not force and solana_binary.stat.exists
 
 - name: install solana-snapshot-finder
   import_tasks: solana_snapshot_finder.yaml
@@ -45,3 +45,13 @@
     - cli
     - cli.snapshot-finder
   when: with_snapshot_finder
+
+- name: update symbolic link
+  file:
+    src: "{{ jito_bin_path }}/bin/"
+    dest: "{{ env_path }}"
+    owner: "{{ solana_user }}"
+    state: link
+  tags:
+    - cli
+    - cli.install

@@ -24,3 +24,13 @@ extra_params: []
 solana_ledger_slot: 179526403
 solana_shred_version: 56177
 solana_bank_hash: 69p75jzzT1P2vJwVn3wbTVutxHDcWKAgcbjqXvwCVUDE
+
+jito_urls:
+  newyork:
+    block_engine: "https://nyc.testnet.block-engine.jito.wtf"
+    relayer: "http://nyc.testnet.relayer.jito.wtf:8100"
+    shred_receiver_addr: "136.144.58.40:1002"
+  dallas:
+    block_engine: "https://dallas.testnet.block-engine.jito.wtf"
+    relayer: "http://dallas.testnet.relayer.jito.wtf:8100"
+    shred_receiver_addr: "147.28.154.132:1002"

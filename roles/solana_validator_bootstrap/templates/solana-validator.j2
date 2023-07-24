@@ -5,6 +5,15 @@
 
 SOLANA_VALIDATOR_EXTRA_ARGS="--identity {{ secrets_path }}/validator-keypair.json \
 --only-known-rpc \
+{% if jito_validator %}
+--tip-payment-program-pubkey T1pyyaTNZsKv2WcRAB8oVnk93mLJw2XzjtVYqCsaHqt \
+--tip-distribution-program-pubkey 4R3gSG8BpU4t19KYj8CfnbtRpnT8gtk4dvTHxVRwc2r7 \
+--merkle-root-upload-authority GZctHpWXmsZC1YHACTGGcHhYxjdRqQvTpYkb9LMvxDib \
+--commission-bps 800 \
+--relayer-url={{ jito_urls.get(jito_urls_site).relayer }} \
+--block-engine-url={{ jito_urls.get(jito_urls_site).block_engine }} \
+--shred-receiver-address={{ jito_urls.get(jito_urls_site).shred_receiver_addr }} \
+{% endif %}
 {% if not rpc_node %}
 --vote-account {{ secrets_path }}/vote-account-keypair.json \
 {% endif %}

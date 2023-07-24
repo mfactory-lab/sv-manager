@@ -26,3 +26,21 @@ extra_params: []
 solana_ledger_slot: 179526403
 solana_shred_version: 56177
 solana_bank_hash: 69p75jzzT1P2vJwVn3wbTVutxHDcWKAgcbjqXvwCVUDE
+
+jito_urls:
+  amsterdam:
+    block_engine: "https://amsterdam.mainnet.block-engine.jito.wtf"
+    relayer: "http://amsterdam.mainnet.relayer.jito.wtf:8100"
+    shred_receiver_addr: "74.118.140.240:1002"
+  frankfurt:
+    block_engine: "https://frankfurt.mainnet.block-engine.jito.wtf"
+    relayer: "http://frankfurt.mainnet.relayer.jito.wtf:8100"
+    shred_receiver_addr: "145.40.93.84:1002"
+  newyork:
+    block_engine: "https://ny.mainnet.block-engine.jito.wtf"
+    relayer: "http://ny.mainnet.relayer.jito.wtf:8100"
+    shred_receiver_addr: "141.98.216.96:1002"
+  tokyo:
+    block_engine: "https://tokyo.mainnet.block-engine.jito.wtf"
+    relayer: "http://tokyo.mainnet.relayer.jito.wtf:8100"
+    shred_receiver_addr: "202.8.9.160:1002"

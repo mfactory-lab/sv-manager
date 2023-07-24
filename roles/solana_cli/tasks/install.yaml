@@ -17,7 +17,7 @@
         mode: 0755
 
     - name: run solana installer
-      shell: "/tmp/solana/install -d {{ solana_app_path }} {% if solana_version is defined %}v{{ solana_version }}{% else %}stable{% endif %}"
+      shell: "/tmp/solana/install -d {{ solana_bin_path }} {% if solana_version is defined %}v{{ solana_version }}{% else %}stable{% endif %}"
   become: yes
   become_user: "{{ solana_user }}"
   tags:
