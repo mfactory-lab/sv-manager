@@ -44,3 +44,16 @@
     - cli.snapshot-finder
   when: with_snapshot_finder
 
+- name: "Add {{ solana_bin_path }}/active_release/bin to PATH if does not exist"
+  lineinfile:
+    path: /etc/environment
+    line: 'PATH="$PATH:{{ solana_bin_path }}/active_release/bin"'
+    insertafter: EOF
+  when: lookup('file', '/etc/environment') is not search('^\s*PATH\s*=')
+
+- name: 'Add {{ solana_bin_path }}/active_release/bin to PATH'
+  lineinfile:
+    path: /etc/environment
+    regexp: 'PATH=(["])((?!.*?{{ solana_bin_path }}/active_release/bin).*?)(["])$'
+    line: 'PATH=\1\2:{{ solana_bin_path }}/active_release/bin\3'
+    backrefs: yes
