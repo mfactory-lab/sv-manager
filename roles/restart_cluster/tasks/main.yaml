@@ -16,7 +16,7 @@
 - name: "install solana {{ solana_version }}"
   shell: solana-install init {{ solana_version }}
   environment:
-    PATH: "{{ env_path }}"
+    PATH: "{{ env_path }}/active_release/bin"
   become: yes
   become_user: "{{ solana_user }}"
   tags:
@@ -29,7 +29,7 @@
   shell: "solana-ledger-tool --ledger {{ ledger_path }} create-snapshot {{ solana_ledger_slot }} {{ snapshots_path }} --snapshot-archive-path {{ snapshots_path }} --hard-fork {{ solana_ledger_slot }} --wal-recovery-mode skip_any_corrupted_record"
   environment:
     #PATH: "{{ node.solana_home }}/.local/share/solana/install/active_release/bin"
-    PATH: "{{ env_path }}:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin"
+    PATH: "{{ env_path }}/active_release/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin"
     HOME: "{{ solana_home }}"
   tags:
     - validator.cluster.restart

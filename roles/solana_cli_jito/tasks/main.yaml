@@ -3,7 +3,7 @@
 - name: set force install fact
   set_fact:
     force: "{{ force | default('false')  }}"
-    jito_bin_path: "{{ solana_app_path }}/releases/{{ solana_version }}-jito/"
+    jito_bin_path: "{{ solana_app_path }}/releases/{{ solana_version }}-jito/bin"
   tags:
     - cli
     - cli.install
@@ -17,7 +17,7 @@
 
 - name: check solana cli jito installed
   stat:
-    path: "{{ jito_bin_path }}/bin/solana-validator"
+    path: "{{ jito_bin_path }}/solana-validator"
   register: solana_binary
   tags:
     - cli
@@ -48,7 +48,7 @@
 
 - name: update symbolic link
   file:
-    src: "{{ jito_bin_path }}/bin"
+    src: "{{ jito_bin_path }}"
     dest: "{{ env_path }}"
     owner: "{{ solana_user }}"
     state: link
