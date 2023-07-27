@@ -48,6 +48,7 @@
 - name: check previously running rust container
   shell: "docker ps -a | grep {{ docker_builder_name }}"
   register: container_present
+  failed_when: "container_present.rc not in [0,1]"
   become: yes
   tags:
     - cli.install
