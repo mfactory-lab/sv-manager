@@ -3,7 +3,7 @@
 - name: set force install fact
   set_fact:
     force: "{{ force | default('false')  }}"
-    jito_bin_path: "{{ solana_app_path }}/releases/{{ solana_version }}-jito/bin"
+    jito_bin_path: "{{ solana_app_path }}/releases/{{ solana_version }}-jito"
   tags:
     - cli
     - cli.install
@@ -46,7 +46,26 @@
     - cli.snapshot-finder
   when: with_snapshot_finder
 
-- name: update symbolic link
+- name: change ownership of a directory
+  file:
+    path: "{{ jito_bin_path }}"
+    state: directory
+    recurse: yes
+    owner: "{{ solana_user }}"
+    group: "{{ solana_user }}"
+  tags:
+    - cli
+    - cli.install
+
+- name: remove old symbolic link
+  file:
+    path: "{{ env_path }}"
+    state: absent
+  tags:
+    - cli
+    - cli.install
+
+- name: create new symbolic link
   file:
     src: "{{ jito_bin_path }}"
     dest: "{{ env_path }}"
