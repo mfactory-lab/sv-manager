@@ -20,4 +20,6 @@
 "validator_homepage": "{{ hostvars[inventory_hostname]["validator_homepage"] }}",
 "validator_name": "{{ hostvars[inventory_hostname]["validator_name"] }}",
 "with_snapshot_finder": "{% if with_snapshot_finder is defined %}{{ with_snapshot_finder }}{% else %}{{ hostvars[inventory_hostname]["with_snapshot_finder"] }}{% endif %}",
+"jito_validator": "{% if jito_validator is defined %}{{ jito_validator }}{% else %}{{ hostvars[inventory_hostname]["jito_validator"] }}{% endif %}",
+"jito_urls_site": "{% if jito_urls_site is defined %}{{ jito_urls_site }}{% else %}{{ hostvars[inventory_hostname]["jito_urls_site"] }}{% endif %}",
 }
