@@ -64,7 +64,6 @@
 - name: run docker rust container for make solana jito binary
   shell: "docker run --name {{ docker_builder_name }} --network host -d -v {{ tmp_install_path }}:{{ tmp_install_path }} -v {{ jito_bin_path }}:{{ jito_bin_path }} rust:bullseye sleep 99999999"
   become: yes
-  when: container_present.stdout|length = 0
   tags:
     - cli.install
     - cli.make
