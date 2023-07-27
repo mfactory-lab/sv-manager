@@ -89,7 +89,7 @@ sysctl_params:
   vm.dirtytime_expire_seconds: 43200
 
 jito_validator: false
-jito_url_site: "newyork"
+jito_urls_site: "newyork"
 
 #validator info
 validator_description: "Bootstrapped with https://sv-manager.thevalidators.io"
