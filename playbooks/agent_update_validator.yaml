@@ -3,7 +3,19 @@
   hosts: all
   serial: 1
   become: yes
+  vars_files:
+    - "/etc/sv_manager/sv_manager.conf"
   roles:
-    - solana_config
-    - solana_cli
+    - name: solana_cli
+      tags:
+        - cli
+        - cli.install
+        - cli.update
+      when: not jito_validator
+    - name: solana_cli_jito
+      tags:
+        - cli
+        - cli.install
+        - cli.update
+      when: jito_validator
     - solana_validator_restart
