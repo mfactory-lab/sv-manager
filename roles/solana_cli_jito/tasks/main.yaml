@@ -59,7 +59,7 @@
 
 - name: remove old symbolic link
   file:
-    path: "{{ env_path }}"
+    path: "{{ solana_app_path }}/active_release"
     state: absent
   tags:
     - cli
@@ -68,8 +68,9 @@
 - name: create new symbolic link
   file:
     src: "{{ jito_bin_path }}"
-    dest: "{{ env_path }}"
+    dest: "{{ solana_app_path }}/active_release"
     owner: "{{ solana_user }}"
+    group: "{{ solana_user }}"
     state: link
   tags:
     - cli
