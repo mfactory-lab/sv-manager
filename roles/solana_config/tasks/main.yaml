@@ -11,7 +11,7 @@
     path: /etc/sv_manager/sv_manager.conf
   register: config_exists
 
-- name: Load config file
+- name: remove config file
   file:
     path: /etc/sv_manager/sv_manager.conf
     state: absent
