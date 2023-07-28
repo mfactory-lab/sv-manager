@@ -35,7 +35,10 @@
 - name: Start solana service
   systemd:
     name: solana-validator
-    state: "{{ solana_validator_service }}"
+    state: "{{ item }}"
+  with_items:
+    - "started"
+    - "restarted"
   tags:
     - validator.service.solana
 
