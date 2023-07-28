@@ -30,13 +30,19 @@
   command: swapoff -a
   tags:
     - config.swap.file.disable
-  when: force or (not swap_file_exists.stat.exists and not old_swap_file_exists.stat.exists)
+
+- name: remove swap file
+  file:
+    path: "{{ mount_base_path }}/swap/swapfile"
+    state: absent
+  tags:
+    - config.swap.file.remove
+  when: force or swap_file_exists.stat.exists
 
 - name: Create swap file
   command: fallocate -l {{ swap_file_size_gb }}G {{ mount_base_path }}/swap/swapfile 
   tags:
     - config.swap.file.create
-  when: force or (not swap_file_exists.stat.exists and not old_swap_file_exists.stat.exists)
 
 - name: Change swap file permissions
   file: path="{{ mount_base_path }}/swap/swapfile"
@@ -45,13 +51,11 @@
         mode=0600
   tags:
     - config.swap.file.permissions
-  when: force or (not swap_file_exists.stat.exists and not old_swap_file_exists.stat.exists)
 
 - name: Make swap file
   command: "mkswap {{ mount_base_path }}/swap/swapfile"
   tags:
     - config.swap.file.mkswap
-  when: force or (not swap_file_exists.stat.exists and not old_swap_file_exists.stat.exists)
 
 - name: Write swap entry in fstab
   mount: name=none
@@ -69,4 +73,3 @@
   command: "swapon {{ mount_base_path }}/swap/swapfile"
   tags:
     - config.swap.file.swapon
-  when: force or (not swap_file_exists.stat.exists and not old_swap_file_exists.stat.exists)

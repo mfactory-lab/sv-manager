@@ -7,6 +7,7 @@
 - name: Load config
   include_vars:
     file: "/etc/sv_manager/sv_manager.conf"
+  become: yes
 
 - name: Configure lvm
   import_tasks: lvm.yaml
