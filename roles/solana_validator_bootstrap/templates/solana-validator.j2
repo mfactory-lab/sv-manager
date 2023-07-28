@@ -9,7 +9,7 @@ SOLANA_VALIDATOR_EXTRA_ARGS="--identity {{ secrets_path }}/validator-keypair.jso
 --tip-payment-program-pubkey T1pyyaTNZsKv2WcRAB8oVnk93mLJw2XzjtVYqCsaHqt \
 --tip-distribution-program-pubkey 4R3gSG8BpU4t19KYj8CfnbtRpnT8gtk4dvTHxVRwc2r7 \
 --merkle-root-upload-authority GZctHpWXmsZC1YHACTGGcHhYxjdRqQvTpYkb9LMvxDib \
---commission-bps 800 \
+--commission-bps {{ jito_commission_bps }} \
 --relayer-url {{ jito_urls.get(jito_urls_site).relayer }} \
 --block-engine-url {{ jito_urls.get(jito_urls_site).block_engine }} \
 --shred-receiver-address {{ jito_urls.get(jito_urls_site).shred_receiver_addr }} \

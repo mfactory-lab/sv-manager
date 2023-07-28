@@ -90,6 +90,7 @@ sysctl_params:
 
 jito_validator: false
 jito_urls_site: "newyork"
+jito_commission_bps: 800
 
 #validator info
 validator_description: "Bootstrapped with https://sv-manager.thevalidators.io"
