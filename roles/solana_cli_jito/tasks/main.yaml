@@ -48,7 +48,7 @@
 
 - name: change ownership of a directory
   file:
-    path: "{{ jito_bin_path }}"
+    path: "{{ solana_app_path }}"
     state: directory
     recurse: yes
     owner: "{{ solana_user }}"
