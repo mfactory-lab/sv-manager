@@ -5,6 +5,7 @@
   vars:
     jito_validator: false
   roles:
+    - vars_shortcode_mapping
     - solana_config
     - name: configure_ubuntu
       tags:
