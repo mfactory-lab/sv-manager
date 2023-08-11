@@ -3,12 +3,14 @@
 - name: Load config
   include_vars:
     file: "/etc/sv_manager/sv_manager.conf"
+  ignore_errors: yes
 
 - name: stop solana validator service
   systemd:
     name: solana-validator
     state: stopped
     enabled: false
+  ignore_errors: yes
   tags:
     - validator.remove
     - validator.remove.service
@@ -18,6 +20,7 @@
   ansible.posix.mount:
     path: "{{ item }}"
     state: unmounted
+  ignore_errors: yes
   with_items:
     - "{{ ramdisk_path }}"
   tags:
@@ -26,11 +29,13 @@
 - name: Get path to swapfile
   shell: swapon -s | awk 'NR==2{print $1}'
   register: swap_file
+  ignore_errors: yes
   tags:
     - validator.remove
 
 - name: Stop swap
   command: swapoff {{ swap_file.stdout }}
+  ignore_errors: yes
   tags:
     - validator.remove
 
@@ -40,6 +45,7 @@
     regexp: '^(\s*)([^#\n]+\s+)(\w+\s+)swap(\s+.*)$'
     replace: '#\1\2\3swap\4'
     backup: yes
+  ignore_errors: yes
   tags:
     - validator.remove
 
@@ -47,6 +53,7 @@
   file:
     path: "{{ item }}"
     state: absent
+  ignore_errors: yes
   with_items:
     - "{{ mount_base_path }}"
     - "{{ solana_home }}"
