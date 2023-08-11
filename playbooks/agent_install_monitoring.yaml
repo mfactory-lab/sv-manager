@@ -3,5 +3,6 @@
   hosts: all
   become: yes
   roles:
+    - vars_shortcode_mapping
     - solana_config_load
     - monitoring
