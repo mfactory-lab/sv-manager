@@ -6,6 +6,7 @@
   vars_files:
     - "/etc/sv_manager/sv_manager.conf"
   roles:
+    - vars_shortcode_mapping
     - name: solana_cli
       tags:
         - cli
