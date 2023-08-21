@@ -1,5 +1,10 @@
 ---
 
+- name: Load config
+  include_vars:
+    file: "/etc/sv_manager/sv_manager.conf"
+  become: yes
+
 - name: wait for restarting window
   import_tasks: wait_for_restart_window.yaml
   tags:

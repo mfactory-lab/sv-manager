@@ -25,3 +25,4 @@
     jito_validator: "{% if jv is defined %}{{ jv }}{% elif jito_validator is defined %}{{ jito_validator }}{% else %}{{ hostvars[inventory_hostname][\"jito_validator\"] }}{% endif %}"
     jito_urls_site: "{% if jus is defined %}{{ jus }}{% elif jito_urls_site is defined %}{{ jito_urls_site }}{% else %}{{ hostvars[inventory_hostname][\"jito_urls_site\"] }}{% endif %}"
     jito_commission_bps: "{% if jcb is defined %}{{ jcb }}{% elif jito_commission_bps is defined %}{{ jito_commission_bps }}{% else %}{{ hostvars[inventory_hostname][\"jito_commission_bps\"] }}{% endif %}"
+    wait_for_window: "{% if wfw is defined %}{{ wfw }}{% elif wait_for_window is defined %}{{ wait_for_window }}{% else %}False{% endif %}"
