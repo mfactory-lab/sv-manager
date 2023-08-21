@@ -1,5 +1,7 @@
 ---
 
+sv_manager_config_path: "/etc/sv_manager/sv_manager.conf"
+
 #backward compatibility
 old_swap_file: "/mnt/swap/swapfile"
 old_ramdisk_path: /mnt/ramdisk

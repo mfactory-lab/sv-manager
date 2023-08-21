@@ -8,12 +8,12 @@
 
 - name: Check if config file exists
   stat:
-    path: /etc/sv_manager/sv_manager.conf
+    path: "{{ sv_manager_config_path }}"
   register: config_exists
 
 - name: remove config file
   file:
-    path: /etc/sv_manager/sv_manager.conf
+    path: "{{ sv_manager_config_path }}"
     state: absent
   when: config_exists.stat.exists
 
@@ -45,4 +45,4 @@
 - name: write var to file
   copy:
     content: "{{ config_dict | to_nice_json }}"
-    dest: /etc/sv_manager/sv_manager.conf
+    dest: "{{ sv_manager_config_path }}"

@@ -12,7 +12,7 @@
 
 - name: Load config
   include_vars:
-    file: "/etc/sv_manager/sv_manager.conf"
+    file: "{{ sv_manager_config_path }}"
   become: yes
 
 - name: check solana cli jito installed

@@ -2,7 +2,7 @@
 
 - name: Load config
   include_vars:
-    file: "/etc/sv_manager/sv_manager.conf"
+    file: "{{ sv_manager_config_path }}"
   ignore_errors: yes
 
 - name: stop solana validator service
@@ -60,6 +60,6 @@
     - "{{ swap_file.stdout }}"
     - "/etc/systemd/system/solana-validator.service"
     - "/etc/default/solana-validator"
-    - "/etc/sv_manager"
+    - "{{ sv_manager_config_path }}"
   tags:
     - validator.remove
