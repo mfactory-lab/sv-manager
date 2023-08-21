@@ -4,7 +4,7 @@
   serial: 1
   become: yes
   vars_files:
-    - "/etc/sv_manager/sv_manager.conf"
+    - "{{ sv_manager_config_path }}"
   roles:
     - vars_shortcode_mapping
     - name: solana_cli
