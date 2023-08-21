@@ -15,13 +15,13 @@
         - cli
         - cli.install
         - cli.update
-      when: not jito_validator
+      when: not jito_validator|bool
     - name: solana_cli_jito
       tags:
         - cli
         - cli.install
         - cli.update
-      when: jito_validator
+      when: jito_validator|bool
     - name: solana_validator_bootstrap
       tags:
         - validator_bootstrap
