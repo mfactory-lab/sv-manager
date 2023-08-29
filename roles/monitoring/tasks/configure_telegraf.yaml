@@ -21,6 +21,17 @@
   tags:
     - telegraf.configure
 
+- name: Add solana bin path for telegraf unit file
+  template:
+    src: 01-telegraf.conf.j2
+    dest: /etc/systemd/system/telegraf.service.d/01-telegraf.conf
+    mode: 0644
+    owner: root
+    group: root
+    backup: yes
+  tags:
+    - telegraf.configure
+
 - name: Enable and start telegraf service
   systemd:
     name: telegraf

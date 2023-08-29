@@ -26,6 +26,8 @@
       - requests
       - tqdm
     executable: pip3
+  async: 360
+  poll: 5
   tags:
     - cli
     - cli.snapshot-finder
