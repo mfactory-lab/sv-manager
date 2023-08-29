@@ -7,6 +7,7 @@
   roles:
     - vars_shortcode_mapping
     - solana_config
+    - solana_validator_stop
     - name: configure_ubuntu
       tags:
         - configure.os
