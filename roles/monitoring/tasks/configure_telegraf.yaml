@@ -21,6 +21,13 @@
   tags:
     - telegraf.configure
 
+- name: create telegraf.service.d dir
+  file:
+    path: /etc/systemd/system/telegraf.service.d
+    state: directory
+  tags:
+    - telegraf.configure
+
 - name: Add solana bin path for telegraf unit file
   template:
     src: 01-telegraf.conf.j2
