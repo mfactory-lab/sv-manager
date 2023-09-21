@@ -17,7 +17,7 @@
 
 - name: check solana cli jito installed
   stat:
-    path: "{{ jito_bin_path }}/solana-validator"
+    path: "{{ jito_bin_path }}/bin/solana-validator"
   register: solana_binary
   tags:
     - cli
