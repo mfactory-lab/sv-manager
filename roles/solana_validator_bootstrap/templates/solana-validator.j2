@@ -50,7 +50,6 @@ SOLANA_VALIDATOR_EXTRA_ARGS="--identity {{ secrets_path }}/validator-keypair.jso
 --incremental-snapshot-interval-slots 5000 \
 --maximum-full-snapshots-to-retain 1 \
 --maximum-incremental-snapshots-to-retain 2 \
---no-port-check \
 --limit-ledger-size {{ limit_ledger_size }} \
 --log {{ validator_log_path }}/solana-validator.log \
 --ledger {{ ledger_path }} \
