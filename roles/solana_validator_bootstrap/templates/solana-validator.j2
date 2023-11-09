@@ -34,7 +34,6 @@ SOLANA_VALIDATOR_EXTRA_ARGS="--identity {{ secrets_path }}/validator-keypair.jso
 --private-rpc \
 --rpc-bind-address 127.0.0.1 \
 --wal-recovery-mode skip_any_corrupted_record \
---snapshot-compression none \
 {% endif %}
 {% if rpc_node %}
 --no-voting \
