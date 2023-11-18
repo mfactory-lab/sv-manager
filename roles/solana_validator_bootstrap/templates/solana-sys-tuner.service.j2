@@ -6,7 +6,7 @@ StartLimitIntervalSec=0
 [Service]
 Type=oneshot
 {% for param, value in sysctl_params.items() -%}
-ExecStart=/usr/sbin/sysctl -w {{ param }}={{value}}
+ExecStart=/usr/sbin/sysctl -w {{ param }}="{{value}}"
 {% endfor %}
 
 [Install]
