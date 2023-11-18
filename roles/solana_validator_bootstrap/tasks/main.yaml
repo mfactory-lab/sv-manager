@@ -28,10 +28,10 @@
   tags:
     - validator.manage.config
 
-#- name: Create sys-tuner service
-#  import_tasks: sys-tuner.service.yaml
-#  tags:
-#    - validator.service.sys-tuner
+- name: Create sys-tuner service
+  import_tasks: sys-tuner.service.yaml
+  tags:
+    - validator.service.sys-tuner
 
 - name: Setup logrotate
   import_tasks: logrotate.yaml

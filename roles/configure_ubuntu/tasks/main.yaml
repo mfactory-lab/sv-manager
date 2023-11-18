@@ -56,10 +56,10 @@
   tags:
     - config.fail2ban
 
-- name: Config sysctl
-  import_tasks: sysctl.yaml
-  tags:
-    - config.sysctl
+#- name: Config sysctl
+#  import_tasks: sysctl.yaml
+#  tags:
+#    - config.sysctl
 
 - name: Create ansible user
   import_tasks: ansible_user.yaml

@@ -4,10 +4,10 @@ After=network.target syslog.target
 StartLimitIntervalSec=0
 
 [Service]
-Type=simple
-Restart=always
-RestartSec=1
-ExecStart={{ env_path }}/solana-sys-tuner --user {{ solana_user }}
+Type=oneshot
+{% for param, value in sysctl_params.items() -%}
+ExecStart=/usr/sbin/sysctl -w {{ param }}={{value}}
+{% endfor %}
 
 [Install]
 WantedBy=multi-user.target
