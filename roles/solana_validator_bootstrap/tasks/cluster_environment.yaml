@@ -1,5 +1,5 @@
 ---
-- name: set testnet cluster environment
+- name: set cluster environment
   shell: solana config set --url {{ cluster_rpc_address }}
   become: yes
   become_user: "{{ solana_user }}"
