@@ -17,6 +17,7 @@ ExecStart={{ env_path }}/solana-validator \
 --vote-account {{ secrets_path }}/vote-account-keypair.json \
 --rpc-port {{ solana_rpc_port }} \
 --no-untrusted-rpc \
+--full-rpc-api \
 --expected-genesis-hash {{ expected_genesis_hash }} \
 --incremental-snapshot-interval-slots {{ snapshot_interval_slots }} \
 --accounts-hash-interval-slots {{ snapshot_interval_slots }} \
