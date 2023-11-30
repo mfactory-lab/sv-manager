@@ -1,5 +1,5 @@
 ---
-- name: Install firwall package
+- name: Install firewall package
   package:
     name:
       - ufw
@@ -8,14 +8,14 @@
     - config.firewall
 
 - name: Deny all ingress connections
-  community.general.ufw:
+  ufw:
     policy: deny
     direction: incoming
   tags:
     - config.firewall
 
 - name: allow ingress ssh
-  community.general.ufw:
+  ufw:
     rule: allow
     port: ssh
     proto: tcp
@@ -24,7 +24,7 @@
     - config.firewall
 
 - name: allow rpc ingress port
-  community.general.ufw:
+  ufw:
     rule: allow
     proto: tcp
     direction: in
@@ -33,7 +33,7 @@
     - config.firewall
 
 - name: allow ingress solana udp ports
-  community.general.ufw:
+  ufw:
     rule: allow
     proto: udp
     direction: in
@@ -42,7 +42,7 @@
     - config.firewall
 
 - name: allow ingress solana tcp ports
-  community.general.ufw:
+  ufw:
     rule: allow
     proto: tcp
     direction: in
@@ -51,7 +51,7 @@
     - config.firewall
 
 - name: deny out from any to 10.0.0.0/8
-  community.general.ufw:
+  ufw:
     rule: deny
     direction: out
     src: '{{ item }}'
@@ -66,7 +66,7 @@
     - config.firewall
 
 - name: Enable ufw
-  community.general.ufw:
+  ufw:
     state: enabled
   tags:
     - config.firewall

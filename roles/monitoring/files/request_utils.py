@@ -16,7 +16,7 @@ def execute_cmd_str(config: ValidatorConfig, cmd: str, convert_to_json: bool, de
     """
     try:
         debug(config, cmd)
-        result: str = subprocess.check_output(cmd, shell=True, stderr=subprocess.DEVNULL).decode().strip()
+        result: str = subprocess.check_output(cmd, shell=True, stderr=subprocess.DEVNULL, timeout=10).decode().strip()
 
         if convert_to_json:
             result = json.loads(result)

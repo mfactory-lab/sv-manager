@@ -25,6 +25,13 @@
   tags:
     - telegraf.install
 
+- name: apt update
+  ansible.builtin.apt:
+    update_cache: yes
+  when: ansible_distribution == 'Ubuntu'
+  tags:
+    - telegraf.install
+
 - name: Install telegraf
   package:
     name: telegraf

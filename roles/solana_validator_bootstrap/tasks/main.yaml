@@ -8,7 +8,8 @@
   import_tasks: upload_keys.yaml
   tags:
     - validator.manage.keys
-  when: upload_validator_keys|bool
+  when: upload_validator_keys
+        and not rpc_node
 
 - name: Create missing keys
   import_tasks: create_missing_keys.yaml
@@ -37,10 +38,10 @@
   tags:
     - validator.service.solana
 
-- name: Set validator info
-  import_tasks: validator_info.yaml
-  tags:
-    - validator.manage.info
-  when: set_validator_info|bool
+# - name: Set validator info
+#   import_tasks: validator_info.yaml
+#   tags:
+#     - validator.manage.info
+#   when: set_validator_info
 
 
