@@ -48,3 +48,11 @@ telegraf_database: v_metrics
 telegraf_urls: http://influx.thevalidators.io:8086
 telegraf_username: v_user
 telegraf_password: thepassword
+
+# Sys Tuning
+sysctl_params:
+  - 'net.core.wmem_default=134217728'
+  - 'vm.max_map_count=1000000'
+  - 'net.core.wmem_max=134217728'
+  - 'net.core.rmem_default=134217728'
+  - 'net.core.rmem_max=134217728'
