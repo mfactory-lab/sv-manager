@@ -3,7 +3,7 @@
 - name: cli | get solana snapshot finder
   copy:
     src: files/solana-snapshot-finder
-    dest: "{{ env_path }}/solana-snapshot-finder"
+    dest: "{{ solana_home }}/solana-snapshot-finder"
     owner: "{{ solana_user }}"
     group: "{{ solana_user }}"
     mode: 0755
