@@ -16,7 +16,7 @@
 - name: run snapshot finder
   become: yes
   become_user: "{{ solana_user }}"
-  shell: "solana-snapshot-finder --snapshot-path {{ snapshots_path }} -r {{ cluster_rpc_address }}"
+  shell: "{{ solana_home }}/solana-snapshot-finder --snapshot-path {{ snapshots_path }} -r {{ cluster_rpc_address }}"
   environment:
     PATH: "{{ env_path }}"
   ignore_errors: True

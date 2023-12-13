@@ -7,7 +7,10 @@
   roles:
     - vars_shortcode_mapping
     - solana_config
-    - solana_validator_stop
+    - name: solana_validator_stop
+      tags:
+        - solana.stop
+      when: not jito_validator|bool
     - name: configure_ubuntu
       tags:
         - configure.os
@@ -22,6 +25,10 @@
         - cli
         - cli.install
         - cli.update
+      when: jito_validator|bool
+    - name: solana_validator_stop
+      tags:
+        - solana.stop
       when: jito_validator|bool
     - name: solana_validator_bootstrap
       tags:
