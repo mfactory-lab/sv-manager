@@ -4,7 +4,7 @@ from common import debug
 from common import ValidatorConfig
 import statistics
 import numpy as np
-# import tds_info as tds
+import tds_info as tds
 from common import measurement_from_fields
 
 
