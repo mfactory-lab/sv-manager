@@ -35,7 +35,6 @@ ExecStart={{ env_path }}/solana-validator \
 {% endfor %}
 {%if 'mainnet_validators' in group_names and not rpc_node %}
 --private-rpc \
---rpc-bind-address 127.0.0.1 \
 --wal-recovery-mode skip_any_corrupted_record \
 --rpc-bind-address 127.0.0.1 \
 {% endif %}

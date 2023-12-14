@@ -20,4 +20,3 @@ snapshot_interval_slots: 500
 maximum_local_snapshot_age: 1000
 solana_version: 1.16.20
 extra_params:
-  - '--incremental-snapshot-interval-slots 200'
