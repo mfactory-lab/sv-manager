@@ -11,7 +11,8 @@ solana_user: 'solana'
 ansible_user: 'root'
 
 #all:
-accounts_path: "{{ ramdisk_path }}/accounts"
+accounts_path: "{{ mount_base_path }}/accounts"
+accounts_hash_cache_path: "{{ ramdisk_path }}/accounts_hash_cache"
 use_firewall: True
 env_path: "{{ solana_app_path }}/active_release/bin"
 fail_if_no_validator_keypair: True

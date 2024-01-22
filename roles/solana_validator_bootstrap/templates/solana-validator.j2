@@ -54,5 +54,6 @@ SOLANA_VALIDATOR_EXTRA_ARGS="--identity {{ secrets_path }}/validator-keypair.jso
 --log {{ validator_log_path }}/solana-validator.log \
 --ledger {{ ledger_path }} \
 --accounts {{ accounts_path }} \
+--accounts-hash-cache-path {{ accounts_hash_cache_path }} \
 --snapshots {{ snapshots_path }} \
 --dynamic-port-range {{ open_solana_ports_start }}-{{ open_solana_ports_end }}"

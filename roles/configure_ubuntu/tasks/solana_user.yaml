@@ -54,6 +54,18 @@
     - config.solana_user
     - validator.service.solana
 
+- name: Create accounts hash cache directory
+  become: yes
+  file:
+    path: "{{ accounts_hash_cache_path }}"
+    owner: "{{ solana_user }}"
+    group: "{{ solana_user }}"
+    state: directory
+    mode: '0755'
+  tags:
+    - config.solana_user
+    - validator.service.solana
+
 - name: Create snapshots directory
   become: yes
   file:

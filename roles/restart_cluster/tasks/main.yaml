@@ -37,7 +37,7 @@
 
 - name: Add cluster repair args to service
   blockinfile:
-    path: /home/makhonin/solana-validator
+    path: /etc/default/solana-validator
     marker: "# {mark} ANSIBLE MANAGED BLOCK"
     insertbefore: "SOLANA_VALIDATOR_EXTRA_ARGS"
     block: |
@@ -72,7 +72,7 @@
 
 - name: Remove cluster repair args from service
   blockinfile:
-    path: /home/makhonin/solana-validator
+    path: /etc/default/solana-validator
     marker: "# {mark} ANSIBLE MANAGED BLOCK"
     block: ""
   tags:

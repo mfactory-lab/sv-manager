@@ -1,6 +1,8 @@
 ---
 - name: Map shortcode to full variables
   set_fact:
+    accounts_path: "{% if ap is defined %}{{ ap }}{% elif accounts_path is defined %}{{ accounts_path }}{% else %}{{ hostvars[inventory_hostname][\"accounts_path\"] }}{% endif %}"
+    accounts_hash_cache_path: "{% if ahcp is defined %}{{ ahcp }}{% elif accounts_hash_cache_path is defined %}{{ accounts_hash_cache_path }}{% else %}{{ hostvars[inventory_hostname][\"accounts_hash_cache_path\"] }}{% endif %}"
     cluster_environment: "{% if ce is defined %}{{ ce }}{% elif cluster_environment is defined %}{{ cluster_environment }}{% else %}{{ hostvars[inventory_hostname][\"cluster_environment\"] }}{% endif %}"
     cluster_rpc_address: "{% if cra is defined %}{{ cra }}{% elif cluster_rpc_address is defined %}{{ cluster_rpc_address }}{% else %}{{ hostvars[inventory_hostname][\"cluster_rpc_address\"] }}{% endif %}"
     flat_path: "{% if fp is defined %}{{ fp }}{% elif flat_path is defined %}{{ flat_path }}{% else %}{{ hostvars[inventory_hostname][\"flat_path\"] }}{% endif %}"
