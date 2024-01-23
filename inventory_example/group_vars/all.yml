@@ -14,6 +14,7 @@ use_firewall: True
 env_path: "{{ solana_home }}/.local/share/solana/install/active_release/bin"
 fail_if_no_validator_keypair: True
 flat_path: True
+incremental_snapshot_interval_slots: 2500
 ledger_path: "{{ mount_base_path }}/ledger"
 local_secrets_path: '../.secrets'
 log_level: "WARN"
