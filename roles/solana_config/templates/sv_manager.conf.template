@@ -1,6 +1,7 @@
 {
 "cluster_environment": "{% if cluster_environment is defined %}{{ cluster_environment }}{% else %}{{ hostvars[inventory_hostname]["cluster_environment"] }}{% endif %}",
 "cluster_rpc_address": "{% if cluster_rpc_address is defined %}{{ cluster_rpc_address }}{% else %}{{ hostvars[inventory_hostname]["cluster_rpc_address"] }}{% endif %}",
+"accounts_hash_cache_path": "{% if accounts_hash_cache_path is defined %}{{ accounts_hash_cache_path }}{% else %}{{ hostvars[inventory_hostname]["accounts_hash_cache_path"] }}{% endif %}",
 "flat_path": "{% if flat_path is defined %}{{ flat_path }}{% else %}{{ hostvars[inventory_hostname]["flat_path"] }}{% endif %}",
 "keybase_username": "{% if keybase_username is defined %}{{ keybase_username }}{% else %}{{ hostvars[inventory_hostname]["keybase_username"] }}{% endif %}",
 "ledger_path": "{% if ledger_path is defined %}{{ ledger_path }}{% else %}{{ hostvars[inventory_hostname]["ledger_path"] }}{% endif %}",
