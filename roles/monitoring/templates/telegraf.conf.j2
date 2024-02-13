@@ -66,28 +66,6 @@
 
   json_time_format = "unix_ms"
 
-[[inputs.exec]]
-  commands = [
-               "sudo -i -u {{ solana_user }} {{ solana_home }}/monitoring/output_starter.sh output_tds_measurements"
-             ]
-  interval = "10m"
-  timeout = "30s"
-  json_name_key = "measurement"
-  json_time_key = "time"
-  tag_keys = ["tags_validator_name",
-              "tags_validator_identity_pubkey",
-              "tags_validator_vote_pubkey",
-              "tags_cluster_environment",
-              "validator_id",
-              "validator_name"]
-
-  json_string_fields = [
-            "validator_identity_pubkey",
-            "cluster_environment"]
-
-  json_time_format = "unix_ms"
-
-
 ##OUTPUTS
 [[outputs.influxdb]]
   database = "{{ telegraf_database }}"
