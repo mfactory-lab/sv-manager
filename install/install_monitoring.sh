@@ -44,6 +44,9 @@ install_monitoring () {
   $pkg_manager update
   echo "### Install ansible, curl, unzip... ###"
   $pkg_manager install ansible curl unzip --yes
+  
+  # fix for eventually hanging of pip
+  export PYTHON_KEYRING_BACKEND=keyring.backends.null.Keyring
 
   ansible-galaxy collection install ansible.posix
   ansible-galaxy collection install community.general
