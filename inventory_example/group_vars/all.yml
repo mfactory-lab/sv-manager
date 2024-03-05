@@ -17,7 +17,7 @@ flat_path: True
 incremental_snapshot_interval_slots: 2500
 ledger_path: "{{ mount_base_path }}/ledger"
 local_secrets_path: '../.secrets'
-log_level: "WARN"
+log_level: "INFO"
 lvm_enabled: False
 lvm_log_volume_size: '25G'
 lvm_vg: 'vg00'
@@ -58,3 +58,4 @@ sysctl_params:
   - 'net.core.rmem_default=134217728'
   - 'net.core.rmem_max=134217728'
   - 'fs.nr_open=1000000'
+  - 'vm.swappiness=5'
