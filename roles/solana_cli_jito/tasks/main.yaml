@@ -76,6 +76,16 @@
     - cli
     - cli.install
 
+- name: Create solana path profile file
+  template:
+    src: solana.sh
+    dest: /etc/profile.d/solana.sh
+    mode: 0766
+    owner: root
+    group: root
+  tags:
+    cli.solana-path.profile
+
 #- name: "Add {{ solana_bin_path }}/active_release/bin to PATH if does not exist"
 #  lineinfile:
 #    path: /etc/environment
