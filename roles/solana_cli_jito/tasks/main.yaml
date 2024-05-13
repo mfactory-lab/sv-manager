@@ -80,7 +80,7 @@
   template:
     src: solana.sh
     dest: /etc/profile.d/solana.sh
-    mode: 0766
+    mode: 0644
     owner: root
     group: root
   tags:
