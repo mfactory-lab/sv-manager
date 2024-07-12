@@ -11,7 +11,11 @@ User={{ solana_user }}
 LimitNOFILE=1000000
 Environment="PATH=/bin:/usr/bin:{{ env_path }}"
 Environment="SOLANA_METRICS_CONFIG=host={{ solana_metrics_url }}"
+{% if agave is defined and agave %}
+ExecStart={{ env_path }}/agave-validator \
+{% else %}
 ExecStart={{ env_path }}/solana-validator \
+{% endif %}
 --identity {{ secrets_path }}/validator-keypair.json \
 {% if not rpc_node %}
 --vote-account {{ secrets_path }}/vote-account-keypair.json \
@@ -50,6 +54,15 @@ ExecStart={{ env_path }}/solana-validator \
 --ledger {{ ledger_path }} \
 --accounts {{ accounts_path }} \
 --snapshots {{ snapshots_path }} \
+{% if jito is defined and jito %}
+--relayer-url http://frankfurt.mainnet.relayer.jito.wtf:8100 \
+--block-engine-url https://frankfurt.mainnet.block-engine.jito.wtf \
+--shred-receiver-address 145.40.93.84:1002 \
+--tip-payment-program-pubkey T1pyyaTNZsKv2WcRAB8oVnk93mLJw2XzjtVYqCsaHqt \
+--tip-distribution-program-pubkey 4R3gSG8BpU4t19KYj8CfnbtRpnT8gtk4dvTHxVRwc2r7 \
+--merkle-root-upload-authority GZctHpWXmsZC1YHACTGGcHhYxjdRqQvTpYkb9LMvxDib \
+--commission-bps 800 \
+{% endif %}
 --dynamic-port-range {{ open_solana_ports_start }}-{{ open_solana_ports_end }}
 
 

@@ -19,5 +19,7 @@ solana_metrics_url: 'https://metrics.solana.com:8086,db=mainnet-beta,u=mainnet-b
 expected_genesis_hash: '5eykt4UsFv8P8NJdTREpY1vzqKqZKvdpKuc147dw2N9d'
 limit_ledger_size: 50000000
 maximum_local_snapshot_age: 2000
-solana_version: 1.17.28
+solana_version: 1.18.18
+jito_version: 1.18.15
+agave_version: 2.0.2 
 extra_params:
