@@ -1,4 +1,11 @@
 ---
+- name: Remove old service file
+  file:
+    path: /etc/systemd/system/solana-validator.service
+    state: absent
+  tags:
+    - validator.service.solana
+
 - name: Create solana validator service
   template:
     src: solana-validator.service.j2
