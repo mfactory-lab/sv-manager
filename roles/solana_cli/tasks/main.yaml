@@ -16,7 +16,7 @@
 
 - name: check solana cli installed
   stat:
-    path: "{{ solana_bin_path }}/releases/{% if solana_version is defined %}{{ solana_version }}{% else %}stable{% endif %}/solana_release/bin/solana-install"
+    path: "{{ solana_bin_path }}/releases/{% if solana_version is defined %}{{ solana_version }}{% else %}stable{% endif %}/solana_release/bin/agave-install"
   register: solana_exists
   tags:
     - cli

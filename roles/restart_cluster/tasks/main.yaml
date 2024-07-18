@@ -14,7 +14,7 @@
     - validator.cluster.restart.stop
 
 - name: "install solana {{ solana_version }}"
-  shell: solana-install init {{ solana_version }}
+  shell: agave-install init {{ solana_version }}
   environment:
     PATH: "{{ env_path }}/active_release/bin"
   become: yes

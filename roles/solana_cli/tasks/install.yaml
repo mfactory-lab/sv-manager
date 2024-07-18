@@ -12,7 +12,7 @@
   block:
     - name: download latest solana release installer
       get_url:
-        url: "https://release.solana.com/{% if solana_version is defined %}v{{ solana_version }}{% else %}stable{% endif %}/install"
+        url: "https://release.anza.xyz/v{{ solana_version | default('stable') }}/install"
         dest: /tmp/solana/
         mode: 0755
 
