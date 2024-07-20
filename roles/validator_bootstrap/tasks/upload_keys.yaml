@@ -1,7 +1,7 @@
 ---
 - name: "Upload keys: Build keys path"
   set_fact:
-    secrets_local_path: "{% if flat_path|bool %}{{ local_secrets_path }}{% else %}{{ local_secrets_path }}/{{ validator_name }}/solana{% endif %}"
+    secrets_local_path: "{% if flat_path|bool %}{{ local_secrets_path }}{% else %}{{ local_secrets_path }}/{{ validator_name }}/secrets{% endif %}"
 
 #- name: "Upload keys: Check validator-keypair exists locally"
 #  stat:

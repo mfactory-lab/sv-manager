@@ -5,6 +5,7 @@
   become: yes
   vars_files:
     - "{{ sv_manager_config_path }}"
+    - ../vars/{{ val_prj }}.yaml
   roles:
     - vars_shortcode_mapping
     - name: validator_cli

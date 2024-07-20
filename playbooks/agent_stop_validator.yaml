@@ -1,6 +1,6 @@
 ---
 
-- name: stop solana validator
+- name: stop validator
   hosts: all
   become: yes
   tags:

@@ -3,5 +3,7 @@
 - name: repair cluster
   hosts: all
   become: yes
+  vars_files:
+    - ../vars/{{ val_prj }}.yaml
   roles:
     - repair_cluster

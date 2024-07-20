@@ -1,3 +1,4 @@
-binary_name: solana-validator
-install_binary_url: "https://raw.githubusercontent.com/jito-foundation/jito-solana/lb/v{{ validator_version }}-jito/install/solana-install-init.sh"
+validator_binary: solana-validator
+validator_install_binary: solana-install
+install_script_url: "https://raw.githubusercontent.com/jito-foundation/jito-solana/lb/v{{ validator_version }}-jito/install/solana-install-init.sh"
 jito_validator: true

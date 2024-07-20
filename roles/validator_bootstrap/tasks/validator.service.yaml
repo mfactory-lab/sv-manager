@@ -1,0 +1,51 @@
+---
+- name: Remove validator systemd service unit file
+  file:
+    path: "/etc/systemd/system/{{ validator_binary }}.service"
+    state: absent
+  tags:
+    - validator.service
+
+- name: Create validator service
+  template:
+    src: validator.service.j2
+    dest: "/lib/systemd/system/{{ validator_binary }}.service"
+    mode: 0644
+    owner: root
+    group: root
+  tags:
+    - validator.service
+
+- name: Add default environments file
+  template:
+    src: validator-env.j2
+    dest: /etc/default/validator-env
+    mode: 0644
+    owner: root
+    group: root
+  tags:
+    - validator-env.service
+
+- name: Reload systemd
+  systemd:
+    daemon_reload: yes
+  tags:
+    - validator.service
+
+- name: Enable validator service
+  systemd:
+    name: "{{ validator_binary }}"
+    enabled: yes
+  tags:
+    - validator.service
+
+- name: Start validator service
+  systemd:
+    name: "{{ validator_binary }}"
+    state: "{{ item }}"
+  with_items:
+    - "started"
+    - "restarted"
+  tags:
+    - validator.service
+

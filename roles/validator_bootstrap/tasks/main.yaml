@@ -44,10 +44,10 @@
   tags:
     - validator.snapshot.load
 
-- name: Create solana validator service
-  import_tasks: solana-validator.service.yaml
+- name: Create validator service
+  import_tasks: validator.service.yaml
   tags:
-    - validator.service.solana
+    - validator.service
 
 # - name: Set validator info
 #   import_tasks: validator_info.yaml

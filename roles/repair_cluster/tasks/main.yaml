@@ -4,17 +4,17 @@
   include_vars:
     file: "{{ sv_manager_config_path }}"
 
-- name: stop solana validator service
+- name: stop validator service
   systemd:
-    name: solana-validator
+    name: "{{ validator_binary }}"
     state: stopped
   tags:
     - validator.cluster.repair
     - validator.cluster.repair.service
     - validator.cluster.repair.service.stop
 
-- name: "install solana {{ validator_version }}"
-  shell: solana-install init {{ validator_version }}
+- name: "install validator {{ validator_version }}"
+  shell: "{{ validator_install_binary }} init -d {{ validator_bin_path }} {{ validator_version }}"
   environment:
     PATH: "{{ env_path }}/active_release/bin"
   become: yes

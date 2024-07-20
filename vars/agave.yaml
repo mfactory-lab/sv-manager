@@ -1,3 +1,4 @@
-validator_binary_name: agave-validator
-install_binary_url: "https://release.anza.xyz/{% if validator_version is defined %}v{{ validator_version }}{% else %}stable{% endif %}/install"
+validator_binary: agave-validator
+validator_install_binary: agave-install
+install_script_url: "https://release.anza.xyz/{% if validator_version is defined %}v{{ validator_version }}{% else %}stable{% endif %}/install"
 agave_validator: true
