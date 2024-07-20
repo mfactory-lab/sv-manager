@@ -7,7 +7,7 @@ StartLimitIntervalSec=0
 Type=simple
 Restart=always
 RestartSec=1
-User={{ solana_user }}
+User={{ validator_user }}
 LimitNOFILE=1024000
 Environment="PATH=/bin:/usr/bin:{{ env_path }}"
 Environment="SOLANA_METRICS_CONFIG=host=https://metrics.solana.com:8086,db=tds,u=testnet_write,p=c4fa841aa918bf8274e3e2a44d77568d9861b3ea"
@@ -15,7 +15,7 @@ Environment="RUST_LOG={{ log_level }}"
 ExecStart={{ env_path }}/solana-validator \
 --identity {{ secrets_path }}/validator-keypair.json \
 --vote-account {{ secrets_path }}/vote-account-keypair.json \
---rpc-port {{ solana_rpc_port }} \
+--rpc-port {{ validator_rpc_port }} \
 --wait-for-supermajority 95038710 \
 --no-snapshot-fetch \
 --no-genesis-fetch \
@@ -37,7 +37,7 @@ ExecStart={{ env_path }}/solana-validator \
 --accounts {{ accounts_path }} \
 --accounts-db-caching-enabled \
 --snapshots {{ snapshots_path }} \
---dynamic-port-range {{ open_solana_ports_start }}-{{ open_solana_ports_end }}
+--dynamic-port-range {{ open_validator_ports_start }}-{{ open_validator_ports_end }}
 
 
 [Install]

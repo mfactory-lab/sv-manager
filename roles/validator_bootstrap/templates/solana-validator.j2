@@ -1,0 +1,59 @@
+# /etc/default/solana-validator
+#
+# Environment file for solana validator systemd unit files.
+#
+
+VALIDATOR_EXTRA_ARGS="--identity {{ secrets_path }}/validator-keypair.json \
+--only-known-rpc \
+{% if jito_validator %}
+--tip-payment-program-pubkey T1pyyaTNZsKv2WcRAB8oVnk93mLJw2XzjtVYqCsaHqt \
+--tip-distribution-program-pubkey 4R3gSG8BpU4t19KYj8CfnbtRpnT8gtk4dvTHxVRwc2r7 \
+--merkle-root-upload-authority GZctHpWXmsZC1YHACTGGcHhYxjdRqQvTpYkb9LMvxDib \
+--commission-bps {{ jito_commission_bps }} \
+--relayer-url {{ jito_urls.get(jito_urls_site).relayer }} \
+--block-engine-url {{ jito_urls.get(jito_urls_site).block_engine }} \
+--shred-receiver-address {{ jito_urls.get(jito_urls_site).shred_receiver_addr }} \
+{% endif %}
+{% if not rpc_node %}
+--vote-account {{ secrets_path }}/vote-account-keypair.json \
+{% endif %}
+--rpc-port {{ validator_rpc_port }} \
+--full-rpc-api \
+{% if not extra_params is none %}
+{% for extra_var in extra_params %}
+{{ extra_var }} \
+{% endfor %}
+{% endif %}
+{% for entrypoint in entrypoints %}
+--entrypoint {{ entrypoint }} \
+{% endfor %}
+{% for known_validator in known_validators %}
+--known-validator {{ known_validator }} \
+{% endfor %}
+{% if 'mainnet_validators' in group_names and not rpc_node %}
+--private-rpc \
+--rpc-bind-address 127.0.0.1 \
+--wal-recovery-mode skip_any_corrupted_record \
+{% endif %}
+{% if rpc_node %}
+--no-voting \
+--account-index program-id \
+--no-duplicate-instance-check \
+{% if index_excluded_keys is defined %}
+{% for key in index_excluded_keys %}
+--account-index-exclude-key {{ key }} \
+{% endfor %}
+{% endif %}
+--accounts-index-memory-limit-mb 350 \
+{% endif %}
+--full-snapshot-interval-slots 50000 \
+--incremental-snapshot-interval-slots 5000 \
+--maximum-full-snapshots-to-retain 1 \
+--maximum-incremental-snapshots-to-retain 2 \
+--limit-ledger-size {{ limit_ledger_size }} \
+--log {{ validator_log_path }}/solana-validator.log \
+--ledger {{ ledger_path }} \
+--accounts {{ accounts_path }} \
+--accounts-hash-cache-path {{ accounts_hash_cache_path }} \
+--snapshots {{ snapshots_path }} \
+--dynamic-port-range {{ open_validator_ports_start }}-{{ open_validator_ports_end }}"

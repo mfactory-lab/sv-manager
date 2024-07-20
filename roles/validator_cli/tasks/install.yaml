@@ -1,0 +1,34 @@
+---
+- name: "{{ role_path|basename }} | create download dir"
+  file:
+    path: "/tmp/{{ validator_binary_name }}"
+    state: directory
+    owner: "{{ validator_user }}"
+    group: "{{ validator_user }}"
+  tags:
+    - cli.install
+
+- name: "{{ role_path|basename }} | install validator"
+  block:
+    - name: download latest solana release installer
+      get_url:
+        url: "{{ install_binary_url }}"
+        dest: "/tmp/{{ validator_binary_name }}/install"
+        mode: 0755
+
+    - name: run validator installer
+      shell: "/tmp/{{ validator_binary_name }}/install -d {{ validator_bin_path }} {% if validator_version is defined %}v{{ validator_version }}{% else %}stable{% endif %}"
+  become: yes
+  become_user: "{{ validator_user }}"
+  tags:
+    - cli.install
+
+- name: "{{ role_path|basename }} | remove installer"
+  file:
+    path: "/tmp/{{ validator_binary_name }}"
+    state: absent
+  tags:
+    - cli.install
+
+
+

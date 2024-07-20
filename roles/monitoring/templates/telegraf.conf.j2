@@ -29,7 +29,7 @@
 [[inputs.nstat]]
 
 [[inputs.procstat]]
- pattern="{{ solana_user }}"
+ pattern="{{ validator_user }}"
 
 [[inputs.system]]
 
@@ -43,7 +43,7 @@
 
 [[inputs.exec]]
   commands = [
-               "{{ solana_home }}/monitoring/output_starter.sh output_validator_measurements"
+               "{{ validator_home }}/monitoring/output_starter.sh output_validator_measurements"
              ]
   interval = "30s"
   timeout = "30s"
@@ -68,7 +68,7 @@
 
 [[inputs.exec]]
   commands = [
-               "{{ solana_home }}/monitoring/output_starter.sh output_tds_measurements"
+               "{{ validator_home }}/monitoring/output_starter.sh output_tds_measurements"
              ]
   interval = "10m"
   timeout = "30s"

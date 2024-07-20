@@ -1,36 +1,24 @@
 ---
-- name: Configure and install solana validator
+- name: "Configure and install {{ val_prj }} validator"
   hosts: all
   become: yes
-  vars:
-    jito_validator: false
+  vars_files:
+    - ../vars/{{ val_prj }}.yaml
   roles:
     - vars_shortcode_mapping
-    - solana_config
-    - name: solana_validator_stop
-      tags:
-        - solana.stop
-      when: not jito_validator|bool
+    - validator_config
     - name: configure_ubuntu
       tags:
         - configure.os
-    - name: solana_cli
+    - name: validator_cli
       tags:
         - cli
         - cli.install
         - cli.update
-      when: not jito_validator|bool
-    - name: solana_cli_jito
+    - name: validator_service_stop
       tags:
-        - cli
-        - cli.install
-        - cli.update
-      when: jito_validator|bool
-    - name: solana_validator_stop
-      tags:
-        - solana.stop
-      when: jito_validator|bool
-    - name: solana_validator_bootstrap
+        - validator.stop
+    - name: validator_bootstrap
       tags:
         - validator_bootstrap
     - monitoring

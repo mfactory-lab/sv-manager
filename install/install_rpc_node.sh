@@ -70,7 +70,7 @@ install_rpc () {
 
   if [ ! -z $solana_version ]
   then
-    SOLANA_VERSION="--extra-vars {\"solana_version\":\"$solana_version\"}"
+    SOLANA_VERSION="--extra-vars {\"validator_version\":\"$solana_version\"}"
   fi
   if [ ! -z $extra_vars ]
   then

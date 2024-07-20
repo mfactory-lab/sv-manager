@@ -69,7 +69,7 @@
     - "'local' not in group_names"
 
 - name: Create solana user
-  import_tasks: solana_user.yaml
+  import_tasks: validator_user.yaml
   tags:
-    - config.solana_user
+    - config.validator_user
     - validator.service.solana

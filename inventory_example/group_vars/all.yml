@@ -7,14 +7,14 @@ old_swap_file: "/mnt/swap/swapfile"
 old_ramdisk_path: /mnt/ramdisk
 
 # users:
-solana_user: 'solana'
+validator_user: 'solana'
 ansible_user: 'root'
 
 #all:
 accounts_path: "{{ mount_base_path }}/accounts"
 accounts_hash_cache_path: "{{ ramdisk_path }}/accounts_hash_cache"
 use_firewall: True
-env_path: "{{ solana_app_path }}/active_release/bin"
+env_path: "{{ validator_app_path }}/active_release/bin"
 fail_if_no_validator_keypair: True
 flat_path: True
 ledger_path: "{{ mount_base_path }}/ledger"
@@ -26,18 +26,18 @@ lvm_vg: 'vg00'
 mount_base_path: '/mnt/solana'
 max_delinquent_stake: 15
 name: "{{ inventory_hostname }}"
-open_solana_ports_start: 8000
-open_solana_ports_end: 10000
+open_validator_ports_start: 8000
+open_validator_ports_end: 10000
 ramdisk_path: "{{ mount_base_path }}/ramdisk"
 ramdisk_size_gb: 0
 rpc_node: False
 set_validator_info: False
-secrets_path: "{{ solana_home }}/.secrets"
+secrets_path: "{{ validator_home }}/.secrets"
 snapshots_path: "{{ mount_base_path }}/snapshots"
-solana_home: "/home/{{ solana_user }}"
-solana_app_path: "{{ solana_home }}/app"
-solana_rpc_port: 8899
-solana_gossip_port: 8001
+validator_home: "/home/{{ validator_user }}"
+validator_app_path: "{{ validator_home }}/app"
+validator_rpc_port: 8899
+validator_gossip_port: 8001
 swap_file_size_gb: 64
 upload_validator_keys: True
 validator_name: "{{ inventory_hostname }}"
@@ -88,6 +88,8 @@ sysctl_params:
   vm.dirty_expire_centisecs: 36000
   vm.dirty_writeback_centisecs: 3000
   vm.dirtytime_expire_seconds: 43200
+
+agave_validator: false
 
 jito_validator: false
 jito_urls_site: "newyork"

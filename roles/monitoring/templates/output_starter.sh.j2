@@ -1,6 +1,6 @@
 #!/bin/bash
 
-result=$(timeout -k 50 45 python3 "{{ solana_home }}/monitoring/$1.py")
+result=$(timeout -k 50 45 python3 "{{ validator_home }}/monitoring/$1.py")
 
 if [ -z "${result}" ]
 then

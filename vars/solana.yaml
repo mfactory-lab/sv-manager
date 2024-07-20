@@ -1,0 +1,4 @@
+binary_name: solana-validator
+install_binary_url: "https://release.solana.com/{% if validator_version is defined %}v{{ validator_version }}{% else %}stable{% endif %}/install"
+agave_validator: false
+jito_validator: false

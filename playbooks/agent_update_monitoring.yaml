@@ -3,6 +3,6 @@
   hosts: all
   become: yes
   roles:
-    - solana_config_load
+    - validator_config_load
     - vars_shortcode_mapping
     - monitoring

@@ -7,4 +7,4 @@
     - validator.cluster.restart
   roles:
     - vars_shortcode_mapping
-    - solana_validator_restart
+    - validator_restart

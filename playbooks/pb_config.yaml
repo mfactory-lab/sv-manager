@@ -3,4 +3,4 @@
   hosts: all
   become: yes
   roles:
-    - solana_config
+    - validator_config

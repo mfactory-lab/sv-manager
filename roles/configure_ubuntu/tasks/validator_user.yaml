@@ -1,0 +1,91 @@
+---
+- name: Ensure group solana exists
+  ansible.builtin.group:
+    name: "{{ validator_user }}"
+    state: present
+
+- name: Create user solana
+  user:
+    name: "{{ validator_user }}"
+    state: present
+    create_home: yes
+    shell: /bin/bash
+    skeleton: /etc/skel
+    force: yes
+    groups:
+      - "{{ validator_user }}"
+      - syslog
+  tags:
+    - config.validator_user
+    - validator.service.solana
+
+- name: Create secrets dir
+  become: yes
+  become_user: "{{ validator_user }}"
+  file:
+    path: "{{ secrets_path }}"
+    state: directory
+    mode: '0700'
+  tags:
+    - config.validator_user
+    - validator.service.solana
+
+- name: Create ledger directory
+  become: yes
+  file:
+    path: "{{ ledger_path }}"
+    owner: "{{ validator_user }}"
+    group: "{{ validator_user }}"
+    state: directory
+    mode: '0755'
+  tags:
+    - config.validator_user
+    - validator.service.solana
+
+- name: Create accounts directory
+  become: yes
+  file:
+    path: "{{ accounts_path }}"
+    owner: "{{ validator_user }}"
+    group: "{{ validator_user }}"
+    state: directory
+    mode: '0755'
+  tags:
+    - config.validator_user
+    - validator.service.solana
+
+- name: Create accounts hash cache directory
+  become: yes
+  file:
+    path: "{{ accounts_hash_cache_path }}"
+    owner: "{{ validator_user }}"
+    group: "{{ validator_user }}"
+    state: directory
+    mode: '0755'
+  tags:
+    - config.validator_user
+    - validator.service.solana
+
+- name: Create snapshots directory
+  become: yes
+  file:
+    path: "{{ snapshots_path }}"
+    owner: "{{ validator_user }}"
+    group: "{{ validator_user }}"
+    state: directory
+    mode: '0755'
+  tags:
+    - config.validator_user
+    - validator.service.solana
+
+- name: Create logs directory
+  become: yes
+  file:
+    path: "{{ validator_log_path }}"
+    owner: "{{ validator_user }}"
+    group: "{{ validator_user }}"
+    state: directory
+    mode: '0755'
+  tags:
+    - config.validator_user
+    - validator.service.solana

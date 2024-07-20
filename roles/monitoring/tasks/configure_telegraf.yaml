@@ -11,12 +11,12 @@
   tags:
     - telegraf.configure
 
-- name: Allow 'telegraf' user to run solana scripts
+- name: Allow 'telegraf' user to run validator scripts
   lineinfile:
     path: /etc/sudoers
     state: present
     regexp: '^telegraf'
-    line: "telegraf ALL=({{ solana_user }}:{{ solana_user }}) NOPASSWD:ALL"
+    line: "telegraf ALL=({{ validator_user }}:{{ validator_user }}) NOPASSWD:ALL"
     validate: 'visudo -cf %s'
   tags:
     - telegraf.configure
@@ -28,7 +28,7 @@
   tags:
     - telegraf.configure
 
-- name: Add solana bin path for telegraf unit file
+- name: Add validator bin path for telegraf unit file
   template:
     src: 01-telegraf.conf.j2
     dest: /etc/systemd/system/telegraf.service.d/01-telegraf.conf

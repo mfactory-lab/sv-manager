@@ -1,0 +1,14 @@
+- name: Load config
+  include_vars:
+    file: "{{ sv_manager_config_path }}"
+  become: yes
+
+- name: List all vars
+  debug:
+    var: hostvars[inventory_hostname]
+
+
+- name: Simulate long running op (15 sec), wait for up to 45 sec, poll every 5 sec
+  shell: /bin/sleep 60
+  async: "{{ wait_for_window_timeout }}"
+  poll: 5

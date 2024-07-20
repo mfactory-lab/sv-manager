@@ -1,0 +1,30 @@
+---
+
+- name: "{{ role_path|basename }} | Load config"
+  include_vars:
+    file: "{{ sv_manager_config_path }}"
+  become: yes
+
+- name: "{{ role_path|basename }} | wait for restarting window"
+  import_tasks: wait_for_restart_window.yaml
+  tags:
+    - validator.manage.stop
+
+#- name: stop sys_tuner-service
+#  systemd:
+#    name: solana-sys-tuner
+#    state: stopped
+#  tags:
+#    - validator.manage.stop.service
+#    - validator.manage.stop
+
+- name: "{{ role_path|basename }} | stop validator service"
+  systemd:
+    name: "{{ binary_name }}"
+    state: stopped
+  ignore_errors: True
+  tags:
+    - validator.manage.stop.service
+    - validator.manage.stop
+
+

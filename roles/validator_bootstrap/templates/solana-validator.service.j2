@@ -1,0 +1,20 @@
+[Unit]
+Description=Solana {{ cluster_environment }} node
+After=network.target syslog.target
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=1
+User={{ validator_user }}
+TimeoutStopSec=180
+LimitNOFILE=infinity
+Environment="PATH=/bin:/usr/bin:{{ env_path }}"
+Environment="RUST_LOG={{ log_level }}"
+Environment="SOLANA_METRICS_CONFIG=host={{ validator_metrics_url }}"
+EnvironmentFile=-/etc/default/solana-validator
+ExecStart={{ env_path }}/{{ validator_binary_name }} $VALIDATOR_EXTRA_ARGS $REPAIR_CLUSTER_ARGS
+
+[Install]
+WantedBy=multi-user.target

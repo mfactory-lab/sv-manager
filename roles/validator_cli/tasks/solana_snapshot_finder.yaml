@@ -1,0 +1,34 @@
+---
+
+- name: "{{ role_path|basename }} | get validator snapshot finder"
+  copy:
+    src: files/solana-snapshot-finder
+    dest: "{{ validator_home }}/solana-snapshot-finder"
+    owner: "{{ validator_user }}"
+    group: "{{ validator_user }}"
+    mode: 0755
+  tags:
+    - cli
+    - cli.snapshot-finder
+
+#- name: cli | add python env in solana-snapshot-finder file
+#  lineinfile:
+#    path: "{{ env_path }}/solana-snapshot-finder"
+#    insertbefore: BOF
+#    line: "#!/usr/bin/env python3"
+#  tags:
+#    - cli
+#    - cli.snapshot-finder
+
+- name: "{{ role_path|basename }} | install requirements"
+  pip:
+    name:
+      - requests
+      - tqdm
+    executable: pip3
+  async: 360
+  poll: 5
+  tags:
+    - cli
+    - cli.snapshot-finder
+

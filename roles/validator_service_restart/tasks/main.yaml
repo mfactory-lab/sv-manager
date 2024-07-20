@@ -1,0 +1,41 @@
+---
+
+- name: "{{ role_path|basename }} | Load config"
+  include_vars:
+    file: "{{ sv_manager_config_path }}"
+  become: yes
+
+- name: "{{ role_path|basename }} | wait for restarting window"
+  import_tasks: wait_for_restart_window.yaml
+  tags:
+    - validator.manage.restart
+
+#- name: restart sys_tuner-service
+#  systemd:
+#    name: solana-sys-tuner
+#    state: restarted
+#  tags:
+#    - validator.manage.restart.service
+#    - validator.manage.restart
+
+- name: "{{ role_path|basename }} | stop solana validator service"
+  systemd:
+    name: "{{ validator_binary_name }}"
+    state: stopped
+  tags:
+    - validator.manage.restart.service
+    - validator.manage.restart
+
+#- name: run snapshot finder
+#  import_tasks: with_snapshot_finder.yaml
+#  when: with_snapshot_finder
+#  tags:
+#    - validator.manage.restart
+
+- name: "{{ role_path|basename }} | start solana validator service"
+  systemd:
+    name: "{{ validator_binary_name }}"
+    state: started
+  tags:
+    - validator.manage.restart.service
+    - validator.manage.restart

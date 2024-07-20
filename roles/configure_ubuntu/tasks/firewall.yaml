@@ -22,8 +22,8 @@
     port: '{{ item }}'
   loop:
     - "ssh"
-    - "{{ solana_rpc_port }}"
-    - "{{ open_solana_ports_start }}:{{ open_solana_ports_end }}"
+    - "{{ validator_rpc_port }}"
+    - "{{ open_validator_ports_start }}:{{ open_validator_ports_end }}"
   tags:
     - config.firewall
 
@@ -32,7 +32,7 @@
     rule: allow
     proto: udp
     direction: in
-    port: '{{ open_solana_ports_start }}:{{ open_solana_ports_end }}'
+    port: '{{ open_validator_ports_start }}:{{ open_validator_ports_end }}'
   tags:
     - config.firewall
 

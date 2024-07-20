@@ -1,0 +1,24 @@
+---
+- name: clear ledger directory
+  file:
+    path: "{{ ledger_path }}"
+    state: "{{ item }}"
+    mode: '0755'
+  with_items:
+    - absent
+    - directory
+  ignore_errors: True
+  when: with_snapshot_finder
+  tags:
+    - validator.manage.restart.snapshot.finder
+
+- name: run snapshot finder
+  become: yes
+  become_user: "{{ validator_user }}"
+  shell: "solana-snapshot-finder --snapshot-path {{ snapshots_path }} -r {{ cluster_rpc_address }}"
+  environment:
+    PATH: "{{ env_path }}"
+  ignore_errors: True
+  when: with_snapshot_finder
+  tags:
+    - validator.manage.restart.snapshot.finder

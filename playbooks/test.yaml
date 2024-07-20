@@ -1,0 +1,12 @@
+---
+- name: install or update config file
+  hosts: all
+  become: yes
+  vars_files:
+    - ../vars/{{ val_prj }}.yaml
+  vars:
+    ansible_python_interpreter: "{{ ansible_playbook_python }}"
+  tasks:
+    - name: test
+      debug:
+        var: validator_binary_name

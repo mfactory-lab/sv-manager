@@ -1,4 +1,4 @@
-# Solana Validator Manager
+# Validators Manager
 
 ### Automatically bootstrap a Solana validator node, optimize its performance, and connect the node to a monitoring dashboard
 

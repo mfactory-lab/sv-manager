@@ -10,7 +10,7 @@
 
 [[inputs.exec]]
   commands = [
-               "sudo -i -u {{ solana_user }} {{ solana_home }}/monitoring/output_starter.sh output_validators"
+               "sudo -i -u {{ validator_user }} {{ validator_home }}/monitoring/output_starter.sh output_validators"
              ]
   interval = "30s"
   timeout = "30s"
@@ -29,7 +29,7 @@
 
 [[inputs.exec]]
   commands = [
-               "sudo -i -u {{ solana_user }} {{ solana_home }}/monitoring/output_starter.sh output_gossip"
+               "sudo -i -u {{ validator_user }} {{ validator_home }}/monitoring/output_starter.sh output_gossip"
              ]
   interval = "3600s"
   timeout = "3600s"
@@ -47,7 +47,7 @@
 
 [[inputs.exec]]
   commands = [
-               "sudo -i -u {{ solana_user }} {{ solana_home }}/monitoring/output_starter.sh output_validators_info"
+               "sudo -i -u {{ validator_user }} {{ validator_home }}/monitoring/output_starter.sh output_validators_info"
              ]
   interval = "120s"
   timeout = "120s"

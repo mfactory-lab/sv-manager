@@ -4,5 +4,5 @@
   become: yes
   roles:
     - vars_shortcode_mapping
-    - solana_config_load
+    - validator_config_load
     - monitoring

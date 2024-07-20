@@ -6,6 +6,6 @@
   tags:
     - validator.cluster.stop
   roles:
-    - solana_config_load
+    - validator_config_load
     - vars_shortcode_mapping
-    - solana_validator_stop
+    - validator_stop

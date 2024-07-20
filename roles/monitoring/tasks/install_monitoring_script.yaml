@@ -11,16 +11,16 @@
 
 - name: Delete script folder
   file:
-    path: "{{ solana_home }}/monitoring"
+    path: "{{ validator_home }}/monitoring"
     state: absent
   tags:
     monitoring.script     
 
 - name: Create script folder
   file:
-    path: "{{ solana_home }}/monitoring"
-    owner: "{{ solana_user }}"
-    group: "{{ solana_user }}"
+    path: "{{ validator_home }}/monitoring"
+    owner: "{{ validator_user }}"
+    group: "{{ validator_user }}"
     mode: 0755
     state: directory
   tags:
@@ -38,8 +38,8 @@
     path: "{{ secrets_path }}"
     state: directory
     mode: 0755
-    owner: "{{ solana_user }}"
-    group: "{{ solana_user }}"
+    owner: "{{ validator_user }}"
+    group: "{{ validator_user }}"
   when: not secrets_path_exists.stat.exists
   tags:
     monitoring.script
@@ -49,8 +49,8 @@
     src: "{{ local_secrets_path }}/{{ item }}"
     dest: "{{ secrets_path }}"
     mode: 0400
-    owner: "{{ solana_user }}"
-    group: "{{ solana_user }}"
+    owner: "{{ validator_user }}"
+    group: "{{ validator_user }}"
     force: false
   with_items:
     - "validator-keypair.json"
@@ -63,9 +63,9 @@
 - name: Upload monitoring library
   copy:
     src: "files/{{ item }}"
-    dest: "{{ solana_home }}/monitoring/{{ item }}"
-    owner: "{{ solana_user }}"
-    group: "{{ solana_user }}"
+    dest: "{{ validator_home }}/monitoring/{{ item }}"
+    owner: "{{ validator_user }}"
+    group: "{{ validator_user }}"
     mode: 0644
   with_items:
     - "cluster_monitoring_library.py"
@@ -89,9 +89,9 @@
 - name: Upload monitoring script starter
   template:
     src: output_starter.sh.j2
-    dest: "{{ solana_home }}/monitoring/output_starter.sh"
-    owner: "{{ solana_user }}"
-    group: "{{ solana_user }}"
+    dest: "{{ validator_home }}/monitoring/output_starter.sh"
+    owner: "{{ validator_user }}"
+    group: "{{ validator_user }}"
     mode: 0755
   tags:
     - monitoring.script
@@ -100,9 +100,9 @@
 - name: Upload config script
   template:
     src: monitoring_config.py.j2
-    dest: "{{ solana_home }}/monitoring/monitoring_config.py"
-    owner: "{{ solana_user }}"
-    group: "{{ solana_user }}"
+    dest: "{{ validator_home }}/monitoring/monitoring_config.py"
+    owner: "{{ validator_user }}"
+    group: "{{ validator_user }}"
     mode: 0644
   tags:
     - monitoring.script

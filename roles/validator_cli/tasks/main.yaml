@@ -1,0 +1,59 @@
+---
+
+- name: "{{ role_path|basename }} | set force install fact"
+  set_fact:
+    force: "{{ force | default('false')  }}"
+    validator_bin_path: "{{ validator_app_path }}"
+  tags:
+    - cli
+    - cli.install
+    - cli.update
+
+- name: "{{ role_path|basename }} | Load config"
+  include_vars:
+    file: "{{ sv_manager_config_path }}"
+  become: yes
+
+- name: "{{ role_path|basename }} | check validator cli installed"
+  stat:
+    path: "{{ validator_bin_path }}/releases/{% if validator_version is defined %}{{ validator_version }}{% else %}stable{% endif %}/solana_release/bin/solana-install"
+  register: validator_exists
+  tags:
+    - cli
+    - cli.install
+    - cli.update
+
+- name: "{{ role_path|basename }} | install solana cli"
+  import_tasks: install.yaml
+  tags:
+    - cli
+    - cli.install
+  when: force == 'true' or not validator_exists.stat.exists
+
+- name: "{{ role_path|basename }} | update solana cli"
+  import_tasks: update.yaml
+  tags:
+    - cli
+    - cli.update
+  when: force != 'true' and validator_exists.stat.exists
+
+- name: "{{ role_path|basename }} | install solana-snapshot-finder"
+  import_tasks: solana_snapshot_finder.yaml
+  tags:
+    - cli
+    - cli.snapshot-finder
+  when: with_snapshot_finder
+
+#- name: "Add {{ validator_bin_path }}/active_release/bin to PATH if does not exist"
+#  lineinfile:
+#    path: /etc/environment
+#    line: 'PATH="$PATH:{{ validator_bin_path }}/active_release/bin"'
+#    insertafter: EOF
+#  when: lookup('file', '/etc/environment') is not search('^\s*PATH\s*=')
+#
+#- name: 'Add {{ validator_bin_path }}/active_release/bin to PATH'
+#  lineinfile:
+#    path: /etc/environment
+#    regexp: 'PATH=(["])((?!.*?{{ validator_bin_path }}/active_release/bin).*?)(["])$'
+#    line: 'PATH=\1\2:{{ validator_bin_path }}/active_release/bin\3'
+#    backrefs: yes

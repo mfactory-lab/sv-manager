@@ -1,5 +1,5 @@
 ---
-- name: update solana validator
+- name: update validator
   hosts: all
   serial: 1
   become: yes
@@ -7,16 +7,9 @@
     - "{{ sv_manager_config_path }}"
   roles:
     - vars_shortcode_mapping
-    - name: solana_cli
+    - name: validator_cli
       tags:
         - cli
         - cli.install
         - cli.update
-      when: not jito_validator|bool
-    - name: solana_cli_jito
-      tags:
-        - cli
-        - cli.install
-        - cli.update
-      when: jito_validator|bool
-    - solana_validator_restart
+    - validator_restart

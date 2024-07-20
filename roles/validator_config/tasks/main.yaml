@@ -1,0 +1,48 @@
+---
+
+- name: "{{ role_path|basename }} | ensure directory exists"
+  file:
+    path: "/etc/sv_manager"
+    state: directory
+    mode: '0755'
+
+- name: "{{ role_path|basename }} | Check if config file exists"
+  stat:
+    path: "{{ sv_manager_config_path }}"
+  register: config_exists
+
+- name: "{{ role_path|basename }} | remove config file"
+  file:
+    path: "{{ sv_manager_config_path }}"
+    state: absent
+  when: config_exists.stat.exists
+
+# - name: show config data
+#   debug:
+#     msg: "{{ config_data }}"
+#   when: config_exists.stat.exists
+
+- name: "{{ role_path|basename }} | set dictionary"
+  set_fact:
+    config_dict: "{{ config_data.content | default([]) }}"
+
+- name: "{{ role_path|basename }} | create config from template"
+  set_fact:
+    config_dict_template: "{{ lookup('template', 'templates/sv_manager.conf.template') }}"
+
+- name: "{{ role_path|basename }} | show present config dictionary"
+  debug:
+    msg: "{{ config_dict }}"
+
+- name: "{{ role_path|basename }} | combine with host section"
+  set_fact:
+    config_dict:  "{{ config_dict_template | combine(config_dict) }}"
+
+- name: "{{ role_path|basename }} | show new config"
+  debug:
+    var: config_dict
+
+- name: "{{ role_path|basename }} | write var to file"
+  copy:
+    content: "{{ config_dict | to_nice_json }}"
+    dest: "{{ sv_manager_config_path }}"

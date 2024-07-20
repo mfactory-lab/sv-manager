@@ -55,7 +55,7 @@ create_config() {
   read -e -p "### Please tell which user is running validator: " SOLANA_USER
 
   ansible-playbook --connection=local --inventory ./inventory --limit local  playbooks/pb_config.yaml --extra-vars "{'host_hosts': 'local', \
-  'solana_user': '$SOLANA_USER', \
+  'validator_user': '$SOLANA_USER', \
   'validator_name':'$VALIDATOR_NAME', \
   'secrets_path': '$PATH_TO_VALIDATOR_KEYS', \
   'flat_path': 'True', \

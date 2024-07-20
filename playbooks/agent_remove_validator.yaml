@@ -4,4 +4,4 @@
   hosts: all
   become: yes
   roles:
-    - remove_validator
+    - validator_remove

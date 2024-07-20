@@ -1,8 +1,0 @@
-- name: "Update Solana to {% if solana_version is defined %}v{{ solana_version }}{% else %}stable{% endif %}"
-  shell: "solana-install init -d {{ solana_bin_path }} {% if solana_version is defined %}v{{ solana_version }}{% else %}stable{% endif %}"
-  become: yes
-  become_user: "{{ solana_user }}"
-  environment:
-    PATH: "{{ env_path }}"
-  tags:
-    - cli.update
