@@ -19,5 +19,5 @@ limit_ledger_size: 50000000
 maximum_local_snapshot_age: 1000
 solana_version: 1.18.17
 jito_version: 1.18.17
-agave_version: 2.0.2 
+agave_version: 2.0.3 
 extra_params:
