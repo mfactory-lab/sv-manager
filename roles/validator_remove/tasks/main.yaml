@@ -58,8 +58,8 @@
     - "{{ mount_base_path }}"
     - "{{ validator_home }}"
     - "{{ swap_file.stdout }}"
-    - "/etc/systemd/system/solana-validator.service"
-    - "/etc/default/solana-validator"
+    - "/etc/systemd/system/{{ validator_binary }}.service"
+    - "/etc/default/validator-env"
     - "{{ sv_manager_config_path }}"
   tags:
     - validator.remove
