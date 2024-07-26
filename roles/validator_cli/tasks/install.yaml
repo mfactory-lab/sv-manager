@@ -1,4 +1,11 @@
 ---
+- name: "{{ role_path|basename }} | remove installer"
+  file:
+    path: "/tmp/{{ validator_binary }}"
+    state: absent
+  tags:
+    - cli.install
+
 - name: "{{ role_path|basename }} | create download dir"
   file:
     path: "/tmp/{{ validator_binary }}"
