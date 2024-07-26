@@ -2,6 +2,8 @@
 - name: install monitoring
   hosts: all
   become: yes
+  vars_files:
+    - ../vars/{{ val_prj }}.yaml
   roles:
     - vars_shortcode_mapping
     - validator_config_load
