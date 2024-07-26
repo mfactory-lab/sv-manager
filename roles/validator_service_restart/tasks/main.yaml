@@ -20,7 +20,7 @@
 
 - name: "{{ role_path|basename }} | stop solana validator service"
   systemd:
-    name: "{{ validator_binary_name }}"
+    name: "{{ validator_binary }}"
     state: stopped
   tags:
     - validator.manage.restart.service
@@ -34,7 +34,7 @@
 
 - name: "{{ role_path|basename }} | start solana validator service"
   systemd:
-    name: "{{ validator_binary_name }}"
+    name: "{{ validator_binary }}"
     state: started
   tags:
     - validator.manage.restart.service
