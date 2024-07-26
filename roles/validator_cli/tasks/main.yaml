@@ -16,7 +16,7 @@
 
 - name: "{{ role_path|basename }} | check validator cli installed"
   stat:
-    path: "{{ validator_bin_path }}/releases/{% if validator_version is defined %}{{ validator_version }}{% else %}stable{% endif %}/solana_release/bin/{{ validator_install_binary }}"
+    path: "{{ validator_bin_path }}/releases/{% if validator_version is defined %}v{{ validator_version }}{% else %}stable{% endif %}/solana_release/bin/{{ validator_install_binary }}"
   register: validator_exists
   tags:
     - cli
