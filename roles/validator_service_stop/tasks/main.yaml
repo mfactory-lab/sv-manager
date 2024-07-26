@@ -20,7 +20,7 @@
 
 - name: "{{ role_path|basename }} | stop validator service"
   systemd:
-    name: "{{ binary_name }}"
+    name: "{{ validator_binary }}"
     state: stopped
   ignore_errors: True
   tags:
