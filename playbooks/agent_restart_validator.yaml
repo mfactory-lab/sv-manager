@@ -7,4 +7,4 @@
     - validator.cluster.restart
   roles:
     - vars_shortcode_mapping
-    - validator_restart
+    - validator_service_restart

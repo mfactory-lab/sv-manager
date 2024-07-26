@@ -13,4 +13,4 @@
         - cli
         - cli.install
         - cli.update
-    - validator_restart
+    - validator_service_restart

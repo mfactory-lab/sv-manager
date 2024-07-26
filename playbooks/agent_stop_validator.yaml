@@ -8,4 +8,4 @@
   roles:
     - validator_config_load
     - vars_shortcode_mapping
-    - validator_stop
+    - validator_service_stop
