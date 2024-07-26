@@ -3,6 +3,8 @@
 - name: stop validator
   hosts: all
   become: yes
+  vars_files:
+    - ../vars/{{ val_prj }}.yaml
   tags:
     - validator.cluster.stop
   roles:
