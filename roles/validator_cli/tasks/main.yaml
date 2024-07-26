@@ -23,14 +23,14 @@
     - cli.install
     - cli.update
 
-- name: "{{ role_path|basename }} | install solana cli"
+- name: "{{ role_path|basename }} | install validator cli"
   import_tasks: install.yaml
   tags:
     - cli
     - cli.install
   when: force == 'true' or not validator_exists.stat.exists
 
-- name: "{{ role_path|basename }} | update solana cli"
+- name: "{{ role_path|basename }} | update validator cli"
   import_tasks: update.yaml
   tags:
     - cli
