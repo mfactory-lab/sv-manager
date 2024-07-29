@@ -24,7 +24,7 @@
         mode: 0755
 
     - name: run validator installer
-      shell: "/tmp/{{ validator_binary }}/install -d {{ validator_bin_path }} {% if validator_version is defined %}v{{ validator_version }}{% else %}stable{% endif %}"
+      shell: "/tmp/{{ validator_binary }}/install -d {{ validator_bin_path }} {% if validator_version is defined %}v{{ validator_version }}{% if jito_validator %}-jito{% endif %}{% else %}stable{% endif %}"
   become: yes
   become_user: "{{ validator_user }}"
   tags:
