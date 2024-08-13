@@ -6,7 +6,7 @@
   compress
   missingok
   postrotate
-    systemctl kill -s USR1 {{ validator_binary }}.service
+    systemctl kill -s USR1 validator.service
   endscript
 }
 

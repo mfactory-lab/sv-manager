@@ -1,7 +1,7 @@
 ---
 - name: Remove validator systemd service unit file
   file:
-    path: "/etc/systemd/system/{{ validator_binary }}.service"
+    path: "/etc/systemd/system/validator.service"
     state: absent
   tags:
     - validator.service
@@ -9,7 +9,7 @@
 - name: Create validator service
   template:
     src: validator.service.j2
-    dest: "/lib/systemd/system/{{ validator_binary }}.service"
+    dest: "/lib/systemd/system/validator.service"
     mode: 0644
     owner: root
     group: root
@@ -34,14 +34,14 @@
 
 - name: Enable validator service
   systemd:
-    name: "{{ validator_binary }}"
+    name: "validator"
     enabled: yes
   tags:
     - validator.service
 
 - name: Start validator service
   systemd:
-    name: "{{ validator_binary }}"
+    name: "validator"
     state: "{{ item }}"
   with_items:
     - "started"

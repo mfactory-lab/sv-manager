@@ -58,7 +58,7 @@
     - "{{ mount_base_path }}"
     - "{{ validator_home }}"
     - "{{ swap_file.stdout }}"
-    - "/etc/systemd/system/{{ validator_binary }}.service"
+    - "/etc/systemd/system/validator.service"
     - "/etc/default/validator-env"
     - "{{ sv_manager_config_path }}"
   tags:
