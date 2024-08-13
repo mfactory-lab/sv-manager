@@ -26,6 +26,8 @@
     - name: run validator installer
       shell: "/tmp/{{ validator_binary }}/install -d {{ validator_bin_path }} {% if validator_version is defined %}v{{ validator_version }}{% if jito_validator %}-jito{% endif %}{% else %}stable{% endif %}"
   become: yes
+  environment:
+    SOLANA_RELEASE: "{% if validator_version is defined %}v{{ validator_version }}{% if jito_validator %}-jito{% endif %}{% else %}stable{% endif %}"
   become_user: "{{ validator_user }}"
   tags:
     - cli.install
