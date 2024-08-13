@@ -44,3 +44,7 @@ jito_urls:
     block_engine: "https://tokyo.mainnet.block-engine.jito.wtf"
     relayer: "http://tokyo.mainnet.relayer.jito.wtf:8100"
     shred_receiver_addr: "202.8.9.160:1002"
+  saltlakecity:
+    block_engine: "https://slc.mainnet.block-engine.jito.wtf"
+    relayer: "http://slc.mainnet.relayer.jito.wtf:8100"
+    shred_receiver_addr: "64.130.53.8:1002"
