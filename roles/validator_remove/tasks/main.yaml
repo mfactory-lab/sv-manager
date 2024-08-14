@@ -9,7 +9,11 @@
   systemd:
     name: "{{ validator_binary }}"
     state: stopped
-    enabled: false
+    enabled: no
+  with_items:
+    - 'agave-validator'
+    - 'solana-validator'
+    - 'validator'
   ignore_errors: yes
   tags:
     - validator.remove
@@ -59,6 +63,8 @@
     - "{{ validator_home }}"
     - "{{ swap_file.stdout }}"
     - "/etc/systemd/system/validator.service"
+    - "/etc/systemd/system/agave-validator.service"
+    - "/etc/systemd/system/solana-validator.service"
     - "/etc/default/validator-env"
     - "{{ sv_manager_config_path }}"
   tags:
