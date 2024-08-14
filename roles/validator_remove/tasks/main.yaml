@@ -7,7 +7,7 @@
 
 - name: "{{ role_path|basename }} | stop validator service"
   systemd:
-    name: "{{ validator_binary }}"
+    name: "{{ item }}"
     state: stopped
     enabled: no
   with_items:
