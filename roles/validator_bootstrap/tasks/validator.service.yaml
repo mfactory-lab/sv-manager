@@ -1,8 +1,24 @@
 ---
+- name: Disable old validator services
+  systemd:
+    name: "{{ item.0 }}"
+    state: "{{ item.1 }}"
+    enabled: no
+  ignore_errors: True
+  with_nested:
+    - [ 'solana-validator', 'agave-validator']
+    - [ 'stopped' ]
+  tags:
+    - validator.service
+
 - name: Remove validator systemd service unit file
   file:
-    path: "/etc/systemd/system/validator.service"
+    path: "/etc/systemd/system/{{ item }}.service"
     state: absent
+  with_items:
+    - "validator"
+    - "agave-validator"
+    - "solana-validator"
   tags:
     - validator.service
 
