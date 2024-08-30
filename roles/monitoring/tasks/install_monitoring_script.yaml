@@ -1,14 +1,4 @@
 ---
-- name: Install python packages
-  pip:
-    name:
-      - requests
-      - numpy
-    state: present
-    executable: pip3
-  tags:
-    monitoring.script
-
 - name: Delete script folder
   file:
     path: "{{ solana_home }}/monitoring"
@@ -23,6 +13,17 @@
     group: "{{ solana_user }}"
     mode: 0755
     state: directory
+  tags:
+    monitoring.script
+
+- name: Install python packages
+  pip:
+    name:
+      - requests
+      - numpy
+    state: present
+    virtualenv: "{{ solana_home }}/monitoring"
+  #  executable: pip3
   tags:
     monitoring.script
 
@@ -72,13 +73,10 @@
     - "measurement_validator_info.py"
     - "output_gossip.py"
     - "output_validator_measurements.py"
-    - "output_tds_measurements.py"
     - "output_validators_info.py"
     - "output_validators.py"
     - "request_utils.py"
     - "solana_rpc.py"
-    - "tds_info.py"
-    - "measurement_tds_info.py"
     - "validator_monitoring.py"
   tags:
     - monitoring.script
