@@ -1,32 +1,69 @@
 ---
 
-- name: Adde influx repo key on Ubuntu
+- name: Ensure keyrings directory exists (Ubuntu 24+)
+  file:
+    path: /etc/apt/keyrings
+    state: directory
+    mode: '0755'
+  when:
+    - ansible_distribution == 'Ubuntu'
+    - ansible_distribution_version is version('24.04', '>=')
+  tags:
+    - telegraf.install
+
+- name: Download InfluxData GPG key to keyrings directory (Ubuntu 24+)
+  get_url:
+    url: https://repos.influxdata.com/influxdata-archive_compat.key
+    dest: /etc/apt/keyrings/influxdata-archive_compat.asc
+    mode: '0644'
+  when:
+    - ansible_distribution == 'Ubuntu'
+    - ansible_distribution_version is version('24.04', '>=')
+  tags:
+    - telegraf.install
+
+- name: Add InfluxData apt repository with signed-by (Ubuntu 24+)
+  apt_repository:
+    repo: "deb [signed-by=/etc/apt/keyrings/influxdata-archive_compat.asc] https://repos.influxdata.com/{{ ansible_distribution | lower }} {{ ansible_distribution_release | lower }} stable"
+    filename: influxdb
+    state: present
+  when:
+    - ansible_distribution == 'Ubuntu'
+    - ansible_distribution_version is version('24.04', '>=')
+  tags:
+    - telegraf.install
+
+- name: Add InfluxData apt key (Ubuntu 20.04 & 22.04)
   apt_key:
     url: https://repos.influxdata.com/influxdata-archive.key
     state: present
-  when: ansible_distribution == 'Ubuntu'
+  when:
+    - ansible_distribution == 'Ubuntu'
+    - ansible_distribution_version is version('24.04', '<')
   tags:
     - telegraf.install
 
-- name: Add telegraf repo
+- name: Add InfluxData apt repository (Ubuntu 20.04 & 22.04)
   block:
-    - name: Add {{ ansible_distribution_release | lower }} telegraf repo
+    - name: Add telegraf repo for {{ ansible_distribution_release | lower }}
       apt_repository:
-        repo: deb https://repos.influxdata.com/{{ ansible_distribution | lower }} {{ ansible_distribution_release | lower }} stable
-        state: present
+        repo: "deb https://repos.influxdata.com/{{ ansible_distribution | lower }} {{ ansible_distribution_release | lower }} stable"
         filename: influxdb
+        state: present
   rescue:
-    - name: ansible_distribution_release repo failed, adding bionic telegraf repo
+    - name: Fallback to bionic repo
       apt_repository:
-        repo: deb https://repos.influxdata.com/{{ ansible_distribution | lower }} bionic stable
-        state: present
+        repo: "deb https://repos.influxdata.com/{{ ansible_distribution | lower }} bionic stable"
         filename: influxdb
-  when: ansible_distribution == 'Ubuntu'
+        state: present
+  when:
+    - ansible_distribution == 'Ubuntu'
+    - ansible_distribution_version is version('24.04', '<')
   tags:
     - telegraf.install
 
-- name: apt update
-  ansible.builtin.apt:
+- name: Update apt cache
+  apt:
     update_cache: yes
   when: ansible_distribution == 'Ubuntu'
   tags:
