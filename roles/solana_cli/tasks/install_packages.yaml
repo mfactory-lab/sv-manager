@@ -1,0 +1,49 @@
+- name: Download rustup installer
+  get_url:
+    url: "https://sh.rustup.rs"
+    dest: /usr/local/sbin/rustup-install.sh
+    mode: "0755"
+    owner: root
+    group: root
+  tags:
+    - cli
+    - cli.packages
+
+- name: DEBUG
+  debug:
+    var: solana_home
+  tags:
+    - cli
+    - cli.packages
+
+- name: Install rust
+  command: "/usr/local/sbin/rustup-install.sh -y"
+  args:
+    chdir: "{{ solana_home }}"
+  become: true
+  become_user: "{{ solana_user }}"
+  register: install_output
+  changed_when: false
+  tags:
+    - cli
+    - cli.packages
+
+- name: Install dependencies
+  ansible.builtin.apt:
+    pkg:
+      - libssl-dev
+      - libudev-dev
+      - libclang-dev
+      - pkg-config
+      - zlib1g-dev
+      - llvm
+      - clang
+      - cmake
+      - make
+      - libprotobuf-dev
+      - protobuf-compiler
+      - build-essential
+    state: present
+  tags:
+    - cli
+    - cli.packages

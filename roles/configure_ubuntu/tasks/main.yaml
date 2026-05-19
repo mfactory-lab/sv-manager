@@ -1,9 +1,4 @@
 ---
-- name: Configure lvm
-  import_tasks: lvm.yaml
-  when: lvm_enabled|bool
-  tags:
-    config.lvm
 
 - name: Install additional packages
   import_tasks: packages.yaml

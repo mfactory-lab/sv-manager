@@ -3,7 +3,7 @@ set_validator_info: False
 cluster_environment: 'mainnet-beta'
 cluster_rpc_address: 'https://api.mainnet-beta.solana.com'
 solana_validator_service: stopped
-swap_file_size_gb: 200
+swap_file_size_gb: 250
 entrypoints:
   - entrypoint.mainnet-beta.solana.com:8001
   - entrypoint2.mainnet-beta.solana.com:8001
@@ -18,8 +18,12 @@ known_validators:
 solana_metrics_url: 'https://metrics.solana.com:8086,db=mainnet-beta,u=mainnet-beta_write,p=password'
 expected_genesis_hash: '5eykt4UsFv8P8NJdTREpY1vzqKqZKvdpKuc147dw2N9d'
 limit_ledger_size: 50000000
-maximum_local_snapshot_age: 2000
-solana_version: 1.18.18
-jito_version: 1.18.15
-agave_version: 2.0.2 
+snapshot_interval_slots: 25000
+incremental-snapshot-interval-slots: 2500
+maximum_local_snapshot_age: 1500
+cli_version: 3.1.8
+ramdisk_size_gb: 0
 extra_params:
+  - '--minimal-snapshot-download-speed 41943040'
+#  - '--incremental-snapshot-interval-slots 200'
+#  - '--disable-accounts-disk-index'

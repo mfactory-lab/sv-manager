@@ -1,0 +1,44 @@
+---
+# - name: DEBUG
+#   debug:
+#     var: jito
+
+# - name: DEBUG
+#   debug:
+#     var: agave
+
+# - name: Stop play
+#   meta: end_play
+
+- name: Set agave release params
+  set_fact:
+    release_label: "agave-{{ cli_version }}"
+    tag: "tags/v{{ cli_version }}"
+    git_url: https://github.com/anza-xyz/agave.git
+    repo_name: "agave"
+  when: not jito
+
+- name: Set jito release params
+  set_fact:
+    release_label: "jito-{{ cli_version }}"
+    tag: "tags/v{{ cli_version }}-jito"
+    git_url: "https://github.com/jito-foundation/jito-solana.git"
+    repo_name: "jito"
+  when: jito
+
+- name: Clone {{ repo_name }} repo
+  git:
+    dest: "{{ git_clone_target }}/{{ repo_name }}"
+    force: true
+    repo: "{{ git_url }}"
+    version: "{{ tag }}"
+    recursive: yes
+  become: true
+  become_user: "{{ solana_user }}"
+  tags:
+    - cli
+    - cli.sources
+
+
+- name: Pause until you can apply patch
+  ansible.builtin.pause:

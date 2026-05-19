@@ -7,43 +7,30 @@
     mode: '0755'
   when:
     - ansible_distribution == 'Ubuntu'
-    - ansible_distribution_version is version('24.04', '>=')
+  #  - ansible_distribution_version is version('24.04', '>=')
   tags:
     - telegraf.install
 
-- name: Download InfluxData GPG key to keyrings directory (Ubuntu 24+)
+- name: Download InfluxData GPG key to keyrings directory
   get_url:
-    url: https://repos.influxdata.com/influxdata-archive_compat.key
+    url: https://repos.influxdata.com/influxdata-archive.key
     dest: /etc/apt/keyrings/influxdata-archive_compat.asc
     mode: '0644'
   when:
     - ansible_distribution == 'Ubuntu'
-    - ansible_distribution_version is version('24.04', '>=')
   tags:
     - telegraf.install
 
-- name: Add InfluxData apt repository with signed-by (Ubuntu 24+)
-  apt_repository:
-    repo: "deb [signed-by=/etc/apt/keyrings/influxdata-archive_compat.asc] https://repos.influxdata.com/{{ ansible_distribution | lower }} {{ ansible_distribution_release | lower }} stable"
-    filename: influxdb
-    state: present
-  when:
-    - ansible_distribution == 'Ubuntu'
-    - ansible_distribution_version is version('24.04', '>=')
-  tags:
-    - telegraf.install
-
-- name: Add InfluxData apt key (Ubuntu 20.04 & 22.04)
+- name: Add InfluxData apt key
   apt_key:
     url: https://repos.influxdata.com/influxdata-archive.key
     state: present
   when:
     - ansible_distribution == 'Ubuntu'
-    - ansible_distribution_version is version('24.04', '<')
   tags:
     - telegraf.install
 
-- name: Add InfluxData apt repository (Ubuntu 20.04 & 22.04)
+- name: Add InfluxData apt repository
   block:
     - name: Add telegraf repo for {{ ansible_distribution_release | lower }}
       apt_repository:
@@ -58,7 +45,6 @@
         state: present
   when:
     - ansible_distribution == 'Ubuntu'
-    - ansible_distribution_version is version('24.04', '<')
   tags:
     - telegraf.install
 

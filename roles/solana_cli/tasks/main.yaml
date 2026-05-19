@@ -1,31 +1,20 @@
 ---
-- name: set force install fact
-  set_fact:
-    force: "{{ force | default('false')  }}"
-  tags:
-    - cli
-    - cli.install
-    - cli.update
+  - name: Build solana cli
+    import_tasks: install_packages.yaml
+    tags:
+      - cli
+      - cli.packages
 
-- name: check solana cli installed
-  stat:
-    path: /home/solana/.local/share/solana/install/active_release/bin/solana-install
-  register: solana_exists
-  tags:
-    - cli
-    - cli.install
-    - cli.update
 
-- name: install solana cli
-  import_tasks: install.yaml
-  tags:
-    - cli
-    - cli.install
-  when: force == 'true' or not solana_exists.stat.exists
+  - name: Download sources
+    import_tasks: get_sources.yaml
+    tags:
+      - cli
+      - cli.sources
 
-- name: update solana cli
-  import_tasks: update.yaml
-  tags:
-    - cli
-    - cli.update
-  when: force != 'true' and solana_exists.stat.exists
+  - name: Build release
+    import_tasks: build_release.yaml
+    tags:
+      - cli
+      - cli.build
+

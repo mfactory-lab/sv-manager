@@ -22,7 +22,7 @@
       - requests
       - numpy
     state: present
-    virtualenv: "{{ solana_home }}/monitoring"
+    virtualenv: "{{ solana_home }}/monitoring/venv"
   #  executable: pip3
   tags:
     monitoring.script

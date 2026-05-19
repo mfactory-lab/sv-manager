@@ -1,0 +1,46 @@
+---
+- name: Create release folder
+  file:
+    state: directory
+    path: "{{ releases_dir }}"
+    owner: "{{ solana_user }}"
+    group: "{{ solana_user }}"
+  tags:
+    - cli
+    - cli.build
+
+- name: Build release from sources
+  become: true
+  become_user: "{{ solana_user }}"
+  become_flags: "-i"
+  shell: |
+    export PATH="$HOME/.cargo/bin:$PATH"
+    scripts/cargo-install-all.sh --validator-only {{ releases_dir }}/{{ release_label }}
+  args:
+    chdir: "{{ git_clone_target }}/{{ repo_name }}"
+    executable: /usr/bin/bash
+  tags:
+    - cli
+    - cli.build
+
+- name: Set active release
+  become: true
+  become_user: "{{ solana_user }}"
+  become_flags: "-i"
+  file:
+    state: link
+    src: "{{ releases_dir }}/{{ release_label }}"
+    path: "{{ active_release_dir }}"
+  tags:
+    - cli
+    - cli.link
+
+- name: Add binary path to .profile
+  ansible.builtin.lineinfile:
+    path: "{{ solana_home }}/.profile"
+    line: "export PATH=\"{{ env_path }}:$PATH\""
+    owner: "{{ solana_user }}"
+    state: present
+  tags:
+    - cli
+    - cli.profile

@@ -30,50 +30,83 @@
     - config.solana_user
     - validator.service.solana
 
-- name: Create ledger directory
+# - name: DEBUG
+#   debug:
+#     msg: "{{ item }}"
+#   with_items:
+#     - "{{ validator_log_path }}"
+#     - "{{ ledger_path }}"
+#     - "{{ accounts_path }}"
+#     - "{{ snapshots_path }}"
+#     - "{{ accounts-hash-cache-path }}"
+#     - accounts-index-path
+#   tags:
+#     - debug.config.solana_user
+#     - debug.validator.service.solana
+
+- name: Create validator directories
   become: yes
   file:
-    path: "{{ ledger_path }}"
+    path: "{{ item }}"
     owner: "{{ solana_user }}"
     group: "{{ solana_user }}"
     state: directory
     mode: '0755'
+  with_items:
+    - "{{ ledger_path }}"
+    - "{{ accounts_path }}"
+    - "{{ snapshots_path }}"
+    - "{{ validator_log_path }}"
+    - "{{ accounts_hash_cache_path }}"
+    - "{{ accounts_index_path }}"   
   tags:
     - config.solana_user
     - validator.service.solana
 
-- name: Create accounts directory
-  become: yes
-  file:
-    path: "{{ accounts_path }}"
-    owner: "{{ solana_user }}"
-    group: "{{ solana_user }}"
-    state: directory
-    mode: '0755'
-  tags:
-    - config.solana_user
-    - validator.service.solana
+# - name: Create ledger directory
+#   become: yes
+#   file:
+#     path: "{{ ledger_path }}"
+#     owner: "{{ solana_user }}"
+#     group: "{{ solana_user }}"
+#     state: directory
+#     mode: '0755'
+#   tags:
+#     - config.solana_user
+#     - validator.service.solana
 
-- name: Create snapshots directory
-  become: yes
-  file:
-    path: "{{ snapshots_path }}"
-    owner: "{{ solana_user }}"
-    group: "{{ solana_user }}"
-    state: directory
-    mode: '0755'
-  tags:
-    - config.solana_user
-    - validator.service.solana
+# - name: Create accounts directory
+#   become: yes
+#   file:
+#     path: "{{ accounts_path }}"
+#     owner: "{{ solana_user }}"
+#     group: "{{ solana_user }}"
+#     state: directory
+#     mode: '0755'
+#   tags:
+#     - config.solana_user
+#     - validator.service.solana
 
-- name: Create logs directory
-  become: yes
-  file:
-    path: "{{ validator_log_path }}"
-    owner: "{{ solana_user }}"
-    group: "{{ solana_user }}"
-    state: directory
-    mode: '0755'
-  tags:
-    - config.solana_user
-    - validator.service.solana
+# - name: Create snapshots directory
+#   become: yes
+#   file:
+#     path: "{{ snapshots_path }}"
+#     owner: "{{ solana_user }}"
+#     group: "{{ solana_user }}"
+#     state: directory
+#     mode: '0755'
+#   tags:
+#     - config.solana_user
+#     - validator.service.solana
+
+# - name: Create logs directory
+#   become: yes
+#   file:
+#     path: "{{ validator_log_path }}"
+#     owner: "{{ solana_user }}"
+#     group: "{{ solana_user }}"
+#     state: directory
+#     mode: '0755'
+#   tags:
+#     - config.solana_user
+#     - validator.service.solana
