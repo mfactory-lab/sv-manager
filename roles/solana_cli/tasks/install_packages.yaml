@@ -43,6 +43,7 @@
       - libprotobuf-dev
       - protobuf-compiler
       - build-essential
+      - git
     state: present
   tags:
     - cli
